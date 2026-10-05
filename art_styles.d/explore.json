@@ -1,237 +1,53 @@
 {
- "palette": {
-  "panel_fill": [
-   20,
-   26,
-   46
-  ],
-  "accent": [
-   104,
-   136,
-   244
-  ],
-  "glow": [
-   72,
-   104,
-   232
-  ],
-  "text_key_hex": "#A9BCFF"
- },
- "background": {
-  "tiles": [
-   {
-    "asset": "tfc:block/rock/smooth/slate",
-    "weight": 5
-   },
-   {
-    "asset": "tfc:block/rock/raw/slate",
-    "weight": 2
-   }
-  ],
-  "target_brightness": 0.1,
-  "saturation": 0.55,
-  "tint": [
-   200,
-   218,
-   245
-  ],
-  "contrast_sd": 0.012,
-  "overlay": {
-   "type": "none",
-   "density": 0,
-   "color": [
-    214,
-    196,
-    150
-   ]
-  },
-  "tile_size": 12
- },
- "banner": {
-  "ribbon_asset": "minecraft:block/sandstone_top",
-  "icons_left": [
-   "map_atlases:item/atlas",
-   "minecraft:item/compass_16",
-   "minecraft:item/spyglass"
-  ],
-  "icons_right": [
-   "minecraft:item/emerald",
-   "firmaciv:item/sextant",
-   "vc_gliders:item/paraglider_wood"
-  ],
-  "motif": "mountains",
-  "motif_color": [
-   112,
-   140,
-   230
-  ]
- },
+ "palette": {"panel_fill": [20, 26, 46], "accent": [104, 136, 244], "glow": [72, 104, 232], "text_key_hex": "#A9BCFF"},
+ "background": {"tiles": [{"asset": "tfc:block/rock/smooth/slate", "weight": 5}, {"asset": "tfc:block/rock/raw/slate", "weight": 2}], "target_brightness": 0.1, "saturation": 0.55, "tint": [200, 218, 245], "contrast_sd": 0.012, "overlay": {"type": "none", "density": 0, "color": [214, 196, 150]}, "tile_size": 12},
+ "banner": {"ribbon_asset": "minecraft:block/sandstone_top", "icons_left": ["map_atlases:item/atlas", "minecraft:item/compass_16", "minecraft:item/spyglass"], "icons_right": ["minecraft:item/emerald", "firmaciv:item/sextant", "vc_gliders:item/paraglider_wood"], "motif": "mountains", "motif_color": [112, 140, 230]},
  "decor": [],
- "shapes": {
-  "normal": "circle",
-  "milestone": "pentagon",
-  "optional": "diamond",
-  "gate": "gear"
- },
+ "shapes": {"normal": "circle", "milestone": "pentagon", "optional": "diamond", "gate": "gear"},
  "scene": {
+  "texel": 4,
+  "shadow": 0.45,
+  "light": {"dir": [-1, -0.4], "color": [255, 178, 116], "tint": 0.1, "rim": 0.55, "shade": 0.3},
+  "lights": [{"x": 0.215, "y": 0.225, "radius": 0.13, "strength": 0.8, "color": [255, 170, 100]}, {"x": 0.4105, "y": 0.7652, "radius": 0.2, "strength": 1.0, "color": [255, 150, 80]}, {"x": 0.3337, "y": 0.7241, "radius": 0.11, "strength": 0.9, "color": [255, 176, 100]}, {"x": 0.8115, "y": 0.2841, "radius": 0.08, "strength": 0.7, "color": [130, 190, 255]}],
+  "ambient": 0.76,
+  "haze_color": [120, 146, 206],
   "layers": [
-   {
-    "motif": "sky_band",
-    "x": 0.5,
-    "y": 0.18,
-    "w": 74,
-    "h": 14,
-    "color": [
-     90,
-     150,
-     210
-    ],
-    "alpha": 0.38
-   },
-   {
-    "motif": "sun",
-    "x": 0.25,
-    "y": 0.2,
-    "w": 9,
-    "color": [
-     255,
-     196,
-     128
-    ],
-    "alpha": 0.8
-   },
-   {
-    "motif": "mountain_range",
-    "x": 0.55,
-    "y": 0.215,
-    "w": 74,
-    "h": 10,
-    "color": [
-     86,
-     110,
-     150
-    ],
-    "alpha": 0.85
-   },
-   {
-    "motif": "mountain_range",
-    "x": 0.42,
-    "y": 0.27,
-    "w": 62,
-    "h": 8,
-    "color": [
-     38,
-     50,
-     68
-    ],
-    "alpha": 0.9
-   },
-   {
-    "motif": "contour_map",
-    "x": 0.5,
-    "y": 0.53,
-    "w": 62,
-    "h": 40,
-    "color": [
-     150,
-     190,
-     230
-    ],
-    "alpha": 0.22
-   },
-   {
-    "motif": "soft_glow",
-    "x": 0.215,
-    "y": 0.5,
-    "w": 18,
-    "h": 18,
-    "color": [
-     250,
-     210,
-     140
-    ],
-    "alpha": 0.22
-   },
-   {
-    "motif": "compass_rose",
-    "x": 0.215,
-    "y": 0.5,
-    "w": 13,
-    "color": [
-     222,
-     196,
-     140
-    ],
-    "alpha": 0.92
-   },
-   {
-    "motif": "tower",
-    "x": 0.81,
-    "y": 0.45,
-    "w": 5,
-    "h": 13,
-    "color": [
-     62,
-     70,
-     96
-    ],
-    "alpha": 0.97
-   },
-   {
-    "motif": "tree_line",
-    "x": 0.8,
-    "y": 0.56,
-    "w": 16,
-    "h": 5,
-    "color": [
-     30,
-     52,
-     54
-    ],
-    "alpha": 1.0
-   },
-   {
-    "motif": "tree_line",
-    "x": 0.3,
-    "y": 0.82,
-    "w": 44,
-    "h": 11,
-    "color": [
-     40,
-     70,
-     66
-    ],
-    "alpha": 1.0
-   },
-   {
-    "motif": "sky_band",
-    "x": 0.78,
-    "y": 0.845,
-    "w": 34,
-    "h": 5,
-    "color": [
-     70,
-     140,
-     200
-    ],
-    "alpha": 0.85
-   },
-   {
-    "motif": "sprite",
-    "asset": "firmaciv:item/sloop_icon_only",
-    "x": 0.79,
-    "y": 0.76,
-    "w": 8,
-    "alpha": 1.0
-   },
-   {
-    "motif": "sprite",
-    "asset": "immersive_aircraft:item/biplane",
-    "x": 0.735,
-    "y": 0.235,
-    "w": 6.67,
-    "alpha": 1.0
-   }
+  {"motif": "sky_band", "x": 0.5, "y": 0.175, "w": 76, "color": [78, 116, 218], "alpha": 0.36, "h": 15},
+  {"motif": "sky_band", "x": 0.25, "y": 0.268, "w": 46, "color": [255, 150, 84], "alpha": 0.34, "h": 8},
+  {"motif": "soft_glow", "x": 0.215, "y": 0.235, "w": 30, "color": [255, 164, 92], "alpha": 0.3, "h": 20},
+  {"motif": "sky_band", "x": 0.3, "y": 0.3, "w": 40, "color": [255, 156, 96], "alpha": 0.16, "h": 5},
+  {"motif": "sky_band", "x": 0.8, "y": 0.285, "w": 36, "color": [130, 160, 240], "alpha": 0.14, "h": 5},
+  {"motif": "mountain_range", "x": 0.5, "y": 0.235, "w": 78, "color": [112, 138, 202], "alpha": 0.85, "h": 9.5},
+  {"motif": "sun", "x": 0.215, "y": 0.225, "w": 11, "color": [255, 146, 66], "alpha": 1.0},
+  {"motif": "snowy_range", "x": 0.36, "y": 0.292, "w": 56, "color": [80, 104, 168], "alpha": 1.0, "h": 9, "haze": 0.5},
+  {"motif": "snowy_range", "x": 0.86, "y": 0.245, "w": 28, "color": [86, 108, 172], "alpha": 1.0, "h": 10, "haze": 0.5},
+  {"motif": "mountain_range", "x": 0.62, "y": 0.338, "w": 70, "color": [48, 62, 102], "alpha": 1.0, "h": 7},
+  {"motif": "contour_map", "x": 0.5, "y": 0.56, "w": 62, "color": [150, 190, 230], "alpha": 0.14, "h": 40},
+  {"motif": "tree_line", "x": 0.5, "y": 0.717, "w": 72, "color": [20, 40, 58], "alpha": 1.0, "h": 6.5, "haze": 0.12},
+  {"motif": "sky_band", "x": 0.5, "y": 0.765, "w": 72, "color": [172, 192, 228], "alpha": 0.16, "h": 4.5},
+  {"motif": "soft_glow", "x": 0.8115, "y": 0.2841, "w": 12, "color": [130, 186, 255], "alpha": 0.34, "h": 12},
+  {"motif": "blocks", "x": 0.7832, "y": 0.4391, "w": 10.88, "h": 18.88, "rows": ["..B..", "..BB.", "..BW.", "B.BB.", "BABBA", ".RNRR", "RTCRR", "RNRVC", "gRRCR"], "legend": {"B": "tfc:block/rock/mossy_bricks/gabbro", "A": "tfc:block/rock/cracked_bricks/gabbro", "W": "minecraft:block/deepslate_bricks", "R": "tfc:block/rock/raw/andesite", "C": "tfc:block/rock/cobble/andesite", "N": "tfc:block/rock/mossy_cobble/andesite", "T": "minecraft:block/tuff", "V": "tfc:block/rock/gravel/andesite", "g": "tfc:block/rock/raw/gabbro"}, "depth": 0.45, "alpha": 1.0, "k": 3, "shadow": 0, "haze": 0.3, "haze_color": [120, 146, 206]},
+  {"motif": "sprite", "asset": "minecraft:item/soul_lantern", "x": 0.8115, "y": 0.2882, "w": 2.67, "alpha": 1.0, "k": 3, "glow": [120, 190, 255], "glow_strength": 1.3, "shadow": 0, "haze": 0.0},
+  {"motif": "tree", "x": 0.1631, "y": 0.5892, "w": 6, "h": 15, "color": [34, 86, 72], "alpha": 1.0, "lit": true, "pixelate": 4, "colors": 24, "outline": 0.9},
+  {"motif": "tree", "x": 0.2607, "y": 0.6336, "w": 4.5, "h": 10.5, "color": [30, 78, 66], "alpha": 1.0, "lit": true, "pixelate": 4, "colors": 24, "outline": 0.9},
+  {"motif": "tree", "x": 0.7165, "y": 0.5284, "w": 4.5, "h": 10.5, "color": [30, 78, 66], "alpha": 1.0, "lit": true, "pixelate": 4, "colors": 24, "outline": 0.9},
+  {"motif": "blocks", "x": 0.5094, "y": 0.7323, "w": 57.17, "h": 17.17, "rows": [".................PGGG", "...............PPDDDD", "..............PDDNTVN", "GGGPPPP......PDRCRRCR", "DDDDDDDPPPPPPDgbbbbgb", "ggbbbbgDDDDDDbbgbbggb"], "legend": {"G": {"front": "minecraft:block/podzol_side", "top": "minecraft:block/podzol_top", "side": "minecraft:block/podzol_side"}, "b": "tfc:block/rock/raw/basalt", "g": "tfc:block/rock/raw/gabbro", "P": {"front": "minecraft:block/dirt_path_side", "top": "minecraft:block/dirt_path_top", "side": "minecraft:block/dirt_path_side"}, "D": "minecraft:block/dirt", "R": "tfc:block/rock/raw/andesite", "C": "tfc:block/rock/cobble/andesite", "N": "tfc:block/rock/mossy_cobble/andesite", "T": "minecraft:block/tuff", "V": "tfc:block/rock/gravel/andesite"}, "depth": 0.45, "alpha": 1.0, "shadow": 0},
+  {"motif": "sprite", "asset": "minecraft:item/spruce_sign", "x": 0.792, "y": 0.5547, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "firmaciv:item/large_triangular_sail", "x": 0.141, "y": 0.7192, "w": 2.67, "alpha": 1.0, "flip": true},
+  {"motif": "sprite", "asset": "firmaciv:item/large_triangular_sail", "x": 0.1826, "y": 0.7192, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "firmaciv:item/medium_triangular_sail", "x": 0.2217, "y": 0.7241, "w": 2.67, "alpha": 1.0, "flip": true},
+  {"motif": "sprite", "asset": "firmaciv:item/medium_triangular_sail", "x": 0.2581, "y": 0.7241, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "sns:item/icon/frame_pack", "x": 0.2972, "y": 0.7175, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:item/lantern", "x": 0.3337, "y": 0.7208, "w": 2.67, "alpha": 1.0, "glow": [255, 178, 100], "glow_strength": 1.0},
+  {"motif": "sprite", "asset": "sns:item/hiking_boots", "x": 0.3688, "y": 0.7685, "w": 2.67, "alpha": 1.0, "flip": true},
+  {"motif": "sprite", "asset": "minecraft:item/campfire", "x": 0.4105, "y": 0.7652, "w": 2.67, "alpha": 1.0, "glow": [255, 150, 70], "glow_strength": 1.25},
+  {"motif": "blocks", "x": 0.5042, "y": 0.7537, "w": 6.5, "h": 3.83, "rows": ["TT"], "legend": {"T": {"front": "minecraft:block/cartography_table_side1", "top": "minecraft:block/cartography_table_top", "side": "minecraft:block/cartography_table_side3"}}, "depth": 0.45, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:item/compass_00", "x": 0.4743, "y": 0.7076, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "map_atlases:item/atlas_overworld", "x": 0.5199, "y": 0.7044, "w": 2.67, "alpha": 1.0},
+  {"motif": "blocks", "x": 0.5941, "y": 0.7537, "w": 3.83, "h": 3.83, "rows": ["S"], "legend": {"S": {"front": "minecraft:block/barrel_side", "top": "minecraft:block/barrel_top", "side": "minecraft:block/barrel_side"}}, "depth": 0.45, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:item/spyglass", "x": 0.5863, "y": 0.7027, "w": 2.67, "alpha": 1.0, "flip": true},
+  {"motif": "soft_glow", "x": 0.4105, "y": 0.7652, "w": 20, "color": [255, 156, 84], "alpha": 0.26, "h": 12},
+  {"motif": "soft_glow", "x": 0.3337, "y": 0.7274, "w": 10, "color": [255, 176, 100], "alpha": 0.2, "h": 8}
   ]
  }
 }
