@@ -92,7 +92,7 @@ ch.quest("first_year", 3, 0, "第一年的建议", icon="tfc:food/blueberry", de
                "",
                "&c不要急着探索远方或深入地下&r，世界上有很多会把你当晚餐的东西。"],
          tasks=[checkmark("记住了")],
-         rewards=[item("tfc:food/barley_bread", 6), item("tfc:powder/salt", 8)])
+         rewards=[item("tfc:food/barley_bread", 6)])
 
 ch.quest("roadmap", 6, 0, "前方的路", icon="ad_astra:tier_1_rocket", deps=["first_year"], shape="gear", size=1.5,
          desc=["本任务书分为四大篇章：",

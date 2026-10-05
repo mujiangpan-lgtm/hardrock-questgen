@@ -228,7 +228,7 @@ ch.quest("milking", 11.25, 10.325, "挤奶", icon="minecraft:milk_bucket", deps=
                "",
                "牛奶可以直接饮用解渴，也是乳制品的原料。"],
          tasks=[item("minecraft:milk_bucket", title="牛奶桶")],
-         rewards=[item("tfc:powder/salt", 4), xp(40)])
+         rewards=[xp(50)])
 
 ch.quest("shearing", 11.25, 12.325, "剪羊毛", icon="minecraft:shears", deps=["breeding"], shape="hexagon",
          desc=["&6产毛动物&r（绵羊、羊驼、麝牛）成年且毛长够长时，手持&6剪刀&r&e右键&r即可剪毛，"

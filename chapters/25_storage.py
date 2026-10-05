@@ -115,7 +115,7 @@ ch.quest("hanger", 13.45, 2.1, "悬挂架：腌肉房", icon="firmalife:wood/han
                "",
                "&a小技巧：&r把地窖挖进山体或建在阴面，天然就更冷，蜂蜡也能用来给熟化中的奶酪封顶。"],
          tasks=[tag("firmalife:hangers", title="任意悬挂架")],
-         rewards=[item("tfc:powder/salt", 8), xp(30)])
+         rewards=[item("tfc:powder/salt", 4), xp(30)])
 
 ch.quest("jarbnet", 13.45, 4.1, "罐头柜", icon="firmalife:wood/jarbnet/pine", deps=["food_shelf"],
          desc=["&6罐头柜&r是存放&6罐子&r、蜡烛和水壶的装饰性储物方块，"

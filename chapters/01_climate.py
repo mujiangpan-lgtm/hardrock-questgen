@@ -21,7 +21,7 @@ ch.quest("start", 0, 0, "你的体温", icon="cold_sweat:thermometer", shape="ge
                "&a进阶工具：&r实体&6温度计&r可显示精确的&6环境温度与体温&r数值。它需要金片与红石粉，"
                "进入金属加工阶段后再按 JEI 配方制作，放进&6快捷栏、副手或 Curios 饰品栏&r使用即可。"],
          tasks=[checkmark("我已找到体温指示并读懂冷热提示")],
-         rewards=[item("cold_sweat:waterskin"), xp(30)])
+         rewards=[xp(40)])
 
 ch.quest("seasons", 2, -1.5, "季节与纬度", icon="firmaciv:sextant", deps=["start"],
          desc=["TFC 的世界有真实的&6四季&r与&6气候带&r：",
@@ -124,7 +124,7 @@ ch.quest("winter_ready", 15.25, 0, "入冬检查清单", icon="cold_sweat:goat_f
                "",
                "&a小技巧：&r体温刚开始发蓝时及时处理（加衣服/靠近火），别等到饥饿值和生命值一起往下掉。"],
          tasks=[checkmark("我已经准备好过冬了")],
-         rewards=[item("tfc:food/barley_bread", 6), item("tfc:powder/salt", 4), xp(40)])
+         rewards=[item("tfc:food/barley_bread", 6), xp(40)])
 # ============================================================ C · 酷热与特殊环境
 ch.quest("heat_cooling", 6.5, 6.5, "酷暑降温", icon="minecraft:ice", deps=["wet"], hide_lines=True,
          desc=["夏天、沙漠、靠近熔炉和岩浆都会让你&c过热&r，图标变黄甚至变红就要注意了。",
@@ -147,7 +147,7 @@ ch.quest("waterskin", 8.5, 6.5, "水袋：随身调温", icon="cold_sweat:waters
                "",
                "&c注意：&r生水要煮沸后才能安全饮用（见「生存之道 · 饮水与食物」）。"],
          tasks=[item("cold_sweat:waterskin", title="水袋")],
-         rewards=[item("cold_sweat:waterskin"), xp(30)])
+         rewards=[xp(40)])
 
 ch.quest("nether_end", 10.5, 6.5, "下界的酷热", icon="cold_sweat:soulspring_lamp", deps=["waterskin"],
          optional=True, shape="diamond",
@@ -208,7 +208,7 @@ ch.quest("finale", 14, 6.5, "四季轮回，心中有数", icon="cold_sweat:goat
                "剩下的生存要素——饮水、食物保存、医疗、农业——分别在&6生存之道&r的后续章节"
                "和&6务农&r章节详述。&a下一步：确保吃饱喝好，别让体温之外的东西先倒下。&r"],
          tasks=[checkmark("我已准备好面对群峦的四季")],
-         rewards=[item("cold_sweat:waterskin"), item("firstaid:bandage", 4), levels(5)])
+         rewards=[item("firstaid:bandage", 4), levels(5)])
 
 ch.section("第一节 · 读懂体温", ["start", "seasons", "shelter_warm", "wet"])
 ch.section("第二节 · 保暖衣物", ["plant_recap", "hides_leather", "wool", "fur_hunt", "sewing_table", "winter_ready"])

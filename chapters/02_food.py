@@ -233,7 +233,7 @@ ch.quest("flatbread", 6, 7, "粗饼", icon="firmalife:food/barley_flatbread", de
                "",
                "&a小技巧：&r粗饼也能用来做三明治（第三节）。"],
          tasks=[tag("firmalife:foods/flatbreads", 4, title="任意粗饼 ×4")],
-         rewards=[item("tfc:food/barley_flour", 4), item("tfc:powder/salt", 2), xp(30)])
+         rewards=[item("tfc:food/barley_flour", 4), xp(30)])
 
 ch.quest("yeast_bread", 8, 9, "发酵面包", icon="tfc:food/barley_bread", deps=["flatbread"],
          optional=True, shape="diamond",
@@ -319,7 +319,7 @@ ch.quest("decay", 11.5, 0, "腐烂与密封", icon="tfc:ceramic/large_vessel", d
                "&7- 不同时间做的同种食物不能合并成一叠——这是保质期不同导致的，不是 bug",
                "&7- 越热的地方腐烂越快，地下、北方更耐放"],
          tasks=[item("tfc:ceramic/large_vessel", title="大缸")],
-         rewards=[item("tfc:powder/salt", 4), item("tfc:ceramic/vessel", 2), xp(40)])
+         rewards=[item("tfc:ceramic/vessel", 2), xp(40)])
 
 ch.quest("salting", 13.5, 0, "盐腌", icon="tfc:powder/salt", deps=["decay"],
          desc=["&6盐腌&r是最早能用上的肉类保存法。",
@@ -331,7 +331,7 @@ ch.quest("salting", 13.5, 0, "盐腌", icon="tfc:powder/salt", deps=["decay"],
                "&c注意：&r只有&c生肉&r能盐腌；腌过再烤，特性会保留下来。",
                "&a小技巧：&r大量狩猎后先全部盐腌、烤熟，再密封进大缸，能撑过一整个冬天。"],
          tasks=[checkmark("我腌过一批生肉")],
-         rewards=[item("tfc:powder/salt", 8), xp(40)])
+         rewards=[item("tfc:powder/salt", 4), xp(40)])
 
 ch.quest("smoking", 15.5, -2, "烟熏", icon="tfc:wool_yarn", deps=["salting"],
          optional=True, shape="diamond",
@@ -386,7 +386,7 @@ ch.quest("pickling", 15, 2, "腌渍", icon="tfc:wood/barrel/oak", deps=["salting
                "",
                "&c注意：&r打开木桶后效果会消失。酒需要先酿造，详见野外指南。"],
          tasks=[checkmark("我做过一桶腌渍食物")],
-         rewards=[item("tfc:powder/salt", 6), xp(40)])
+         rewards=[xp(50)])
 
 ch.quest("drying", 13, 2, "晒干", icon="firmalife:drying_mat", deps=["decay"],
          optional=True, shape="diamond",
@@ -424,7 +424,7 @@ ch.quest("finale", 17.5, 0, "粮仓满了", icon="tfc:ceramic/pot", shape="gear"
                "",
                "&a下一步：&r去「务农」章自己种粮、养牲口，不再靠运气吃饭。"],
          tasks=[checkmark("我的粮仓已经准备好过冬")],
-         rewards=[item("tfc:food/barley_flour", 8), item("tfc:powder/salt", 8), item("tfc:ceramic/large_vessel", 2),
+         rewards=[item("tfc:food/barley_flour", 8), item("tfc:ceramic/large_vessel", 2),
                   levels(5), xp(100)])
 
 # ============================================================ 章节布局

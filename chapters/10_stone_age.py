@@ -28,7 +28,7 @@ ch.quest("sticks", 2, -1.5, "树枝与木棍", icon="minecraft:stick", deps=["st
                "&c注意：&r没有斧头时&c无法徒手砍树&r，原木要等做出石斧再说。",
                "8 根木棍可以捆成一个&6木棍堆&r，方便携带，也是篝火的好燃料。"],
          tasks=[tag("forge:rods/wooden", 8, title="木棍 ×8")],
-         rewards=[item("minecraft:stick", 8), item("tfc:powder/salt", 2)])
+         rewards=[item("minecraft:stick", 8)])
 
 ch.quest("rough_head", 2, 1.5, "敲出第一块工具头", icon="tfc:stone/hammer_head/sedimentary",
          deps=["start"], shape="hexagon", size=1.25,
@@ -173,7 +173,7 @@ ch.quest("firepit", 13.5, -1, "第一堆篝火", icon="tfc:firepit", deps=["logs
                "&7- 篝火是&c污染源&r，室内请注意通风（见生存之道章节）",
                "&7- 用铲子右键篝火可以熄灭它"],
          tasks=[item("tfc:firepit", title="篝火")],
-         rewards=[item("tfc:food/barley_bread", 4), item("tfc:powder/salt", 4), xp(40)])
+         rewards=[item("tfc:food/barley_bread", 4), xp(40)])
 
 ch.quest("torch", 15.5, -1, "火把", icon="tfc:torch", deps=["firepit"],
          desc=["把&6木棍&r放进点燃的篝火里加热，1 根木棍会变成 &62 支火把&r。",
@@ -231,7 +231,7 @@ ch.quest("plant_clothes", 0, 8, "植物衣物", icon="tfc_stone_tools:plant_ches
                 item("tfc_stone_tools:plant_chestplate", title="植物上衣"),
                 item("tfc_stone_tools:plant_leggings", title="植物裤"),
                 item("tfc_stone_tools:plant_boots", title="植物鞋")],
-         rewards=[item("cold_sweat:waterskin"), item("tfc_stone_tools:plant_string", 8), xp(50)])
+         rewards=[item("tfc_stone_tools:plant_string", 8), xp(50)])
 
 ch.quest("hunt", 2.5, 8, "第一次狩猎", icon="tfc:large_raw_hide", deps=["javelin"],
          desc=["猎杀动物后，收好掉落的&6尸体&r、肉和兽皮。尸体还能继续分割成肉、骨头、油脂等材料。",
@@ -247,7 +247,7 @@ ch.quest("hunt", 2.5, 8, "第一次狩猎", icon="tfc:large_raw_hide", deps=["ja
                "",
                "&a刀和原木就能完成第一步刮制。&r完整制革还需要铜器时代的木桶等工具，先存好转出的生兽皮。"],
          tasks=[tag("tfc:raw_hides", title="任意生皮")],
-         rewards=[item("tfc:powder/salt", 8), item("firstaid:bandage", 2), xp(40)])
+         rewards=[item("firstaid:bandage", 2), xp(40)])
 
 ch.quest("hide_scraping", 2.5, 12.5, "兽皮刮制", icon="butchersdelight:cow_hide", deps=["knife"],
          hide_lines=True, shape="hexagon", size=1.25,
@@ -356,7 +356,7 @@ ch.quest("cookware", 14.5, 10, "陶制厨具", icon="tfc:ceramic/pot", deps=["ki
                "详细用法见「生存之道 · 饮水与食物」。"],
          tasks=[item("tfc:ceramic/pot", title="陶锅"), item("tfc:ceramic/bowl", title="陶碗"),
                 item("tfc:ceramic/jug", title="陶壶")],
-         rewards=[item("tfc:powder/salt", 8), item("tfc:food/barley_bread", 4), xp(30)])
+         rewards=[item("tfc:food/barley_bread", 4), xp(30)])
 
 ch.quest("molds", 12, 10, "模具与大缸", icon="tfc:ceramic/ingot_mold", deps=["kiln"], optional=True,
          shape="diamond",
