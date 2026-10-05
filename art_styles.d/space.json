@@ -1,0 +1,24 @@
+{
+ "palette": {"panel_fill": [16, 14, 38], "accent": [176, 150, 255], "glow": [118, 88, 222], "text_key_hex": "#BFAEFF"},
+ "background": {"tiles": [{"asset": "ad_astra:block/moon_deepslate", "weight": 6}, {"asset": "ad_astra:block/moon_stone", "weight": 2}, {"asset": "ad_astra:block/glacio_stone", "weight": 1}], "target_brightness": 0.09, "saturation": 0.5, "tint": [196, 178, 255], "overlay": {"type": "starfield", "density": 0.3, "color": [215, 205, 255]}, "tile_size": 12},
+ "banner": {"ribbon_asset": "ad_astra:block/glacio_stone", "icons_left": ["ad_astra:item/space_helmet", "ad_astra:item/rocket_nose_cone", "ad_astra:item/steel_engine"], "icons_right": ["ad_astra:item/oxygen_gear", "ad_astra:item/rocket_fin", "ad_astra:item/astrodux"], "motif": "planet_rings", "motif_color": [150, 125, 240]},
+ "decor": [],
+ "shapes": {"normal": "circle", "milestone": "octagon", "optional": "diamond", "gate": "gear"},
+ "scene": {
+  "layers": [
+  {"motif": "nebula_glow", "x": 0.25, "y": 0.3, "w": 34, "h": 26, "color": [120, 70, 215], "alpha": 0.55},
+  {"motif": "nebula_glow", "x": 0.76, "y": 0.66, "w": 36, "h": 24, "color": [55, 95, 215], "alpha": 0.5},
+  {"motif": "nebula_glow", "x": 0.64, "y": 0.2, "w": 22, "h": 14, "color": [205, 80, 170], "alpha": 0.3},
+  {"motif": "milky_way", "x": 0.5, "y": 0.45, "w": 80, "h": 16, "color": [215, 205, 255], "alpha": 0.45, "rot": -22},
+  {"motif": "planet_horizon", "x": 0.5, "y": 0.84, "w": 74, "h": 13, "color": [62, 116, 206], "alpha": 0.95},
+  {"motif": "ringed_planet", "x": 0.84, "y": 0.22, "w": 20, "h": 13, "color": [165, 150, 235], "alpha": 0.95, "rot": 14},
+  {"motif": "moon", "x": 0.16, "y": 0.24, "w": 6.5, "color": [190, 196, 212], "alpha": 0.95},
+  {"motif": "planet", "x": 0.15, "y": 0.52, "w": 7.5, "color": [186, 96, 60], "alpha": 0.95},
+  {"motif": "star_cluster", "x": 0.38, "y": 0.7, "w": 8, "color": [225, 215, 255], "alpha": 0.6},
+  {"motif": "star_cluster", "x": 0.9, "y": 0.4, "w": 6, "color": [225, 215, 255], "alpha": 0.55},
+  {"motif": "satellite", "x": 0.27, "y": 0.19, "w": 7, "h": 3.5, "color": [200, 200, 210], "alpha": 0.9, "rot": -8},
+  {"motif": "comet", "x": 0.55, "y": 0.15, "w": 13, "h": 3.5, "color": [200, 225, 255], "alpha": 0.6, "rot": 14},
+  {"motif": "rocket", "x": 0.82, "y": 0.55, "w": 3.6, "h": 11, "color": [190, 70, 60], "alpha": 1.0, "rot": 12}
+  ]
+ }
+}

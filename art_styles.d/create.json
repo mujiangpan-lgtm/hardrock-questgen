@@ -1,0 +1,24 @@
+{
+ "palette": {"panel_fill": [34, 33, 30], "accent": [232, 184, 86], "glow": [255, 190, 90], "text_key_hex": "#F2C46B"},
+ "background": {"tiles": [{"asset": "create:block/industrial_iron_block", "weight": 7}, {"asset": "create:block/andesite_casing", "weight": 1}], "target_brightness": 0.1, "saturation": 0.6, "tint": [232, 236, 244], "overlay": {"type": "gear_ghosts", "density": 0.3, "color": [214, 164, 80]}, "tile_size": 12, "contrast_sd": 0.008},
+ "banner": {"ribbon_asset": "tfc:block/metal/smooth/brass", "icons_left": ["create:item/andesite_alloy", "create:item/goggles", "create:item/whisk"], "icons_right": ["create:item/brass_hand", "tfc:item/metal/ingot/brass", "create:item/precision_mechanism"], "motif": "cogs", "motif_color": [214, 164, 80]},
+ "decor": [],
+ "shapes": {"normal": "rsquare", "milestone": "hexagon", "optional": "diamond", "gate": "gear"},
+ "scene": {
+  "layers": [
+  {"motif": "shaft", "x": 0.5, "y": 0.19, "w": 58, "h": 1.0, "color": [112, 106, 98], "alpha": 0.55},
+  {"motif": "blueprint", "x": 0.5, "y": 0.5, "w": 64, "h": 48, "color": [110, 160, 215], "alpha": 0.18},
+  {"motif": "soft_glow", "x": 0.5, "y": 0.5, "w": 50, "h": 34, "color": [255, 186, 90], "alpha": 0.22},
+  {"motif": "shaft", "x": 0.8, "y": 0.33, "w": 14, "h": 1.0, "color": [112, 106, 98], "alpha": 0.6, "rot": 90},
+  {"motif": "windmill_sails", "x": 0.8, "y": 0.19, "w": 13, "color": [150, 110, 70], "alpha": 0.95, "rot": 20},
+  {"motif": "cog", "x": 0.88, "y": 0.55, "w": 20, "color": [92, 68, 46], "alpha": 0.9},
+  {"motif": "cog", "x": 0.73, "y": 0.42, "w": 6, "color": [132, 95, 46], "alpha": 0.8},
+  {"motif": "shaft", "x": 0.25, "y": 0.34, "w": 9, "h": 1.0, "color": [112, 106, 98], "alpha": 0.6},
+  {"motif": "cog", "x": 0.12, "y": 0.34, "w": 15, "color": [86, 63, 43], "alpha": 0.88},
+  {"motif": "cog", "x": 0.31, "y": 0.34, "w": 3.5, "color": [132, 95, 46], "alpha": 0.8},
+  {"motif": "water_wheel", "x": 0.2, "y": 0.7, "w": 14, "color": [110, 80, 52], "alpha": 0.95},
+  {"motif": "belt", "x": 0.5, "y": 0.74, "w": 26, "h": 3.0, "color": [118, 114, 106], "alpha": 0.6},
+  {"motif": "gear_cluster", "x": 0.74, "y": 0.8, "w": 10, "color": [132, 95, 46], "alpha": 0.8}
+  ]
+ }
+}
