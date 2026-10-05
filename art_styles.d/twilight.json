@@ -1,385 +1,108 @@
 {
- "palette": {
-  "panel_fill": [
-   30,
-   22,
-   40
-  ],
-  "accent": [
-   200,
-   118,
-   226
-  ],
-  "glow": [
-   166,
-   86,
-   214
-  ],
-  "text_key_hex": "#E0AAF6"
- },
- "background": {
-  "tiles": [
-   {
-    "asset": "twilightforest:block/mazestone",
-    "weight": 6
-   },
-   {
-    "asset": "twilightforest:block/weathered_deadrock",
-    "weight": 2
-   }
-  ],
-  "target_brightness": 0.1,
-  "saturation": 0.55,
-  "tint": [
-   176,
-   204,
-   222
-  ],
-  "contrast_sd": 0.012,
-  "overlay": {
-   "type": "speckle",
-   "density": 0.04,
-   "color": [
-    210,
-    240,
-    120
-   ]
-  },
-  "tile_size": 12
- },
- "banner": {
-  "ribbon_asset": "twilightforest:block/mazestone",
-  "icons_left": [
-   "twilightforest:item/naga_scale",
-   "twilightforest:item/magic_map",
-   "twilightforest:item/twilight_scepter"
-  ],
-  "icons_right": [
-   "twilightforest:item/knightmetal_sword",
-   "twilightforest:item/fiery_sword",
-   "twilightforest:item/lamp_of_cinders"
-  ],
-  "motif": "nebula",
-  "motif_color": [
-   176,
-   104,
-   206
-  ]
- },
+ "palette": {"panel_fill": [30, 22, 40], "accent": [200, 118, 226], "glow": [166, 86, 214], "text_key_hex": "#E0AAF6"},
+ "background": {"tiles": [{"asset": "twilightforest:block/mazestone", "weight": 6}, {"asset": "twilightforest:block/weathered_deadrock", "weight": 2}], "target_brightness": 0.1, "saturation": 0.55, "tint": [176, 204, 222], "contrast_sd": 0.012, "overlay": {"type": "speckle", "density": 0.025, "color": [176, 150, 230]}, "tile_size": 12},
+ "banner": {"ribbon_asset": "twilightforest:block/mazestone", "icons_left": ["twilightforest:item/naga_scale", "twilightforest:item/magic_map", "twilightforest:item/twilight_scepter"], "icons_right": ["twilightforest:item/knightmetal_sword", "twilightforest:item/fiery_sword", "twilightforest:item/lamp_of_cinders"], "motif": "nebula", "motif_color": [176, 104, 206]},
  "decor": [],
- "shapes": {
-  "normal": "circle",
-  "milestone": "pentagon",
-  "optional": "diamond",
-  "gate": "gear"
- },
+ "shapes": {"normal": "circle", "milestone": "pentagon", "optional": "diamond", "gate": "gear"},
  "scene": {
+  "texel": 2,
+  "shadow": 0.45,
+  "light": {"dir": [0.6, -0.8], "color": [190, 172, 255], "tint": 0.1, "rim": 0.6, "shade": 0.3},
+  "lights": [{"x": 0.5, "y": 0.72, "radius": 0.26, "strength": 0.9, "color": [140, 185, 255]}, {"x": 0.8, "y": 0.68, "radius": 0.13, "strength": 0.45, "color": [255, 232, 130]}, {"x": 0.83, "y": 0.31, "radius": 0.1, "strength": 0.5, "color": [255, 196, 120]}, {"x": 0.267, "y": 0.78, "radius": 0.1, "strength": 0.5, "color": [255, 200, 100]}],
+  "ambient": 0.84,
+  "haze_color": [62, 48, 120],
   "layers": [
-   {
-    "motif": "sky_band",
-    "x": 0.5,
-    "y": 0.16,
-    "w": 74,
-    "h": 14,
-    "color": [
-     170,
-     70,
-     120
-    ],
-    "alpha": 0.42
-   },
-   {
-    "motif": "nebula_glow",
-    "x": 0.42,
-    "y": 0.19,
-    "w": 46,
-    "h": 9,
-    "color": [
-     176,
-     104,
-     206
-    ],
-    "alpha": 0.32
-   },
-   {
-    "motif": "sky_band",
-    "x": 0.5,
-    "y": 0.62,
-    "w": 74,
-    "h": 26,
-    "color": [
-     60,
-     70,
-     120
-    ],
-    "alpha": 0.22
-   },
-   {
-    "motif": "soft_glow",
-    "x": 0.8,
-    "y": 0.36,
-    "w": 20,
-    "h": 16,
-    "color": [
-     150,
-     90,
-     200
-    ],
-    "alpha": 0.28
-   },
-   {
-    "motif": "moon",
-    "x": 0.8,
-    "y": 0.22,
-    "w": 8,
-    "color": [
-     232,
-     222,
-     242
-    ],
-    "alpha": 0.92
-   },
-   {
-    "motif": "soft_glow",
-    "x": 0.8,
-    "y": 0.22,
-    "w": 16,
-    "h": 14,
-    "color": [
-     200,
-     140,
-     220
-    ],
-    "alpha": 0.3
-   },
-   {
-    "motif": "tree_line",
-    "x": 0.5,
-    "y": 0.27,
-    "w": 74,
-    "h": 8,
-    "color": [
-     30,
-     40,
-     58
-    ],
-    "alpha": 0.9
-   },
-   {
-    "motif": "castle",
-    "x": 0.785,
-    "y": 0.38,
-    "w": 14,
-    "h": 12,
-    "color": [
-     46,
-     38,
-     66
-    ],
-    "alpha": 0.97
-   },
-   {
-    "motif": "sky_band",
-    "x": 0.5,
-    "y": 0.82,
-    "w": 74,
-    "h": 8,
-    "color": [
-     90,
-     70,
-     150
-    ],
-    "alpha": 0.32
-   },
-   {
-    "motif": "soft_glow",
-    "x": 0.5,
-    "y": 0.79,
-    "w": 18,
-    "h": 5.5,
-    "color": [
-     130,
-     220,
-     255
-    ],
-    "alpha": 0.85
-   },
-   {
-    "motif": "tree_line",
-    "x": 0.81,
-    "y": 0.475,
-    "w": 15,
-    "h": 8,
-    "color": [
-     26,
-     40,
-     50
-    ],
-    "alpha": 1.0
-   },
-   {
-    "motif": "tree_line",
-    "x": 0.82,
-    "y": 0.85,
-    "w": 24,
-    "h": 18,
-    "color": [
-     18,
-     30,
-     36
-    ],
-    "alpha": 1.0
-   },
-   {
-    "motif": "nebula_glow",
-    "x": 0.5,
-    "y": 0.79,
-    "w": 13,
-    "h": 3.6,
-    "color": [
-     200,
-     130,
-     255
-    ],
-    "alpha": 0.5
-   },
-   {
-    "motif": "sprite",
-    "asset": "minecraft:block/poppy",
-    "x": 0.405,
-    "y": 0.785,
-    "w": 2.0,
-    "alpha": 1.0
-   },
-   {
-    "motif": "sprite",
-    "asset": "minecraft:block/azure_bluet",
-    "x": 0.595,
-    "y": 0.785,
-    "w": 2.0,
-    "alpha": 1.0
-   },
-   {
-    "motif": "sprite",
-    "asset": "minecraft:block/cornflower",
-    "x": 0.435,
-    "y": 0.825,
-    "w": 2.0,
-    "alpha": 1.0
-   },
-   {
-    "motif": "sprite",
-    "asset": "minecraft:block/dandelion",
-    "x": 0.475,
-    "y": 0.84,
-    "w": 2.0,
-    "alpha": 1.0
-   },
-   {
-    "motif": "tree_line",
-    "x": 0.2,
-    "y": 0.87,
-    "w": 26,
-    "h": 10,
-    "color": [
-     18,
-     30,
-     36
-    ],
-    "alpha": 1.0
-   },
-   {
-    "motif": "sprite",
-    "asset": "minecraft:block/allium",
-    "x": 0.525,
-    "y": 0.84,
-    "w": 2.0,
-    "alpha": 1.0
-   },
-   {
-    "motif": "sprite",
-    "asset": "minecraft:block/poppy",
-    "x": 0.565,
-    "y": 0.825,
-    "w": 2.0,
-    "alpha": 1.0
-   },
-   {
-    "motif": "sprite",
-    "asset": "minecraft:block/oxeye_daisy",
-    "x": 0.445,
-    "y": 0.75,
-    "w": 2.0,
-    "alpha": 1.0
-   },
-   {
-    "motif": "sprite",
-    "asset": "minecraft:block/cornflower",
-    "x": 0.5,
-    "y": 0.74,
-    "w": 2.0,
-    "alpha": 1.0
-   },
-   {
-    "motif": "sprite",
-    "asset": "minecraft:block/dandelion",
-    "x": 0.555,
-    "y": 0.75,
-    "w": 2.0,
-    "alpha": 1.0
-   },
-   {
-    "motif": "fireflies",
-    "x": 0.85,
-    "y": 0.63,
-    "w": 6,
-    "h": 5,
-    "color": [
-     210,
-     240,
-     120
-    ],
-    "alpha": 0.8
-   },
-   {
-    "motif": "tree_line",
-    "x": 0.15,
-    "y": 0.5,
-    "w": 14,
-    "h": 30,
-    "color": [
-     28,
-     46,
-     54
-    ],
-    "alpha": 1.0
-   },
-   {
-    "motif": "fireflies",
-    "x": 0.25,
-    "y": 0.76,
-    "w": 8,
-    "h": 6,
-    "color": [
-     210,
-     240,
-     120
-    ],
-    "alpha": 0.85
-   },
-   {
-    "motif": "star_cluster",
-    "x": 0.33,
-    "y": 0.16,
-    "w": 26,
-    "h": 3,
-    "color": [
-     236,
-     220,
-     255
-    ],
-    "alpha": 0.7
-   }
+  {"motif": "sky_band", "x": 0.500195, "y": 0.15651, "w": 78, "h": 17, "color": [108, 54, 150], "alpha": 0.5},
+  {"motif": "sky_band", "x": 0.625195, "y": 0.399566, "w": 80, "h": 12, "color": [214, 104, 160], "alpha": 0.28},
+  {"motif": "nebula_glow", "x": 0.403841, "y": 0.205122, "w": 44, "h": 9, "color": [172, 108, 232], "alpha": 0.26},
+  {"motif": "star_cluster", "x": 0.470247, "y": 0.154774, "w": 15, "h": 2.6, "color": [236, 224, 255], "alpha": 0.55},
+  {"motif": "soft_glow", "x": 0.675326, "y": 0.195573, "w": 20, "h": 15, "color": [200, 160, 240], "alpha": 0.34},
+  {"motif": "moon", "x": 0.675326, "y": 0.195573, "w": 6.4, "color": [255, 252, 255], "alpha": 1.0},
+  {"motif": "castle", "x": 0.8, "y": 0.29, "w": 13, "h": 12, "color": [50, 40, 78], "alpha": 0.97},
+  {"motif": "soft_glow", "x": 0.827018, "y": 0.295399, "w": 12, "h": 9, "color": [255, 190, 120], "alpha": 0.12},
+  {"motif": "tree_line", "x": 0.5, "y": 0.335, "w": 80, "h": 8.5, "color": [98, 82, 152], "alpha": 0.82, "haze": 0.2},
+  {"motif": "tree_line", "x": 0.5, "y": 0.395, "w": 80, "h": 8.0, "color": [60, 58, 112], "alpha": 0.94, "haze": 0.1},
+  {"motif": "tree_line", "x": 0.2, "y": 0.6, "w": 18, "h": 15, "color": [62, 60, 114], "alpha": 0.9, "haze": 0.15},
+  {"motif": "sky_band", "x": 0.500195, "y": 0.807552, "w": 76, "h": 8, "color": [120, 100, 200], "alpha": 0.22},
+  {"motif": "soft_glow", "x": 0.500195, "y": 0.699913, "w": 42, "h": 18, "color": [140, 120, 240], "alpha": 0.26},
+  {"motif": "soft_glow", "x": 0.500195, "y": 0.731163, "w": 28, "h": 9.2, "color": [6, 10, 22], "alpha": 0.55},
+  {"motif": "soft_glow", "x": 0.500195, "y": 0.725955, "w": 24, "h": 7.6, "color": [70, 138, 96], "alpha": 0.55},
+  {"motif": "soft_glow", "x": 0.500195, "y": 0.725955, "w": 20, "h": 6.0, "color": [76, 112, 236], "alpha": 0.95},
+  {"motif": "soft_glow", "x": 0.500195, "y": 0.725955, "w": 20, "h": 6.0, "color": [76, 112, 236], "alpha": 0.95},
+  {"motif": "soft_glow", "x": 0.500195, "y": 0.725955, "w": 20, "h": 6.0, "color": [76, 112, 236], "alpha": 0.95},
+  {"motif": "soft_glow", "x": 0.500195, "y": 0.724219, "w": 12, "h": 3.4, "color": [170, 232, 255], "alpha": 0.95},
+  {"motif": "nebula_glow", "x": 0.500195, "y": 0.724219, "w": 18, "h": 5.0, "color": [200, 160, 255], "alpha": 0.5},
+  {"motif": "sprite", "asset": "minecraft:block/cornflower", "x": 0.507925, "y": 0.648804, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/lily_of_the_valley", "x": 0.483805, "y": 0.65616, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/poppy", "x": 0.578291, "y": 0.660002, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/blue_orchid", "x": 0.456244, "y": 0.660236, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/allium", "x": 0.561397, "y": 0.661249, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/oxeye_daisy", "x": 0.396881, "y": 0.667287, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/dandelion", "x": 0.615859, "y": 0.673254, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/lily_of_the_valley", "x": 0.459402, "y": 0.674023, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/allium", "x": 0.383444, "y": 0.675484, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/poppy", "x": 0.518612, "y": 0.675891, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/oxeye_daisy", "x": 0.584029, "y": 0.684802, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/poppy", "x": 0.642989, "y": 0.687416, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/poppy", "x": 0.603139, "y": 0.688, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/dandelion", "x": 0.34973, "y": 0.690098, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/cornflower", "x": 0.395904, "y": 0.694108, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/azure_bluet", "x": 0.650976, "y": 0.705106, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/cornflower", "x": 0.349906, "y": 0.705126, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/dandelion", "x": 0.621186, "y": 0.712856, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "twilightforest:block/huge_lily_pad", "x": 0.470247, "y": 0.724219, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "twilightforest:block/huge_lily_pad", "x": 0.548372, "y": 0.734635, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "twilightforest:block/huge_water_lily", "x": 0.521029, "y": 0.720747, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "twilightforest:block/huge_water_lily", "x": 0.457227, "y": 0.738108, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/amethyst_cluster", "x": 0.351758, "y": 0.71901, "w": 1.33, "alpha": 1.0, "glow": [196, 150, 255], "glow_strength": 0.9},
+  {"motif": "sprite", "asset": "minecraft:block/large_amethyst_bud", "x": 0.368685, "y": 0.732899, "w": 1.33, "alpha": 1.0, "glow": [196, 150, 255], "glow_strength": 0.6},
+  {"motif": "sprite", "asset": "minecraft:block/amethyst_cluster", "x": 0.651237, "y": 0.724219, "w": 1.33, "alpha": 1.0, "glow": [196, 150, 255], "glow_strength": 0.9},
+  {"motif": "sprite", "asset": "minecraft:block/medium_amethyst_bud", "x": 0.635612, "y": 0.736372, "w": 1.33, "alpha": 1.0, "glow": [196, 150, 255], "glow_strength": 0.6},
+  {"motif": "sprite", "asset": "minecraft:block/azure_bluet", "x": 0.342092, "y": 0.716735, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/poppy", "x": 0.663096, "y": 0.71843, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/allium", "x": 0.375001, "y": 0.726607, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/poppy", "x": 0.330959, "y": 0.729652, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/azure_bluet", "x": 0.657629, "y": 0.734519, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/allium", "x": 0.39892, "y": 0.743051, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/cornflower", "x": 0.647551, "y": 0.746776, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/dandelion", "x": 0.355629, "y": 0.746801, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/cornflower", "x": 0.597617, "y": 0.74959, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/azure_bluet", "x": 0.574683, "y": 0.75913, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/poppy", "x": 0.376736, "y": 0.762293, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/dandelion", "x": 0.610065, "y": 0.763493, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/dandelion", "x": 0.452421, "y": 0.764473, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/blue_orchid", "x": 0.493126, "y": 0.770382, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/allium", "x": 0.605074, "y": 0.77169, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/allium", "x": 0.40979, "y": 0.776075, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/cornflower", "x": 0.452598, "y": 0.776838, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/lily_of_the_valley", "x": 0.494324, "y": 0.779964, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/blue_orchid", "x": 0.515581, "y": 0.780738, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/oxeye_daisy", "x": 0.57342, "y": 0.782539, "w": 1.33, "alpha": 1.0},
+  {"motif": "blocks", "x": 0.506706, "y": 0.840538, "w": 67.5, "h": 3.5, "rows": ["PMPMCMMMMMMMMPPPMPPMMMPMPMMMMMMMMMMMMMMMMMCMMMMPMM", "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"], "legend": {"M": {"front": "twilightforest:block/uberous_soil", "top": "minecraft:block/moss_block", "side": "twilightforest:block/uberous_soil"}, "P": {"front": "twilightforest:block/uberous_soil", "top": "twilightforest:block/mosspatch", "side": "twilightforest:block/uberous_soil"}, "C": {"front": "twilightforest:block/uberous_soil", "top": "twilightforest:block/cloverpatch", "side": "twilightforest:block/uberous_soil"}, "S": {"front": "twilightforest:block/uberous_soil", "top": "twilightforest:block/uberous_soil", "side": "twilightforest:block/uberous_soil"}}, "depth": 0.6, "alpha": 1.0, "shadow": 0, "haze": 0.42},
+  {"motif": "blocks", "x": 0.192253, "y": 0.396962, "w": 27.25, "h": 40.58, "rows": ["....................", ".......H.A..........", "....A.HAHAF.A.......", "..FHHHAHHAHHH.......", "HHAHFHHFAHAHAHA.....", "FHHAHAAHHAHAHHHA....", "HAFHHFAAAAAAHHHA....", "AHHHAFHHAHHHFHA.....", "HHHHHFHHHFHHHH......", ".H.HAHFALLLHH.......", "...LLHAHLLLH.L......", "....LL.HLLL.LL......", ".....MM.LLLLL.......", "......LLLLM.........", "........LLM.........", "........LLL.........", "........MLL.........", "........LLLL........", "........LLLL........", "........LLLL........", ".......MLLLL........", ".......LLLLL........", ".......LLLLM........", ".......LLLLL........", ".......LLLLL........", ".......LLLLL........", ".......LLLLM........", ".......LLLLL........", "......LLLLLLM.......", ".....MLLLLLLLM......"], "legend": {"H": {"front": "twilightforest:block/hedge", "top": "twilightforest:block/hedge", "side": "twilightforest:block/hedge"}, "A": {"front": "minecraft:block/azalea_leaves", "top": "minecraft:block/azalea_leaves", "side": "minecraft:block/azalea_leaves"}, "F": {"front": "minecraft:block/flowering_azalea_leaves", "top": "minecraft:block/flowering_azalea_leaves", "side": "minecraft:block/flowering_azalea_leaves"}, "L": {"front": "twilightforest:block/twilight_oak_log", "top": "twilightforest:block/twilight_oak_log_top", "side": "twilightforest:block/twilight_oak_log"}, "M": {"front": "minecraft:block/moss_block", "top": "minecraft:block/moss_block", "side": "minecraft:block/moss_block"}}, "depth": 0.45, "alpha": 1.0, "shadow": 0.5, "drop": 0.25, "haze": 0.3},
+  {"motif": "sprite", "asset": "minecraft:block/cave_vines_lit", "x": 0.135612, "y": 0.331858, "w": 1.33, "alpha": 1.0, "glow": [255, 170, 80], "glow_strength": 0.45, "shadow": 0},
+  {"motif": "sprite", "asset": "minecraft:block/cave_vines_lit", "x": 0.260612, "y": 0.248524, "w": 1.33, "alpha": 1.0, "glow": [255, 170, 80], "glow_strength": 0.45, "shadow": 0},
+  {"motif": "blocks", "x": 0.879753, "y": 0.05842, "w": 19.25, "h": 8.58, "rows": ["AHAHHHHHHAA...", "FHHHHHAAFAA...", "AFHHFHAHHA....", "...HH....H....", "...H.....H....", ".............."], "legend": {"H": {"front": "twilightforest:block/hedge", "top": "twilightforest:block/hedge", "side": "twilightforest:block/hedge"}, "A": {"front": "minecraft:block/azalea_leaves", "top": "minecraft:block/azalea_leaves", "side": "minecraft:block/azalea_leaves"}, "F": {"front": "minecraft:block/flowering_azalea_leaves", "top": "minecraft:block/flowering_azalea_leaves", "side": "minecraft:block/flowering_azalea_leaves"}, "L": {"front": "twilightforest:block/twilight_oak_log", "top": "twilightforest:block/twilight_oak_log_top", "side": "twilightforest:block/twilight_oak_log"}, "M": {"front": "minecraft:block/moss_block", "top": "minecraft:block/moss_block", "side": "minecraft:block/moss_block"}, "D": {"front": "twilightforest:block/dark_log", "top": "twilightforest:block/dark_log_top", "side": "twilightforest:block/dark_log"}}, "depth": 0.45, "alpha": 1.0, "shadow": 0, "drop": 0.25, "haze": 0.18},
+  {"motif": "blocks", "x": 0.270378, "y": 0.770226, "w": 7.08, "h": 4.42, "rows": ["..P..", "P.P.P", "P.P.P"], "legend": {"P": {"front": "twilightforest:block/mossy_mazestone", "top": "twilightforest:block/pedestal/top", "side": "twilightforest:block/mossy_mazestone"}}, "depth": 0.3, "alpha": 1.0, "shadow": 0.6},
+  {"motif": "sprite", "asset": "twilightforest:item/naga_trophy", "x": 0.225456, "y": 0.742448, "w": 1.33, "alpha": 1.0, "glow": [255, 200, 90], "glow_strength": 0.8},
+  {"motif": "sprite", "asset": "twilightforest:item/lich_trophy", "x": 0.267122, "y": 0.71467, "w": 1.33, "alpha": 1.0, "glow": [255, 200, 90], "glow_strength": 0.8},
+  {"motif": "sprite", "asset": "twilightforest:item/hydra_trophy", "x": 0.308789, "y": 0.742448, "w": 1.33, "alpha": 1.0, "glow": [255, 200, 90], "glow_strength": 0.8},
+  {"motif": "blocks", "x": 0.800326, "y": 0.671267, "w": 11.25, "h": 13.92, "rows": ["..CCCC..", ".CCCCCC.", "CCCCCCCC", "...SS...", "...SS...", "...SS...", "...SS...", "...SS...", "..SSSS..", ".SSSSSS."], "legend": {"C": {"front": "twilightforest:block/huge_gloom_cap", "top": "twilightforest:block/huge_gloom_cap", "side": "twilightforest:block/huge_gloom_cap"}, "S": {"front": "twilightforest:block/huge_mushgloom_stem", "top": "twilightforest:block/huge_mushgloom_stem", "side": "twilightforest:block/huge_mushgloom_stem"}}, "depth": 0.45, "alpha": 1.0, "shadow": 0.6, "haze": 0.5},
+  {"motif": "soft_glow", "x": 0.800977, "y": 0.607899, "w": 11, "h": 8, "color": [255, 232, 130], "alpha": 0.12},
+  {"motif": "blocks", "x": 0.716992, "y": 0.754601, "w": 5.92, "h": 5.92, "rows": [".CC.", "CCCC", "..S.", "..S."], "legend": {"C": {"front": "twilightforest:block/huge_gloom_cap", "top": "twilightforest:block/huge_gloom_cap", "side": "twilightforest:block/huge_gloom_cap"}, "S": {"front": "twilightforest:block/huge_mushgloom_stem", "top": "twilightforest:block/huge_mushgloom_stem", "side": "twilightforest:block/huge_mushgloom_stem"}}, "depth": 0.45, "alpha": 1.0, "shadow": 0.6, "haze": 0.5},
+  {"motif": "sprite", "asset": "minecraft:block/red_mushroom", "x": 0.657747, "y": 0.802344, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/brown_mushroom", "x": 0.338737, "y": 0.80408, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "twilightforest:block/fiddlehead", "x": 0.38431, "y": 0.797135, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "twilightforest:block/mayapple", "x": 0.872591, "y": 0.80408, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/brown_mushroom", "x": 0.097852, "y": 0.802344, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/red_mushroom", "x": 0.892122, "y": 0.802344, "w": 1.33, "alpha": 1.0},
+  {"motif": "sprite", "asset": "twilightforest:block/firefly", "x": 0.388216, "y": 0.686024, "w": 1.33, "alpha": 1.0, "glow": [214, 244, 110], "glow_strength": 0.7, "shadow": 0},
+  {"motif": "sprite", "asset": "twilightforest:block/firefly", "x": 0.416862, "y": 0.658247, "w": 1.33, "alpha": 1.0, "glow": [214, 244, 110], "glow_strength": 0.7, "shadow": 0},
+  {"motif": "sprite", "asset": "twilightforest:block/firefly", "x": 0.616081, "y": 0.680816, "w": 1.33, "alpha": 1.0, "glow": [214, 244, 110], "glow_strength": 0.7, "shadow": 0},
+  {"motif": "sprite", "asset": "twilightforest:block/firefly", "x": 0.647331, "y": 0.694705, "w": 1.33, "alpha": 1.0, "glow": [214, 244, 110], "glow_strength": 0.7, "shadow": 0},
+  {"motif": "sprite", "asset": "twilightforest:block/firefly", "x": 0.306185, "y": 0.694705, "w": 1.33, "alpha": 1.0, "glow": [214, 244, 110], "glow_strength": 0.7, "shadow": 0},
+  {"motif": "sprite", "asset": "twilightforest:block/firefly", "x": 0.700716, "y": 0.599219, "w": 1.33, "alpha": 1.0, "glow": [214, 244, 110], "glow_strength": 0.7, "shadow": 0},
+  {"motif": "sprite", "asset": "twilightforest:block/firefly", "x": 0.656445, "y": 0.731163, "w": 1.33, "alpha": 1.0, "glow": [214, 244, 110], "glow_strength": 0.7, "shadow": 0}
   ]
  }
 }
