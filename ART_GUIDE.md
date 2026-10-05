@@ -4,7 +4,8 @@ How the per-chapter art works and the rules learned from in-game checks and thre
 (2026-10-05). Code: `artlib.py` (drawing), `build.py` (wiring), `preview.py` (previews).
 Specs: `art_styles.py` (pilots: stone_age, create, space) and `art_styles.d/<chapter key>.json`
 (one file per chapter, same structure, overrides art_styles.py). Chapters without a spec keep the
-classic look.
+classic look. Since round 6 all 19 chapters have a JSON spec (the three pilots too), so the art_styles.py
+entries are only fallbacks.
 
 ## What the player sees
 
@@ -135,6 +136,79 @@ Round 5 (renderer, 2026-10-05; details and examples in `_art_review/renderer_cha
   backdrops (mountains, tree_line, strata, planets) and atmosphere stay smooth unless the layer itself
   sets `"pixelate"`. `"colors": 12` palette reduction, `"outline": 0.8` dark one-texel outline.
 - Layer `"haze": 0.3` (+ scene or layer `"haze_color"`) pushes a layer back into the distance.
+
+### Round 6: pixel motifs for create and space (2026-10-05, additive only)
+
+New motifs in `artlib.py` (two blocks directly above `DECOR_MOTIFS`, plus one `PIXEL_MOTIFS.update` after
+`BACKDROP`). No existing code, default or motif output changed: the other 17 chapters render pixel-identical.
+All draw on a texel grid: give each layer `"k"` = the scene `texel`, and use square boxes that are multiples
+of k where noted. Prefer them over the old smooth `cog`, `gear_cluster`, `water_wheel`, `windmill_sails`,
+`belt`, `planet`, `ringed_planet`, `moon`, `rocket`, `satellite` next to pixel art.
+
+**Create parts** (`create_*`; in `PIXEL_MOTIFS`, so they take scene `light`, contact `shadow`, `drop`, `haze`
+like sprites; wall-mounted parts: `"shadow": 0, "drop": 0.45-0.6`). Face-on round parts: `w == h`, multiple of
+k; centre at `((w/k - depth)/2)*k` px from the top-left; `depth` = dark extruded side in texels (default 2).
+- `create_cog`: Create cogwheel (spruce-plank teeth ring, andesite hub, axle). `teeth` 12, `phase` 0 (0..1 of
+  a tooth pitch; mesh neighbours with phase1 = (0.25 - a*n1/2pi) % 1, phase2 = (0.75 - (a+pi)*n2/2pi) % 1 for the
+  angle a between centres), `hub` (118,122,118), `holes` 0 (window holes), `hole_w` 0.28, `metal` false
+  (true = flat metal `color` with grain; brass cogs), `depth` 2. `color` = wood tint (default (112,82,46)).
+  `teeth: 0, phase: 0.25` = a plain disc (axle cap plate).
+- `create_wheel`: water wheel with boarded rim, spokes, hub and hooked paddles; `blades` 12, `spokes` 8,
+  `phase`, `hub` (92,94,92), `ring` false, `paddles` true (false = flywheel), `lip` true, `metal` false,
+  `rim` 0.1 (rim thickness / radius - NOTE: the scene light also reads layer `rim` as rim-light strength),
+  `spoke_w` 0.058. Flywheel: `"paddles": false, "metal": true, "rim": 0.17, "spoke_w": 0.1, "spokes": 6`.
+- `create_sails`: windmill arms (stripped spruce) with canvas sails (`color` = cloth, e.g. (206,186,146)),
+  battens and rails; `arms` 4, `ang` 20 (rotation in degrees - not `rot`, which would rotate the image
+  again), `hub_r` 0.2 (centre left clear for a `blocks` windmill bearing on top).
+- `create_shaft`: horizontal shaft (`"rot": 90` = vertical, exact); `thick` 5 texels, collar every `joints`
+  16 texels, `depth` 1; `color` andesite (118,124,120) or copper (186,104,74). h ~ (thick+3)*k.
+- `create_belt`: mechanical belt from the side (rubber loop with tread ticks, andesite plate, pulleys,
+  `legs` 3); `thick` 10 (12 suits 16 px item sprites at texel 4), `scroll` 0. Put items on top as sprites.
+- `create_water`: pixel pool (`pool` fraction of the box, rippled surface, foam, depth) and optional waterfall
+  (`fall` x fraction, `fall_w` 7); `foam` 1|2, `splash` [x fractions] (needs `pool` < 1). Draw an opaque pool
+  behind a wheel and the same box at alpha ~0.4 in front to tint the submerged part.
+- `create_steam`: soft translucent steam puffs (`puffs` 8, `drift` 0.3). Superseded by `create_smoke`.
+- `create_smoke`: hard-edged 3-tone pixel smoke puffs rising from the box bottom (`puffs` 4, `drift`
+  -0.5..1); put the box bottom on the chimney top; `"shadow": 0, "unlit": true`.
+- `create_station`: Create machine on an iron gantry in the `blocks` oblique view. `kind` "press" (andesite
+  casing, brass-banded pole, iron head over a belt passing between the posts) or "mixer" (brass casing,
+  whisk into an andesite basin of molten brass); `d` 5, `post` 5, `pole` 6, `head` 9, `basin_h` 12.
+  W = (span + d)*k with span ~26 (press) / 28-32 (mixer); posts reach the image bottom.
+- `create_boiler`: copper steam boiler (riveted tank, brass bands, dome with rod, flared chimney, gauge,
+  plinth with a lit firebox); `tank_h` 22, `plinth_h` 15, `fire` true, `d` 4; `color` = copper. Pair the
+  firebox with a `lights` entry + soft_glow.
+
+**Space** (`space_*`; NOT in `PIXEL_MOTIFS`: planets, stars, sun, rocks, craters, shadows, tracks, trail are
+deliberately unlit; props take the scene light only with `"lit": true, "pixelate": k` (+ `"outline"`) and an
+explicit `"shadow"`). `color` is required on every layer even where unused. Light convention in the chapter:
+light from the upper left (`dir` [-0.8,-0.55]) -> `side: -1`, `sun: [-1, ..]`, `lsign: -1` (`blocks` always
+draws right faces dark).
+- `space_planet`: pixel sky body, hard 5-step light + dithered terminator. `kind` earth|moon|mercury|mars|
+  venus|glacio|gas (`color` = hue for gas), `sun` (0.7,-0.6) direction to the light, `r` (radius in texels,
+  default fills the box), `ring` false (tilted ring with gap; wide box), `tilt` -16, `seed` 1.
+- `space_sun`: round pixel sun (4-tone disc, Bayer-dithered corona, short rays); `r` 11, `corona`, `rays` true,
+  `ray_len` 0.95, `seed`. Draw after nearby planets; pair with a `lights` entry.
+- `space_stars`: square pixel stars + plus-shaped twinkles; `n` 60, `sparkle` 3. Keep the boxes off panels.
+- `space_rocket`: upright rocket (ogive nose and fins in `color`, white body, band, porthole, engine bell);
+  `side` 1, `window` true; designed 22 x 74 texels.
+- `space_gantry`: launch-tower lattice with service arms, hazard foot, beacon; `arm_len` 8, `arms`
+  (0.3, 0.62), `side`, `beacon` true; use `"outline": 0`.
+- `space_astronaut`: 12x25-texel astronaut, optional planted flag in `color`; `flag` true, `side`, `emblem`
+  "square"|"rocket".
+- `space_rover`: lunar rover in profile; `side` (-1 mirrors), `lsign` (wheel highlight side).
+- `space_satellite`: gold-foil hub, two solar wings, dish, mast; `side`.
+- `space_solar`: two tilted solar panels on a mast with struts and base plate; `side`.
+- `space_mast`: radio mast with dish and red light; `side`.
+- `space_rocks`: scattered 3-tone rocks; `n` 12, `side`, `maxw` 8 (up to 20 for corner boulders).
+- `space_crater`: low-angle crater (lit rim, shadowed wall), box ~5:1; `side`; `color` = neutral ground.
+- `space_shadow`: texel-snapped ground shadow (hard core, dithered rim); `skew` texels; alpha 0.4-0.5,
+  drawn before the prop.
+- `space_tracks`: regolith marks; `kind` "tread" (two dashed rows, `sep` 4, `amp` 1.0) | "prints" (boot
+  prints); `fade` 0.4; `color` dark.
+- `space_trail`: dotted Bezier flight path `p0` -> `p1` (control) -> `p2` (box fractions), `step` 4, `fade` 0.6,
+  `arrow` false (true = arrowhead at p2).
+- `space_crop`: a sub-rectangle `box` [x0,y0,x1,y1] of any texture/atlas `asset`, nearest-scaled by k, `flip`.
+  Its `asset` is NOT validated by `build.py --check`. (Unused now.)
 
 ## Verify (always look at the screen previews)
 

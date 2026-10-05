@@ -2201,6 +2201,1576 @@ _DECOR = {
     "sky_band": _d_sky_band, "embers": _d_embers, "milky_way": _d_milky_way, "comet": _d_comet,
     "shaft": _d_shaft, "belt": _d_belt, "blueprint": _d_blueprint, "cave_painting": _d_cave_painting,
 }
+# ---------------------------------------------------------------- create chapter: pixel Create parts
+# (additive block: pixel cogwheel / water wheel / windmill sails / shaft / belt / water / steam, all drawn on a
+#  coarse k-px texel grid from real Create / Minecraft texels so they sit with the `blocks` and sprites)
+def _cx_wood(w, h, ox=0, oy=0, name="minecraft:block/spruce_planks"):
+    """Real plank texels (Create's wood) tiled into an (h, w, 3) float array."""
+    try:
+        t = np.asarray(tex(name), np.float32)[..., :3] / 255
+    except Exception:  # pragma: no cover - texture missing
+        t = np.tile(np.array([112, 82, 46], np.float32) / 255, (16, 16, 1))
+    return t[(np.arange(h)[:, None] + oy) % t.shape[0], (np.arange(w)[None, :] + ox) % t.shape[1]]
+
+
+def _cx_finish(col, mask, k, W, H, depth=2, outline=0.5, side=0.5):
+    """(h, w, 3) colours + (h, w) mask -> RGBA W x H: extruded thickness toward the lower right, dark one-texel
+    outline, one-texel highlight on the lit (upper-left) inner edge, nearest-upscaled by k."""
+    h, w = mask.shape
+    col = np.clip(col, 0, 1).copy()
+    full = mask.copy()
+    scol = np.zeros_like(col)
+    for d in range(1, depth + 1):
+        for ox, oy in ((d, d), (d, d - 1), (d - 1, d)):
+            m = _shift(mask.astype(np.uint8), ox, oy).astype(bool) & ~full
+            if m.any():
+                for c in range(3):
+                    scol[..., c] = np.where(m, _shift(col[..., c], ox, oy) * side, scol[..., c])
+                full |= m
+    ext = full & ~mask
+    col = np.where(ext[..., None], scol, col)
+    up = _shift(full.astype(np.uint8), 0, 1).astype(bool)      # cell above is solid
+    lf = _shift(full.astype(np.uint8), 1, 0).astype(bool)
+    dn = _shift(full.astype(np.uint8), 0, -1).astype(bool)
+    rt = _shift(full.astype(np.uint8), -1, 0).astype(bool)
+    edge = full & ~(up & lf & dn & rt)
+    hi = mask & ~edge & (_shift(edge.astype(np.uint8), 0, 1).astype(bool)
+                         | _shift(edge.astype(np.uint8), 1, 0).astype(bool))
+    col = np.where(hi[..., None], col * 1.16, col)
+    col = np.where(edge[..., None], col * (1 - outline * 0.76), col)
+    out = np.zeros((h, w, 4), np.float32)
+    out[..., :3] = np.clip(col, 0, 1)
+    out[..., 3] = full.astype(np.float32)
+    im = _img(out, "RGBA").resize((w * k, h * k), Image.NEAREST)
+    res = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    res.paste(im, (0, 0))
+    return res
+
+
+def _cx_grid(W, H, k):
+    k = max(2, int(k))
+    return k, max(8, W // k), max(8, H // k)
+
+
+def _d_create_cog(W, H, color, rng, teeth=12, phase=0.0, k=4, hub=(118, 122, 118), depth=2, holes=0, metal=False,
+                  hole_w=0.28):
+    """Pixel Create cogwheel seen face-on: plank body with a lighter rim and teeth (real spruce texels tinted
+    by `color`, default wood (112,82,46); `metal` true = flat `color` metal with plank grain), andesite hub with a
+    dark axle square, thickness shown as a dark side. `teeth` count, `phase` (0..1 of a tooth pitch; use it to mesh neighbours), `k` px per texel (match the
+    scene texel), `holes` N > 0 cuts N window holes between hub and rim (large cogs / flywheels; `hole_w` 0.2-0.4 = hole
+    width as a fraction of the sector), `depth` side texels. `teeth` 0 with `phase` 0.25 = smooth flywheel disc."""
+    k, w, h = _cx_grid(W, H, k)
+    cx, cy = (w - depth) / 2, (h - depth) / 2
+    R = min(w - depth, h - depth) / 2 - 0.3
+    td = max(2.0, round(R * 0.2))
+    Rb = R - td
+    y, x = np.mgrid[0:h, 0:w].astype(np.float32)
+    dx, dy = x + 0.5 - cx, y + 0.5 - cy
+    r = np.hypot(dx, dy)
+    th = np.arctan2(dy, dx)
+    fr = (th / (2 * np.pi) * teeth + phase) % 1.0
+    taper = np.clip((r - Rb) / td, 0, 1)
+    tooth = np.abs(fr - 0.25) < (0.27 - 0.09 * taper)
+    mask = (r <= Rb + 0.5) | ((r <= R) & tooth)
+    Rh = max(3.2, R * 0.3)
+    if holes:
+        sec = (th / (2 * np.pi) * holes + 0.5) % 1.0
+        mask &= ~((r > Rh + 2.2) & (r < Rb - 2.6) & (np.abs(sec - 0.5) < hole_w))
+    grain = _cx_wood(w, h, int(phase * 7), 3)
+    if metal:
+        col = np.array(color, np.float32) / 255 * (grain.mean(axis=2, keepdims=True) / 0.34)
+    else:
+        col = grain * (np.array(color, np.float32) / np.array([112, 82, 46], np.float32))
+    col = np.where(((r > Rb + 0.5))[..., None], col * 1.12, col)                       # teeth
+    col = np.where(((r > Rb - 1.5) & (r <= Rb + 0.5))[..., None], col * 1.22, col)     # rim band
+    if R > 10:
+        col = np.where(((r > Rb - 3.2) & (r <= Rb - 1.5))[..., None], col * 0.74, col)  # groove inside the rim
+    col = np.where(((r > Rh) & (r <= Rh + 1.3))[..., None], col * 0.55, col)           # shadow ring round the hub
+    g = np.clip(1.12 - 0.3 * (dx + dy) / (2 * Rh), 0.7, 1.25)[..., None]
+    hubc = np.array(hub, np.float32) / 255 * g
+    hubc = np.where(((r > Rh - 1.0))[..., None], hubc * 0.8, hubc)
+    col = np.where((r <= Rh)[..., None], hubc, col)
+    ax = max(1.0, R * 0.08)
+    col = np.where(((r <= ax * 2.3) & (r <= Rh))[..., None], col * 0.8, col)       # socket round the axle
+    axle = (np.abs(dx) <= ax) & (np.abs(dy) <= ax)
+    col = np.where(axle[..., None], np.array([0.22, 0.23, 0.22], np.float32), col)
+    col = np.where((axle & (dx < 0) & (dy < 0))[..., None], np.array([0.36, 0.37, 0.36], np.float32), col)
+    return _cx_finish(col, mask, k, W, H, depth)
+
+
+def _d_create_wheel(W, H, color, rng, blades=12, spokes=8, phase=0.0, k=4, depth=2, hub=(92, 94, 92), ring=False,
+                    paddles=True, lip=True, metal=False, rim=0.1, spoke_w=0.058):
+    """Pixel Create water wheel, face-on: boarded rim, radial paddle boards with a hooked lip (`lip`), wooden
+    spokes (`spoke_w` = width as a fraction of the radius) + optional inner `ring`, steel hub (real spruce /
+    stripped-log texels). `blades` paddles, `spokes` beams, `phase` 0..1 of a blade pitch (rotation), `k` px per
+    texel, `color` = wood tint (default (112,82,46)), `rim` = rim thickness / radius. `paddles` false drops the
+    paddles and `metal` true uses flat `color` metal: together a flywheel."""
+    k, w, h = _cx_grid(W, H, k)
+    cx, cy = (w - depth) / 2, (h - depth) / 2
+    R = min(w - depth, h - depth) / 2 - 0.3
+    pl = max(3.0, R * 0.2) if paddles else 0.0   # paddle length beyond the rim
+    Rr = R - pl                        # rim outer radius
+    rt = max(3.0, R * rim)             # rim thickness
+    Rh = max(4.2, R * 0.14)
+    y, x = np.mgrid[0:h, 0:w].astype(np.float32)
+    dx, dy = x + 0.5 - cx, y + 0.5 - cy
+    r = np.hypot(dx, dy)
+    th = np.arctan2(dy, dx)
+    pitch = 2 * np.pi / blades
+    dth = ((th - phase * pitch + pitch / 2) % pitch) - pitch / 2
+    arc = np.abs(dth) * r
+    pw = max(2.4, R * 0.115)
+    rimm = (r <= Rr) & (r > Rr - rt)
+    pad = (r > Rr - rt * 0.5) & (r <= R) & (arc <= pw) if paddles else np.zeros_like(rimm)
+    if paddles and lip:  # hooked tip: a bucket lip reaching sideways at the end of every paddle
+        pad = pad | ((r > R - 2.3) & (r <= R) & (dth * r > pw - 0.6) & (dth * r <= pw + 3.0))
+    sp = 2 * np.pi / spokes
+    ds = ((th - phase * pitch + sp / 2) % sp) - sp / 2
+    sw = max(2.0, R * spoke_w)
+    spoke = (np.abs(ds) * r <= sw) & (r > Rh * 0.6) & (r <= Rr - rt * 0.5)
+    ringm = ring & (r > R * 0.5) & (r <= R * 0.5 + max(1.6, R * 0.05))
+    mask = rimm | pad | spoke | ringm | (r <= Rh)
+    if metal:
+        base = np.array(color, np.float32) / 255
+        plank = base * (_cx_wood(w, h, 2, 5).mean(axis=2, keepdims=True) / 0.34)
+        log = base * (_cx_wood(w, h, 5, 1, "minecraft:block/stripped_spruce_log").mean(axis=2, keepdims=True) / 0.36)
+    else:
+        tint = np.array(color, np.float32) / np.array([112, 82, 46], np.float32)
+        plank = _cx_wood(w, h, 2, 5) * tint
+        log = _cx_wood(w, h, 5, 1, "minecraft:block/stripped_spruce_log") * tint
+    board = (np.floor((th - phase * pitch) / pitch + 0.5).astype(np.int32) % 2)[..., None]
+    col = plank * 0.96
+    col = np.where(rimm[..., None], plank * np.where(board == 1, 0.88, 1.04), col)
+    col = np.where(pad[..., None], log * 1.2, col)
+    col = np.where((pad & (r > R - 1.2))[..., None], col * 0.8, col)
+    col = np.where((spoke | ringm)[..., None] & ~rimm[..., None] & ~pad[..., None], plank * 1.0, col)
+    gh = np.clip(1.1 - 0.3 * (dx + dy) / (2 * Rh), 0.7, 1.2)[..., None]
+    hubc = np.array(hub, np.float32) / 255 * gh
+    hubc = np.where((r > Rh - 1.0)[..., None], hubc * 0.78, hubc)
+    col = np.where((r <= Rh)[..., None], hubc, col)
+    ax = max(1.0, R * 0.06)
+    axle = (np.abs(dx) <= ax) & (np.abs(dy) <= ax)
+    col = np.where(axle[..., None], np.array([0.2, 0.21, 0.2], np.float32), col)
+    col = np.where((axle & (dx < 0) & (dy < 0))[..., None], np.array([0.38, 0.39, 0.38], np.float32), col)
+    return _cx_finish(col, mask, k, W, H, depth)
+
+
+def _d_create_sails(W, H, color, rng, arms=4, ang=20.0, k=4, depth=2, hub_r=0.2):
+    """Pixel windmill sails seen face-on: `arms` wooden beams radiating from the centre, each with a canvas sail
+    (colour `color`, default off-white (226,222,208)) on its trailing side with a wooden lattice. `ang` degrees (not `rot`),
+    `hub_r` fraction of the radius left empty for a hub block drawn on top (a `blocks` bearing)."""
+    k, w, h = _cx_grid(W, H, k)
+    cx, cy = (w - depth) / 2, (h - depth) / 2
+    R = min(w - depth, h - depth) / 2 - 0.3
+    y, x = np.mgrid[0:h, 0:w].astype(np.float32)
+    dx, dy = x + 0.5 - cx, y + 0.5 - cy
+    mask = np.zeros((h, w), bool)
+    col = np.zeros((h, w, 3), np.float32)
+    beam_c = _cx_wood(w, h, 4, 2, "minecraft:block/stripped_spruce_log") * 0.86
+    cloth = np.array(color, np.float32) / 255
+    lat = np.array([0.40, 0.29, 0.17], np.float32)
+    sw = R * 0.3
+    for i in range(arms):
+        a = math.radians(ang) + i * 2 * math.pi / arms
+        u = dx * math.cos(a) + dy * math.sin(a)
+        v = -dx * math.sin(a) + dy * math.cos(a)
+        beam = (np.abs(v) <= 2.0) & (u > R * hub_r * 0.5) & (u <= R)
+        sail = (v > 1.9) & (v <= 1.9 + sw) & (u > R * hub_r + 1.0) & (u <= R - 0.5)
+        t = np.clip((v - 1.9) / max(sw, 1), 0, 1)
+        fold = np.where((np.floor((v - 1.9) / 2.6).astype(np.int32) % 2) == 0, 1.05, 0.93)
+        cc = cloth * (fold * (1.0 - 0.14 * t))[..., None]
+        batten = ((u - R * hub_r) % 7.0) < 1.0
+        rail = (v > 1.9 + sw - 1.0) | (v <= 2.9) | (u > R - 1.6) | (u <= R * hub_r + 2.0)
+        latt = sail & (batten | rail)
+        cc = np.where(latt[..., None], lat * (1.12 - 0.3 * t)[..., None], cc)
+        bshade = (1.18 - 0.28 * np.clip((v + 2.0) / 4.0, 0, 1))[..., None]      # lit upper edge of the beam
+        m = beam | sail
+        col = np.where(m[..., None], np.where(beam[..., None], beam_c * bshade, cc), col)
+        mask |= m
+    return _cx_finish(col, mask, k, W, H, depth)
+
+
+def _d_create_shaft(W, H, color, rng, k=4, thick=5, joints=16, depth=1):
+    """Pixel Create shaft (horizontal; `rot` 90 for vertical): a rod of `thick` texels (outline included) in
+    `color` with a lit upper half, a darker lower half and a collar every `joints` texels (one block)."""
+    k, w, h = _cx_grid(W, H, k)
+    mask = np.zeros((h, w), bool)
+    col = np.zeros((h, w, 3), np.float32)
+    c = np.array(color, np.float32) / 255
+    t0 = max(1, (h - depth - thick) // 2)
+    for j in range(thick):
+        row = t0 + j
+        if 0 <= row < h:
+            f = 1.0 + 0.3 * (1 - 2.0 * j / max(1, thick - 1)) * 0.8
+            mask[row, :] = True
+            col[row, :] = c * f
+    for xx in range(joints // 2, w - 1, joints):
+        for dxx in (0, 1):
+            for row in (t0 - 1, t0 + thick):
+                if 0 <= row < h:
+                    mask[row, xx + dxx] = True
+                    col[row, xx + dxx] = c * (0.55 if row == t0 + thick else 0.85)
+            for j in range(thick):
+                if 0 <= t0 + j < h:
+                    col[t0 + j, xx + dxx] = c * (0.58 if dxx else 0.8)
+    return _cx_finish(col, mask, k, W, H, depth)
+
+
+def _d_create_belt(W, H, color, rng, k=4, thick=10, legs=3, scroll=0):
+    """Pixel Create mechanical belt from the side: a thick dark rubber loop with lit tread ticks on the top run,
+    an andesite plate (`color`, default (130,135,132)) with bolts inside the loop, end pulleys, and `legs`
+    support legs down to the image bottom. `thick` = belt height in texels, `scroll` shifts the tread ticks."""
+    k, w, h = _cx_grid(W, H, k)
+    rb = thick / 2.0
+    band = 3.0
+    y, x = np.mgrid[0:h, 0:w].astype(np.float32)
+    px, py = x + 0.5, y + 0.5
+    nx = np.clip(px, rb, w - rb)
+    dist = np.hypot(px - nx, py - rb)
+    loop = (dist <= rb) & (py <= thick)
+    inner = dist <= rb - band
+    mask = loop.copy()
+    rub = np.array([48, 44, 38], np.float32) / 255
+    tickc = np.array([104, 94, 76], np.float32) / 255
+    pl = np.array(color, np.float32) / 255
+    col = np.broadcast_to(rub, (h, w, 3)).copy()
+    topband = loop & ~inner & (py < rb)
+    tick = topband & (((x + scroll) % 4) < 2)
+    col = np.where(tick[..., None], tickc, col)
+    col = np.where((topband & (py < 1.2))[..., None], tickc * 1.08, col)
+    col = np.where((loop & ~inner & (py >= rb))[..., None], rub * 0.75, col)
+    plate = pl * np.clip(1.1 - 0.3 * (py - band) / thick, 0.7, 1.15)[..., None] * 0.82
+    col = np.where(inner[..., None], plate, col)
+    bolt = inner & (np.abs(py - rb) < 0.7) & (((x - rb) % 12) < 1.3)
+    col = np.where(bolt[..., None], pl * 0.45, col)
+    for cxp in (rb, w - rb):   # pulleys
+        pr = np.hypot(px - cxp, py - rb)
+        col = np.where((pr <= rb - band - 0.2)[..., None], pl * 1.12, col)
+        col = np.where((pr <= 1.3)[..., None], np.array([0.2, 0.2, 0.2], np.float32), col)
+    lw = 5
+    for j in range(legs):
+        lx = int(rb + 3 + j * (w - 2 * rb - 6 - lw) / max(1, legs - 1)) if legs > 1 else int(w / 2 - lw / 2)
+        for yy in range(int(thick - 1), h):
+            for xx in range(lx, lx + lw):
+                if 0 <= xx < w and yy < h and not loop[yy, xx]:
+                    mask[yy, xx] = True
+                    col[yy, xx] = pl * (0.58 if xx >= lx + lw - 1 else (0.95 if xx == lx else 0.76))
+    return _cx_finish(col, mask, k, W, H, depth=1)
+
+
+def _d_create_water(W, H, color, rng, k=4, pool=1.0, fall=None, fall_w=7, foam=1, splash=None):
+    """Pixel water: a pool filling the bottom `pool` fraction of the box (rippled surface, foam row, darker
+    depth, light dashes) and optionally a waterfall column at x fraction `fall` (`fall_w` texels wide) pouring
+    from the top into the pool. `color` = mid water colour (default (52,112,188)). Use alpha ~0.85. `foam` = number
+    of light foam rows along the surface (default 1), `splash` = optional list of x fractions where a few white
+    droplets jump above the surface (paddle tips)."""
+    k, w, h = _cx_grid(W, H, k)
+    c = np.array(color, np.float32) / 255
+    y, x = np.mgrid[0:h, 0:w].astype(np.float32)
+    ys = int(round(h * (1 - pool)))
+    wave = np.round(np.sin(x * 0.33 + 1.3) * 0.9 + np.sin(x * 0.11) * 0.8)
+    body = (y >= (ys + wave)) & (pool > 0)
+    t = np.clip((y - ys) / max(h - ys, 1), 0, 1)[..., None]
+    col = c * (1.12 - 0.5 * t)
+    nz = np.array([[rng.random() for _ in range(w)] for _ in range(h)], np.float32)
+    dash = body & (y > ys + 2) & (nz > 0.93)
+    col = np.where(dash[..., None], np.minimum(c * 1.45, 1), col)
+    foam_m = body & (y <= ys + wave + 0.9)
+    col = np.where(foam_m[..., None], np.array([0.78, 0.9, 0.97], np.float32), col)
+    mask = body.copy()
+    if foam and foam > 1:   # a second, broken foam row below the first (every other texel)
+        f2 = body & (y > ys + wave + 0.9) & (y <= ys + wave + 1.9) & (((x.astype(np.int32) + int(ys)) % 3) != 0)
+        col = np.where(f2[..., None], np.array([0.6, 0.76, 0.9], np.float32), col)
+    for sx in (splash or []):   # droplets leaping off the surface
+        cxs = int(round(float(sx) * w))
+        for ddx, ddy in ((0, -2), (-1, -3), (1, -3), (0, -4), (-2, -2), (2, -2)):
+            xx, yy = cxs + ddx, int(ys) + ddy
+            if 0 <= xx < w and 0 <= yy < h and not body[yy, xx]:
+                col[yy, xx] = np.array([0.84, 0.93, 0.98], np.float32)
+                mask[yy, xx] = True
+    if fall is not None:
+        fx = fall * w
+        fm = (np.abs(x + 0.5 - fx) <= fall_w / 2) & (y < (ys + 2 if pool > 0 else h))
+        streak = ((x.astype(np.int32) + (y.astype(np.int32) // 3) * (x.astype(np.int32) % 2)) % 3 == 0)
+        fc = c * 1.2
+        fc = np.broadcast_to(fc, (h, w, 3)).copy()
+        fc = np.where(streak[..., None], np.minimum(fc * 1.35, 1), fc)
+        fc = np.where((np.abs(x + 0.5 - fx) > fall_w / 2 - 1)[..., None], c * 0.8, fc)
+        col = np.where(fm[..., None], fc, col)
+        mask |= fm
+        splash = (np.abs(x + 0.5 - fx) <= fall_w / 2 + 2) & (np.abs(y - ys) <= 1.2) & (nz > 0.35)
+        col = np.where(splash[..., None], np.array([0.85, 0.93, 0.98], np.float32), col)
+        mask |= splash & (pool > 0)
+    out = np.zeros((h, w, 4), np.float32)
+    out[..., :3] = np.clip(col, 0, 1)
+    out[..., 3] = mask.astype(np.float32)
+    im = _img(out, "RGBA").resize((w * k, h * k), Image.NEAREST)
+    res = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    res.paste(im, (0, 0))
+    return res
+
+
+def _d_create_steam(W, H, color, rng, k=4, puffs=8, drift=0.3):
+    """A rising plume of pixel steam puffs: small and dense at the bottom, large and faint at the top, three
+    tones (lit upper-left, shaded lower-right). `color` = base tone (default (226,230,236)); use layer alpha
+    ~0.5. `drift` leans the plume sideways (-1..1)."""
+    k, w, h = _cx_grid(W, H, k)
+    base = np.array(color, np.float32) / 255
+    y, x = np.mgrid[0:h, 0:w].astype(np.float32)
+    out = np.zeros((h, w, 4), np.float32)
+    rmax = w * 0.26
+    order = []
+    for j in range(puffs):
+        t = j / max(1, puffs - 1)
+        rad = 2.2 + (rmax - 2.2) * (t ** 0.85) * rng.uniform(0.8, 1.1)
+        cy = max(rad + 1, h * 0.92 - t * h * 0.8 - rng.uniform(0, h * 0.03))
+        cx = w * (0.5 + drift * 0.3 * t) + rng.uniform(-1, 1) * w * 0.1 * (0.3 + t)
+        cx = min(max(cx, rad + 1), w - rad - 1)
+        order.append((t, cx, cy, rad, 0.95 - 0.6 * t))
+    for t, cx, cy, rad, al in sorted(order, reverse=True):  # high faint puffs first, low dense ones over them
+        for sub in range(3):
+            ox = (sub - 1) * rad * 0.62
+            oy = 0.28 * rad if sub != 1 else 0.0
+            rr = rad * (1.0 if sub == 1 else 0.66)
+            d = np.hypot(x + 0.5 - (cx + ox), y + 0.5 - (cy + oy))
+            m = d <= rr
+            if not m.any():
+                continue
+            lit = ((x + 0.5 - (cx + ox)) + (y + 0.5 - (cy + oy))) / max(rr, 1)
+            tone = np.where(lit < -0.5, 1.08, np.where(lit > 0.55, 0.84, 0.97))[..., None] * base
+            out[..., :3] = np.where(m[..., None], np.clip(tone, 0, 1), out[..., :3])
+            out[..., 3] = np.where(m, al, out[..., 3])
+    im = _img(out, "RGBA").resize((w * k, h * k), Image.NEAREST)
+    res = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    res.paste(im, (0, 0))
+    return res
+
+
+_DECOR.update({"create_cog": _d_create_cog, "create_wheel": _d_create_wheel, "create_sails": _d_create_sails,
+               "create_shaft": _d_create_shaft, "create_belt": _d_create_belt, "create_water": _d_create_water,
+               "create_steam": _d_create_steam})
+
+
+# ---------------------------------------------------------------- space chapter motifs (round 2: pixel sky bodies, rocket, gantry, atlas crops)
+# All drawn on a coarse grid of `k` canvas px per texel and NEAREST-upscaled, so they share the scene texel.
+def _sp_h3(a, b, c, seed):
+    n = ((a * 73856093) ^ (b * 19349663) ^ (c * 83492791) ^ ((seed * 2654435761) & 0xFFFFFFFF)) & 0xFFFFFFFF
+    n = ((n ^ (n >> 13)) * 1274126177) & 0xFFFFFFFF
+    return ((n ^ (n >> 16)) & 0xFFFF).astype(np.float32) / 65535.0
+
+
+def _sp_noise3(x, y, z, seed):
+    xi, yi, zi = (np.floor(v).astype(np.int64) for v in (x, y, z))
+    sx, sy, sz = ((v - np.floor(v)) for v in (x, y, z))
+    sx, sy, sz = (f * f * (3 - 2 * f) for f in (sx, sy, sz))
+
+    def c(dx, dy, dz):
+        return _sp_h3(xi + dx, yi + dy, zi + dz, seed)
+
+    def lerp(a, b, t):
+        return a + (b - a) * t
+
+    x00, x10 = lerp(c(0, 0, 0), c(1, 0, 0), sx), lerp(c(0, 1, 0), c(1, 1, 0), sx)
+    x01, x11 = lerp(c(0, 0, 1), c(1, 0, 1), sx), lerp(c(0, 1, 1), c(1, 1, 1), sx)
+    return lerp(lerp(x00, x10, sy), lerp(x01, x11, sy), sz)
+
+
+def _sp_fbm(p, scale, seed, octaves=4):
+    x, y, z = p[..., 0] * scale, p[..., 1] * scale, p[..., 2] * scale
+    acc, tot, amp = 0.0, 0.0, 0.5
+    for o in range(octaves):
+        acc = acc + amp * _sp_noise3(x + o * 17.3, y - o * 9.1, z + o * 5.7, seed + o)
+        tot += amp
+        amp *= 0.5
+        x, y, z = x * 2.03, y * 2.03, z * 2.03
+    return acc / tot
+
+
+def _sp_ramp(t, stops):
+    """Piecewise-linear colour ramp: t array in 0..1, stops = [(pos, (r, g, b)), ...] -> (..., 3) in 0..1."""
+    pos = [s[0] for s in stops]
+    cols = np.array([s[1] for s in stops], np.float32) / 255.0
+    return np.stack([np.interp(t, pos, cols[:, i]) for i in range(3)], -1).astype(np.float32)
+
+
+def _sp_mix(a, b, m):
+    """a * (1 - m) + b * m; b is an (r, g, b) tuple in 0..255 or an array in 0..1."""
+    b = np.asarray(b, np.float32) / 255.0 if isinstance(b, tuple) else np.asarray(b, np.float32)
+    m = np.asarray(m, np.float32)
+    if m.ndim == a.ndim - 1:
+        m = m[..., None]
+    return a * (1 - m) + b * m
+
+
+def _d_space_planet(W, H, color, rng, k=5, kind="moon", sun=(0.7, -0.6), r=None, ring=False, tilt=-16.0, seed=1):
+    """Pixel-art planet on a k-px texel grid, lit from `sun` ([dx, dy] towards the light, y down) in 5 hard
+    tone steps with a little 2x2 dither at the terminator. kind: earth | moon | mercury | mars | venus |
+    glacio | gas (gas uses `color` as its base hue; ring=true adds a tilted ring, canvas should be wide).
+    r = planet radius in texels (default: fills the box; with ring default is the box width / 4.2)."""
+    k = max(1, int(k))
+    Wt, Ht = max(6, W // k), max(6, H // k)
+    R = float(r) if r else (Wt / 4.2 if ring else min(Wt, Ht) / 2.0)
+    cx, cy = Wt / 2.0, Ht / 2.0
+    ys, xs = np.mgrid[0:Ht, 0:Wt].astype(np.float32)
+    u, v = (xs + 0.5 - cx) / R, (ys + 0.5 - cy) / R
+    r2 = u * u + v * v
+    inside = r2 <= 1.0
+    z = np.sqrt(np.clip(1 - r2, 0, 1))
+    n = np.stack([u, v, z], -1)
+    ta = math.radians(tilt)
+    q = np.stack([u * math.cos(ta) - v * math.sin(ta), u * math.sin(ta) + v * math.cos(ta), z], -1)  # unit, for terrain
+    sd = int(seed)
+    L = np.array([sun[0], sun[1], 0.55], np.float32)
+    L /= np.linalg.norm(L)
+    lam = n @ L
+    py = q[..., 1]
+    if kind == "earth":
+        h = _sp_fbm(q + sd, 1.7, sd, 4)
+        ocean = _sp_ramp(np.clip((0.5 - h) / 0.22, 0, 1), [(0, (62, 124, 208)), (1, (22, 58, 142))])
+        elev = np.clip((h - 0.5) / 0.18, 0, 1)
+        land = _sp_ramp(elev, [(0, (72, 150, 70)), (0.55, (118, 152, 72)), (1, (156, 124, 82))])
+        alb = np.where((h > 0.5)[..., None], land, ocean)
+        cl = _sp_fbm((q + 5.5 + sd) * np.array([1.0, 2.6, 1.0], np.float32), 3.0, sd + 11, 3)
+        alb = _sp_mix(alb, (246, 249, 253), np.where(cl > 0.6, 0.78, 0.0))
+        alb = _sp_mix(alb, (238, 246, 253), np.where(np.abs(py) > 0.87 + 0.07 * (h - 0.5), 1.0, 0.0))
+        alb = _sp_mix(alb, (140, 196, 255), np.clip((r2 - 0.78) / 0.22, 0, 1) * 0.55)
+    elif kind in ("moon", "mercury"):
+        lo, hi = ((98, 102, 122), (176, 180, 196)) if kind == "moon" else ((112, 74, 104), (184, 132, 160))
+        h = _sp_fbm(q + sd, 2.4, sd, 3)
+        alb = _sp_ramp(h, [(0, lo), (1, hi)])
+        mar = _sp_fbm(q + 3.1 + sd, 0.95, sd + 3, 2)
+        alb = _sp_mix(alb, lo, np.where(mar < 0.44, 0.55, 0.0))
+        cr = random.Random(f"crater{sd}{kind}")
+        for _ in range(20 if kind == "mercury" else 15):
+            c = np.array([cr.uniform(-1, 1), cr.uniform(-1, 1), cr.uniform(-0.2, 1)], np.float32)
+            c /= np.linalg.norm(c)
+            rad = cr.uniform(0.07, 0.26)
+            ang = np.arccos(np.clip(q @ c, -1, 1))
+            alb = np.where((ang < rad * 0.8)[..., None], alb * 0.78, alb)
+            alb = np.where(((ang >= rad * 0.8) & (ang < rad))[..., None], np.minimum(alb * 1.2 + 0.03, 1.0), alb)
+    elif kind == "mars":
+        h = _sp_fbm(q + sd, 2.1, sd, 4)
+        alb = _sp_ramp(h, [(0, (112, 56, 38)), (0.5, (176, 90, 50)), (1, (222, 148, 92))])
+        mar = _sp_fbm(q + 2.2 + sd, 1.1, sd + 5, 2)
+        alb = _sp_mix(alb, (92, 46, 36), np.where(mar < 0.4, 0.5, 0.0))
+        alb = _sp_mix(alb, (244, 230, 226), np.where(np.abs(py) > 0.9 + 0.05 * (h - 0.5), 1.0, 0.0))
+    elif kind == "venus":
+        s = py * 6.0 + (_sp_fbm(q + sd, 2.0, sd, 3) - 0.5) * 3.4
+        alb = _sp_ramp(0.5 + 0.5 * np.sin(s * math.pi), [(0, (204, 146, 78)), (0.55, (234, 182, 106)), (1, (250, 218, 152))])
+        alb = _sp_mix(alb, (255, 224, 160), np.clip((r2 - 0.8) / 0.2, 0, 1) * 0.35)
+    elif kind == "glacio":
+        h = _sp_fbm(q + sd, 2.6, sd, 4)
+        alb = _sp_ramp(h, [(0, (146, 158, 214)), (0.5, (190, 198, 240)), (1, (232, 238, 255))])
+        crack = np.abs(_sp_fbm(q + 8.8 + sd, 2.2, sd + 9, 3) - 0.5) < 0.028
+        alb = _sp_mix(alb, (104, 116, 190), np.where(crack, 0.7, 0.0))
+        alb = _sp_mix(alb, (130, 232, 244), np.clip((r2 - 0.78) / 0.22, 0, 1) * 0.5)
+    else:  # gas giant in `color`
+        base = np.array(color, np.float32) / 255.0
+        s = py * 7.5 + (_sp_fbm(q + sd, 1.6, sd, 3) - 0.5) * 1.8
+        t = 0.5 + 0.5 * np.sin(s * math.pi)
+        dk, lt = base * 0.62, np.minimum(base * 0.7 + 0.3, 1.0)
+        alb = np.where((t < 0.5)[..., None], _sp_mix(dk + 0 * q, base, t * 2), _sp_mix(base + 0 * q, lt, (t - 0.5) * 2))
+        spot = ((u - 0.28) / 0.3) ** 2 + ((v - 0.34) / 0.14) ** 2 < 1
+        alb = _sp_mix(alb, dk * 0.8, np.where(spot, 0.7, 0.0))
+    # five hard tone steps + 2x2 dither at the terminator, cool ambient on the night side
+    bay = np.array([[0, 2], [3, 1]], np.float32) / 4 - 0.375
+    dith = bay[ys.astype(int) % 2, xs.astype(int) % 2]
+    lev = np.digitize(lam + dith * 0.12, [0.02, 0.28, 0.54, 0.82])
+    ramp = np.array([0.30, 0.56, 0.80, 1.0, 1.15], np.float32)
+    rgb = alb * ramp[lev][..., None]
+    rgb = np.where((lev == 0)[..., None], alb * np.array([0.27, 0.30, 0.46], np.float32) + 0.015, rgb)
+    out = np.zeros((Ht, Wt, 4), np.float32)
+    out[..., :3] = np.clip(rgb, 0, 1)
+    out[..., 3] = inside.astype(np.float32)
+    if ring:
+        rc, rs = math.cos(math.radians(-tilt * 0.5)), math.sin(math.radians(-tilt * 0.5))
+        xr = (xs + 0.5 - cx) * rc - (ys + 0.5 - cy) * rs
+        yr = (xs + 0.5 - cx) * rs + (ys + 0.5 - cy) * rc
+        a_out = 2.15 * R
+        b_out = a_out * 0.27
+        e2 = (xr / a_out) ** 2 + (yr / b_out) ** 2
+        band = (e2 <= 1.0) & (e2 >= (1.5 * R / a_out) ** 2)
+        gap = (e2 > 0.7) & (e2 < 0.77)
+        band &= ~gap
+        tcol = np.clip((e2 - 0.45) / 0.55, 0, 1)
+        rcol = _sp_ramp(tcol, [(0, (214, 196, 248)), (0.5, (170, 150, 226)), (1, (226, 212, 252))])
+        sh = 0.62 + 0.38 * np.clip(0.5 + 0.5 * ((xs - cx) * sun[0] + (ys - cy) * sun[1]) / (a_out * 0.7), 0, 1)
+        rcol = rcol * sh[..., None]
+        front = band & (yr > 0)
+        back = band & (yr <= 0) & ~inside
+        out[back, :3], out[back, 3] = rcol[back], 1.0
+        out[front, :3], out[front, 3] = rcol[front], 1.0
+    img = Image.fromarray((np.clip(out, 0, 1) * 255 + 0.5).astype(np.uint8), "RGBA")
+    return img.resize((Wt * k, Ht * k), Image.NEAREST)
+
+
+def _d_space_rocket(W, H, color, rng, k=5, side=1, window=True):
+    """Pixel rocket standing upright on a k-px texel grid (nose cone in `color`, white steel body, one
+    porthole, swept side fins, engine bell). side = +1 / -1: the light comes from the right / left."""
+    k = max(1, int(k))
+    Wt, Ht = max(12, W // k), max(30, H // k)
+    img = np.zeros((Ht, Wt, 4), np.float32)
+    bw = max(6, (int(Wt * 0.46) // 2) * 2)
+    x0 = (Wt - bw) // 2
+    cxf = x0 + bw / 2.0
+    E = max(5, Ht // 12)
+    N = int(Ht * 0.27)
+    body_end = Ht - E  # first engine row
+    steel = np.array([(88, 94, 124), (132, 140, 170), (178, 186, 208), (216, 222, 238), (248, 250, 255)], np.float32) / 255
+    base = np.array(color, np.float32) / 255
+    red = np.array([base * m for m in (0.40, 0.62, 0.84, 1.0, 1.22)], np.float32).clip(0, 1)
+
+    def lev_of(jc, sd=side):  # jc = texel centre column
+        t = np.clip((jc - cxf) / (bw / 2.0), -1, 1)
+        nz = math.sqrt(max(0.0, 1 - t * t))
+        return int(np.digitize(t * 0.8 * sd + nz * 0.6, [-0.25, 0.15, 0.5, 0.82]))
+
+    def put(y, x, c, a=1.0):
+        if 0 <= y < Ht and 0 <= x < Wt:
+            img[y, x, :3], img[y, x, 3] = c, a
+
+    # nose cone: elliptical ogive
+    for y in range(N):
+        t = (y + 0.5) / N
+        hw = max(1.0, (bw / 2.0) * math.sqrt(max(0.0, 1 - (1 - t) ** 2)))
+        for j in range(Wt):
+            if abs(j + 0.5 - cxf) < hw:
+                lv = lev_of(j + 0.5)
+                if y == 0:
+                    lv = min(4, lv + 1)
+                put(y, j, red[lv])
+    # body
+    for y in range(N, body_end):
+        rr = y - N
+        for j in range(x0, x0 + bw):
+            lv = lev_of(j + 0.5)
+            col = steel[lv]
+            if rr == 0:
+                col = steel[max(0, lv - 2)]
+            elif rr in (5, 6, 7):
+                col = red[lv]
+            elif rr >= 12 and (rr - 12) % 13 == 0:
+                col = steel[max(0, lv - 2)]  # panel seam
+            elif rr >= 13 and (rr - 13) % 13 == 0:
+                col = steel[min(4, lv + 1)]  # lit lip under the seam
+            elif body_end - y <= 4:
+                col = steel[max(0, lv - 1)]  # skirt
+            put(y, j, col)
+    # porthole
+    if window:
+        wy, wx = N + 17, cxf
+        for yy in range(int(wy) - 4, int(wy) + 4):
+            for xx in range(int(wx) - 4, int(wx) + 4):
+                dcx, dcy = (xx + 0.5) - wx, (yy + 0.5) - wy
+                d = math.hypot(dcx, dcy)
+                if d <= 3.1:
+                    if d > 2.3:
+                        put(yy, xx, np.array((56, 62, 84), np.float32) / 255 if dcx * side < 0 else np.array((120, 128, 156), np.float32) / 255)
+                    else:
+                        g = 0.5 + 0.5 * np.clip((-dcx * side * 0.55 - dcy * 0.55) / 2.2, -1, 1)
+                        put(yy, xx, (np.array((34, 86, 172), np.float32) * (1 - g) + np.array((130, 206, 255), np.float32) * g) / 255)
+        put(int(wy) - 2, int(wx) + (1 if side > 0 else -2), np.array((232, 250, 255), np.float32) / 255)
+    # fins
+    fw = x0 - 1
+    fh = max(10, int(Ht * 0.27))
+    ft, fb = body_end - fh, body_end + 1
+    for s in (-1, 1):
+        lvf = 3 if s == side else 1
+        for c in range(fw):
+            jx = x0 - 1 - c if s < 0 else x0 + bw + c
+            top = ft + int(c * (fh * 0.55) / max(1, fw - 1))
+            for y in range(top, fb + 1):
+                lv = lvf
+                if y == top:
+                    lv = min(4, lvf + 1)
+                if c == fw - 1:
+                    lv = max(0, lvf - 1)
+                put(y, jx, red[lv])
+    # engine bell + collar
+    for i in range(E):
+        y = body_end + i
+        wdt = int(round(bw * 0.58 + (bw * 0.34) * i / max(1, E - 1)))
+        wdt += wdt % 2
+        xa = int(round(cxf - wdt / 2.0))
+        for j in range(xa, xa + wdt):
+            t = np.clip((j + 0.5 - cxf) / (wdt / 2.0), -1, 1)
+            lv = int(np.digitize(t * 0.8 * side + math.sqrt(max(0, 1 - t * t)) * 0.6, [-0.25, 0.15, 0.5, 0.82]))
+            c = np.array([(44, 46, 60), (62, 66, 84), (84, 90, 112), (112, 120, 146), (150, 158, 184)], np.float32)[lv] / 255
+            if i == E - 1:
+                c = np.array((150, 70, 34), np.float32) / 255 if lv < 3 else np.array((255, 170, 80), np.float32) / 255
+            put(y, j, c)
+    out = Image.fromarray((np.clip(img, 0, 1) * 255 + 0.5).astype(np.uint8), "RGBA")
+    return out.resize((Wt * k, Ht * k), Image.NEAREST)
+
+
+def _d_space_gantry(W, H, color, rng, k=5, arm_len=8, arms=(0.3, 0.62), side=1, beacon=True):
+    """Launch-tower lattice on a k-px texel grid: two legs, X-braces, hazard-striped foot, beacon on top and
+    service arms reaching `arm_len` texels to the right (towards the rocket) at the given height fractions."""
+    k = max(1, int(k))
+    Wt, Ht = max(10, W // k), max(20, H // k)
+    img = np.zeros((Ht, Wt, 4), np.float32)
+    tw = Wt - int(arm_len)
+
+    def put(y, x, c, a=1.0):
+        if 0 <= y < Ht and 0 <= x < Wt:
+            img[y, x, :3], img[y, x, 3] = np.array(c, np.float32) / 255, a
+
+    leg_d, leg_m, leg_l = (70, 76, 98), (112, 120, 144), (164, 172, 196)
+    top0 = 6 if beacon else 0
+    foot = 7
+    for y in range(top0, Ht):
+        for j in (0, 1, tw - 2, tw - 1):
+            lit = (j == tw - 1) if side > 0 else (j == 0)
+            shd = (j == 0) if side > 0 else (j == tw - 1)
+            put(y, j, leg_l if lit else (leg_d if shd else leg_m))
+    seg = max(8, int(tw * 1.5))
+    y = Ht - foot - 1
+    while y - seg >= top0:  # X-braces between rungs
+        for i in range(seg):
+            f = i / max(1, seg - 1)
+            xa = 2 + int(round(f * (tw - 5)))
+            put(y - i, xa, (86, 92, 114))
+            put(y - i, tw - 3 - int(round(f * (tw - 5))), (86, 92, 114))
+        for j in range(2, tw - 2):
+            put(y, j, (126, 134, 158))
+        y -= seg
+    for j in range(2, tw - 2):
+        put(top0, j, (150, 158, 182))
+    for yy in range(Ht - foot, Ht):  # hazard stripes on the foot
+        for j in range(tw):
+            put(yy, j, (236, 196, 44) if ((j + yy) // 2) % 2 == 0 else (34, 34, 42))
+    if beacon:
+        for dy in range(2):
+            for dx in range(2):
+                put(top0 - 3 + dy, tw // 2 - 1 + dx, (206, 178, 255))
+        for yy in range(top0 - 2, top0):
+            put(yy, tw // 2 - 1, (150, 158, 182))
+        put(top0 - 4, tw // 2, (255, 255, 255))
+    for fr in arms:  # service arms
+        ay = int(top0 + fr * (Ht - top0 - foot))
+        for j in range(tw, Wt):
+            put(ay, j, (178, 186, 208))
+            put(ay + 1, j, (116, 124, 148))
+            put(ay + 2, j, (70, 76, 98))
+        for i in range(5):  # strut under the arm
+            put(ay + 3 + i, tw + 4 - i, (86, 92, 114))
+        for dy in range(-2, 4):  # clamp at the tip
+            put(ay + dy, Wt - 1, (212, 70, 52) if dy == -2 else (60, 64, 84))
+    out = Image.fromarray((np.clip(img, 0, 1) * 255 + 0.5).astype(np.uint8), "RGBA")
+    return out.resize((Wt * k, Ht * k), Image.NEAREST)
+
+
+def _d_space_crop(W, H, color, rng, asset="", box=None, k=5, flip=False):
+    """A sub-rectangle `box` = [x0, y0, x1, y1] (texture pixels) of any texture / model atlas, pixel-scaled by k."""
+    t = tex(asset)
+    if box:
+        t = t.crop(tuple(int(v) for v in box))
+    if flip:
+        t = t.transpose(Image.FLIP_LEFT_RIGHT)
+    k = max(1, int(k))
+    return t.resize((t.size[0] * k, t.size[1] * k), Image.NEAREST)
+
+
+def _sp_put(img, y, x, c, a=1.0):
+    Ht, Wt = img.shape[:2]
+    if 0 <= y < Ht and 0 <= x < Wt:
+        img[y, x, :3], img[y, x, 3] = np.array(c, np.float32) / 255.0, a
+
+
+def _sp_up(img, k):
+    out = Image.fromarray((np.clip(img, 0, 1) * 255 + 0.5).astype(np.uint8), "RGBA")
+    return out.resize((img.shape[1] * k, img.shape[0] * k), Image.NEAREST)
+
+
+_SP_ASTRO = {
+    "W": (232, 236, 248), "w": (190, 196, 218), "s": (132, 140, 172), "V": (26, 34, 66), "v": (58, 98, 178),
+    "h": (176, 218, 255), "G": (240, 190, 70), "r": (214, 64, 56), "b": (70, 120, 210), "k": (62, 66, 86),
+    "K": (84, 88, 110),
+}
+_SP_ASTRO_ROWS = [
+    "...wWWWWs...",
+    "..wWWWWWWs..",
+    ".wWVVVVVVWs.",
+    ".wWVhhvVVWs.",
+    ".wWVhvvVVWs.",
+    ".wWVvvVVVWs.",
+    ".wWVVVVVVWs.",
+    "..wWWWWWWs..",
+    "...wGGGGs...",
+    "swwWWWWWWwss",
+    "swwWWWWWWwss",
+    "swwWrWWbWwss",
+    "swwWWWWWWwss",
+    "swwWGGGGWwss",
+    "kkwWWWWWWwkk",
+    "..wWWWWWWs..",
+    "..wWWswWWs..",
+    "..wWWswWWs..",
+    "..wWWswWWs..",
+    "..wWWswWWs..",
+    "..wWWswWWs..",
+    "..swWswsWs..",
+    "..swWswsWs..",
+    ".kKKKskKKKk.",
+    ".kKKKskKKKk.",
+]
+
+
+def _d_space_astronaut(W, H, color, rng, k=5, flag=True, side=1, emblem="square"):
+    """Pixel astronaut (white suit, dark visor with highlight, chest lights, boots) 12 x 25 texels; with
+    flag=true a flag in `color` is planted beside it (canvas should be >= 20 texels wide, 25 tall).
+    side = -1 mirrors the whole figure."""
+    k = max(1, int(k))
+    Wt, Ht = max(14, W // k), max(26, H // k)
+    img = np.zeros((Ht, Wt, 4), np.float32)
+    ox, oy = 0, Ht - len(_SP_ASTRO_ROWS)
+    for y, row in enumerate(_SP_ASTRO_ROWS):
+        for x, ch in enumerate(row):
+            if ch != ".":
+                _sp_put(img, oy + y, ox + x, _SP_ASTRO[ch])
+    if flag and Wt >= 20:
+        px = 14
+        for y in range(Ht - 1, Ht - 25, -1):  # pole
+            _sp_put(img, y, px, (176, 180, 196))
+            _sp_put(img, y, px + 1, (112, 116, 136))
+        base = np.array(color, np.float32)
+        top = Ht - 24
+        for y in range(top, top + 8):  # cloth, folds shaded in vertical bands
+            for x in range(px + 2, min(Wt, px + 13)):
+                sh = 1.0 if (y - top) < 4 else 0.84
+                if ((x - px) // 3) % 2 == 1:
+                    sh *= 0.9
+                _sp_put(img, y, x, np.clip(base * sh, 0, 255))
+        if emblem == "rocket":  # a small white rocket with red fins, and a lit column on the cloth's left edge
+            for yy, row in enumerate(("..W..", ".WWW.", ".WVW.", ".WWW.", "RWWWR", "R...R")):
+                for xx, ch in enumerate(row):
+                    if ch != ".":
+                        _sp_put(img, top + 1 + yy, px + 5 + xx,
+                                {"W": (250, 250, 255), "R": (214, 64, 56), "V": (60, 96, 176)}[ch])
+            for y in range(top, top + 8):
+                _sp_put(img, y, px + 2, np.clip(base * 1.25 + 14, 0, 255))
+        else:
+            for dy in range(3):
+                for dx in range(3):
+                    _sp_put(img, top + 2 + dy, px + 5 + dx, (250, 250, 255))
+        _sp_put(img, top - 1, px, (255, 232, 140))
+    if side < 0:
+        img = img[:, ::-1].copy()
+    return _sp_up(img, k)
+
+
+def _d_space_rocks(W, H, color, rng, k=5, n=12, side=1, maxw=8):
+    """Scattered pixel rocks / boulders on a k-px texel grid (3 tone steps lit from `side`, shadow texels)."""
+    k = max(1, int(k))
+    Wt, Ht = max(8, W // k), max(4, H // k)
+    img = np.zeros((Ht, Wt, 4), np.float32)
+    base = np.array(color, np.float32)
+    for _ in range(int(n)):
+        w = rng.choice([v for v in (2, 2, 3, 3, 4, 5, 6, 8, 10, 12, 14, 16, 20) if v <= int(maxw)] or [2])
+        h = max(2, int(round(w * rng.uniform(0.5, 0.75))))
+        x0, y0 = rng.randint(0, max(0, Wt - w - 2)), rng.randint(0, max(0, Ht - h - 1))
+        for dy in range(h):
+            for dx in range(w):
+                ex, ey = (dx + 0.5 - w / 2) / (w / 2), (dy + 0.5 - h / 2) / (h / 2)
+                if ex * ex + ey * ey > 1.05:
+                    continue
+                lit = (ex * side * 0.7 - ey * 0.7)
+                m = 1.22 if lit > 0.45 else (1.0 if lit > -0.2 else (0.78 if lit > -0.6 else 0.6))
+                _sp_put(img, y0 + dy, x0 + dx, np.clip(base * m, 0, 255))
+        for dx in range(w - 1):  # contact shadow, away from the light
+            _sp_put(img, y0 + h, x0 + dx - side + 1, (4, 4, 14), 0.45)
+    return _sp_up(img, k)
+
+
+def _d_space_crater(W, H, color, rng, k=5, side=1):
+    """A shallow impact crater seen at a low angle (elliptical rim lit from `side`, shadowed inner wall)."""
+    k = max(1, int(k))
+    Wt, Ht = max(8, W // k), max(4, H // k)
+    img = np.zeros((Ht, Wt, 4), np.float32)
+    base = np.array(color, np.float32)
+    ys, xs = np.mgrid[0:Ht, 0:Wt].astype(np.float32)
+    ex, ey = (xs + 0.5 - Wt / 2) / (Wt / 2), (ys + 0.5 - Ht / 2) / (Ht / 2)
+    d = ex * ex + ey * ey
+    for y in range(Ht):
+        for x in range(Wt):
+            dd = d[y, x]
+            if dd > 1.0:
+                continue
+            if dd > 0.72:  # rim
+                m = 1.28 if (ex[y, x] * side - ey[y, x] * 0.8) > 0.25 else 0.92
+            else:  # inner floor: far wall (towards the light) shadowed, near wall lit
+                v = ex[y, x] * side * 0.5 - ey[y, x]
+                m = 0.45 if v > 0.35 else (0.62 if v > -0.2 else 0.84)
+            _sp_put(img, y, x, np.clip(base * m, 0, 255))
+    return _sp_up(img, k)
+
+
+def _d_space_rover(W, H, color, rng, k=5, side=1, lsign=1):
+    """Pixel lunar rover (white/gold body, solar roof, camera mast, dish, four wheels) in profile, facing right
+    (side = -1 mirrors it). Needs a canvas of about 36 x 26 texels; wheels touch the bottom row."""
+    k = max(1, int(k))
+    Wt, Ht = max(34, W // k), max(26, H // k)
+    img = np.zeros((Ht, Wt, 4), np.float32)
+    P = _sp_put
+    wy = Ht - 4.0
+    for cx in (6.0, 14.0, Wt - 15.0, Wt - 7.0):  # wheels
+        for y in range(Ht):
+            for x in range(Wt):
+                d = math.hypot(x + 0.5 - cx, y + 0.5 - wy)
+                if d <= 3.6:
+                    lit = (x + 0.5 - cx) * 0.6 * lsign - (y + 0.5 - wy) * 0.6
+                    if d > 2.5:
+                        P(img, y, x, (88, 92, 108) if lit > 1.2 else (34, 36, 46))
+                    elif d > 1.2:
+                        P(img, y, x, (176, 182, 200) if lit > 0.2 else (120, 126, 146))
+                    else:
+                        P(img, y, x, (70, 74, 92))
+    y0 = Ht - 13
+    x0, x1 = 3, Wt - 3
+    rows = [(238, 242, 252), (214, 220, 236), (214, 220, 236), (240, 190, 70), (160, 168, 192), (104, 110, 138), (60, 64, 84)]
+    for i, c in enumerate(rows):
+        for x in range(x0, x1):
+            if (i in (0, len(rows) - 1)) and (x < x0 + 2 or x >= x1 - 2):
+                continue
+            P(img, y0 + i, x, c)
+    for i in range(1, 4):  # cabin window
+        for x in range(x1 - 11, x1 - 5):
+            P(img, y0 + i, x, (28, 38, 74))
+    P(img, y0 + 1, x1 - 10, (140, 206, 255))
+    P(img, y0 + 1, x1 - 9, (140, 206, 255))
+    for x in range(x0 + 2, x0 + 8):  # hatch panel
+        P(img, y0 + 2, x, (150, 158, 184))
+    P(img, y0 + 4, x1 - 1, (255, 236, 150))  # headlight
+    for x in range(x0 + 3, x0 + 22):  # solar roof
+        P(img, y0 - 1, x, (176, 184, 204))
+        P(img, y0 - 2, x, (46, 100, 190) if (x - x0) % 4 else (120, 200, 255))
+        P(img, y0 - 3, x, (30, 74, 150) if (x - x0) % 4 else (90, 170, 245))
+    mx = x1 - 6
+    for y in range(y0 - 8, y0):  # camera mast + head
+        P(img, y, mx, (190, 196, 214))
+        P(img, y, mx + 1, (116, 122, 144))
+    for yy in range(3):
+        for xx in range(5):
+            P(img, y0 - 11 + yy, mx - 2 + xx, (62, 68, 90))
+    P(img, y0 - 10, mx + 2, (120, 224, 255))
+    dx = x1 - 15  # small dish on a stem
+    for i in range(5):
+        P(img, y0 - 6 - (1 if i in (0, 4) else 0), dx + i, (176, 182, 200))
+    P(img, y0 - 5, dx + 2, (176, 182, 200))
+    P(img, y0 - 4, dx + 2, (176, 182, 200))
+    if side < 0:
+        img = img[:, ::-1].copy()
+    return _sp_up(img, k)
+
+
+def _d_space_trail(W, H, color, rng, k=5, p0=(0.0, 1.0), p1=(0.5, 0.0), p2=(1.0, 0.1), step=4.0, fade=0.6, arrow=False):
+    """Dotted flight path on a k-px texel grid: a quadratic Bezier p0 -> p1 -> p2 (box fractions, y down) drawn as
+    square texel dots every `step` texels (every 4th dot 2x2, opacity fading by `fade` towards p2)."""
+    k = max(1, int(k))
+    Wt, Ht = max(8, W // k), max(8, H // k)
+    img = np.zeros((Ht, Wt, 4), np.float32)
+    pts = []
+    for i in range(801):
+        t = i / 800.0
+        x = (1 - t) ** 2 * p0[0] + 2 * (1 - t) * t * p1[0] + t * t * p2[0]
+        y = (1 - t) ** 2 * p0[1] + 2 * (1 - t) * t * p1[1] + t * t * p2[1]
+        pts.append((x * (Wt - 1), y * (Ht - 1)))
+    acc, nxt, n = 0.0, 0.0, 0
+    total = sum(math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]) for i in range(800)) or 1.0
+    for i in range(800):
+        if acc >= nxt:
+            x, y = int(round(pts[i][0])), int(round(pts[i][1]))
+            a = 1.0 - fade * acc / total
+            size = 2 if n % 4 == 0 else 1
+            for dy in range(size):
+                for dx in range(size):
+                    _sp_put(img, y + dy, x + dx, color, a)
+            nxt += float(step)
+            n += 1
+        acc += math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1])
+    if arrow:  # solid arrowhead at p2 pointing along the end tangent (5 texels long)
+        ex, ey = pts[800]
+        ux, uy = pts[800][0] - pts[760][0], pts[800][1] - pts[760][1]
+        ln = math.hypot(ux, uy) or 1.0
+        ux, uy = ux / ln, uy / ln
+        for yy in range(int(ey) - 8, int(ey) + 9):
+            for xx in range(int(ex) - 8, int(ex) + 9):
+                rx, ry = xx + 0.5 - ex - 0.5, yy + 0.5 - ey - 0.5
+                back = -(rx * ux + ry * uy)  # distance behind the tip
+                side = abs(-rx * uy + ry * ux)
+                if -0.6 <= back <= 5.0 and side <= back * 0.5 + 0.7:
+                    _sp_put(img, yy, xx, color, 1.0)
+    return _sp_up(img, k)
+
+
+_DECOR.update({"space_planet": _d_space_planet, "space_rocket": _d_space_rocket, "space_gantry": _d_space_gantry,
+               "space_crop": _d_space_crop, "space_astronaut": _d_space_astronaut, "space_rocks": _d_space_rocks,
+               "space_crater": _d_space_crater, "space_rover": _d_space_rover, "space_trail": _d_space_trail})
+
+
+# ---------------------------------------------------------------- space chapter motifs (round 3: sun, stars, satellite, solar array, ground shadows, tracks)
+# Same conventions as the round-2 space motifs above: drawn on a grid of `k` canvas px per texel and NEAREST-upscaled.
+_SP_BAYER = np.array([[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]], np.float32) / 16.0 + 1.0 / 32.0
+
+
+def _d_space_sun(W, H, color, rng, k=5, r=11, corona=None, rays=True, seed=1, ray_len=0.95):
+    """Round pixel sun on a k-px texel grid, centred in the box: a hard-edged disc in four warm tones
+    (white-hot core to orange limb, a few granulation texels), a corona of 7 dithered alpha steps out to `corona`
+    texels (default: half the box) tinted from `color` towards orange, and (rays=true) four 1-texel pixel rays
+    with short diagonals (length = ray_len x r). r = disc radius in texels."""
+    k = max(1, int(k))
+    Wt, Ht = max(12, W // k), max(12, H // k)
+    img = np.zeros((Ht, Wt, 4), np.float32)
+    cx, cy = Wt / 2.0, Ht / 2.0
+    R = float(r)
+    Rc = float(corona) if corona else min(Wt, Ht) / 2.0
+    ys, xs = np.mgrid[0:Ht, 0:Wt].astype(np.float32)
+    d = np.sqrt((xs + 0.5 - cx) ** 2 + (ys + 0.5 - cy) ** 2)
+    glow = np.array(color, np.float32) / 255.0
+    warm = np.array((255, 164, 70), np.float32) / 255.0
+    t = np.clip(1.0 - (d - R) / max(1.0, Rc - R), 0, 1) ** 1.9
+    bay = np.tile(_SP_BAYER, (Ht // 4 + 1, Wt // 4 + 1))[:Ht, :Wt]
+    v = t * 7.0
+    lev = np.floor(v) + ((v - np.floor(v)) > bay)
+    a = np.clip(lev / 7.0, 0, 1) * 0.72
+    mixm = (np.clip(1.0 - t * 1.5, 0, 1) * 0.6)[..., None]
+    rgb = glow * (1 - mixm) + warm * mixm
+    outside = d > R
+    img[..., :3] = np.where(outside[..., None], rgb, 0)
+    img[..., 3] = np.where(outside, a, 0)
+    pal = np.array([(255, 253, 234), (255, 241, 180), (255, 219, 112), (255, 181, 76)], np.float32) / 255.0
+    tone = np.digitize(d / R, [0.42, 0.7, 0.9])
+    g = _sp_h3(xs.astype(np.int64), ys.astype(np.int64), 9, int(seed))
+    tone = np.clip(tone + ((g > 0.9) & (tone < 3)).astype(np.int64) - ((g < 0.04) & (tone > 0)).astype(np.int64), 0, 3)
+    disc = d <= R
+    img[..., :3] = np.where(disc[..., None], pal[tone], img[..., :3])
+    img[..., 3] = np.where(disc, 1.0, img[..., 3])
+    if rays:
+        i0 = int(R * 1.16)
+        la, lb = max(1, int(R * ray_len)), max(1, int(R * ray_len * 0.42))
+        for sx, sy, ln in ((1, 0, la), (-1, 0, la), (0, 1, la), (0, -1, la), (1, 1, lb), (-1, 1, lb), (1, -1, lb), (-1, -1, lb)):
+            diag = sx != 0 and sy != 0
+            for i in range(ln):
+                step = i0 * (0.78 if diag else 1.0) + i
+                px = int(cx + sx * (step / (1.414 if diag else 1.0))) - (1 if sx < 0 else 0)
+                py = int(cy + sy * (step / (1.414 if diag else 1.0))) - (1 if sy < 0 else 0)
+                al = float(np.clip(1.0 - i / max(1, ln), 0, 1))
+                al = (1.0, 0.8, 0.55, 0.35)[min(3, int((1 - al) * 4))]
+                _sp_put(img, py, px, (255, 246, 206), al)
+    return _sp_up(img, k)
+
+
+def _d_space_stars(W, H, color, rng, k=5, n=60, sparkle=3):
+    """Square pixel stars on a k-px texel grid: n single texels (alpha 0.3-1, white / warm / cool), ~7 % 2x2 texels
+    and `sparkle` plus-shaped twinkles. `color` is required but unused. Keep the box off the quest panels."""
+    k = max(1, int(k))
+    Wt, Ht = max(8, W // k), max(8, H // k)
+    img = np.zeros((Ht, Wt, 4), np.float32)
+    pal = [(226, 222, 255), (255, 238, 205), (190, 212, 255), (255, 255, 255)]
+    for _ in range(int(n)):
+        x, y = rng.randrange(Wt), rng.randrange(Ht)
+        c, a = rng.choice(pal), rng.choice((0.3, 0.45, 0.6, 0.8, 1.0))
+        s = 2 if rng.random() < 0.07 else 1
+        for dy in range(s):
+            for dx in range(s):
+                _sp_put(img, y + dy, x + dx, c, a)
+    for _ in range(int(sparkle)):
+        x, y = rng.randrange(3, max(4, Wt - 3)), rng.randrange(3, max(4, Ht - 3))
+        c, L = rng.choice(pal[:3]), (2 if rng.random() < 0.4 else 1)
+        _sp_put(img, y, x, (255, 255, 255), 1.0)
+        for i in range(1, L + 1):
+            for ddx, ddy in ((i, 0), (-i, 0), (0, i), (0, -i)):
+                _sp_put(img, y + ddy, x + ddx, c, 0.7 if i == 1 else 0.4)
+    return _sp_up(img, k)
+
+
+def _d_space_satellite(W, H, color, rng, k=5, side=1):
+    """Pixel satellite: gold-foil hub, two navy solar wings on trusses, a small dish and a mast with a red light.
+    About 34 x 14 texels (w 7.1, h 3 units at k 5). side = -1 mirrors it. `color` is required but unused."""
+    k = max(1, int(k))
+    Wt, Ht = max(34, W // k), max(14, H // k)
+    img = np.zeros((Ht, Wt, 4), np.float32)
+    P = _sp_put
+    cx, cy = Wt // 2, Ht // 2 + 2
+    foil = [(150, 106, 40), (206, 160, 58), (244, 200, 96), (255, 228, 146)]
+    for y in range(cy - 4, cy + 4):
+        for x in range(cx - 4, cx + 4):
+            lv = 3 if x < cx - 2 else (2 if x < cx + 1 else (1 if x < cx + 3 else 0))
+            if y == cy - 4:
+                lv = min(3, lv + 1)
+            if y == cy + 3:
+                lv = max(0, lv - 1)
+            if (x * 3 + y * 5) % 7 == 0 and 0 < lv < 3:
+                lv -= 1
+            P(img, y, x, foil[lv])
+    for x in range(cx - 4, cx + 4):
+        P(img, cy - 1, x, (96, 72, 36))
+    for sgn in (-1, 1):
+        for x in range(cx + sgn * 4 if sgn > 0 else cx - 7, cx + 7 if sgn > 0 else cx - 3):  # truss
+            P(img, cy - 1, x, (150, 158, 182))
+            P(img, cy, x, (92, 98, 122))
+        wx0 = cx + 7 if sgn > 0 else cx - 7 - 11
+        for y in range(cy - 4, cy + 4):
+            for x in range(wx0, wx0 + 11):
+                i, j = x - wx0, y - (cy - 4)
+                c = (24, 48, 104)
+                if i % 3 == 0 or j % 3 == 0:
+                    c = (58, 108, 188)
+                if (i * 2 + j * 3 + (0 if sgn < 0 else 2)) % 14 in (0, 1):
+                    c = (96, 156, 230)
+                if j == 0:
+                    c = (178, 186, 206)
+                elif j == 7:
+                    c = (62, 68, 92)
+                if i == 0:
+                    c = (150, 158, 182)
+                elif i == 10:
+                    c = (74, 80, 104)
+                P(img, y, x, c)
+    for i in range(5):  # dish
+        P(img, cy - 7 - (1 if i in (0, 4) else 0), cx - 5 + i, (186, 192, 210))
+    P(img, cy - 6, cx - 3, (150, 158, 182))
+    P(img, cy - 5, cx - 3, (150, 158, 182))
+    P(img, cy - 5, cx - 2, (110, 116, 140))
+    for y in range(cy - 8, cy - 4):  # mast + red light
+        P(img, y, cx + 2, (170, 176, 198))
+    P(img, cy - 9, cx + 2, (255, 74, 64))
+    if side < 0:
+        img = img[:, ::-1].copy()
+    return _sp_up(img, k)
+
+
+def _d_space_solar(W, H, color, rng, k=5, side=1):
+    """Solar array on a mast: two navy panels (frame, thin grid, a diagonal sheen) in one plane tilted towards the
+    upper left, a mast with diagonal struts and a base plate. Designed 30 x 24 texels (w 6.25, h 5 units at k 5).
+    side = -1 mirrors it. `color` is required but unused."""
+    k = max(1, int(k))
+    Wt, Ht = max(26, W // k), max(20, H // k)
+    img = np.zeros((Ht, Wt, 4), np.float32)
+    P = _sp_put
+    mx = Wt // 2 - 1
+    pw, ph = mx - 1, 7
+    drop = 3.0
+
+    def top(x):
+        return 1 + int(round(x * drop / max(1, Wt - 1)))
+
+    for y in range(Ht - 3, Ht):  # base plate
+        for x in range(mx - 5, mx + 7):
+            P(img, y, x, (150, 158, 182) if y == Ht - 3 else ((100, 106, 130) if y == Ht - 2 else (62, 66, 86)))
+    for y in range(top(mx) + ph + 1, Ht - 3):  # mast
+        P(img, y, mx, (176, 182, 202))
+        P(img, y, mx + 1, (96, 102, 126))
+    for xe, xm in ((3, mx), (Wt - 4, mx + 1)):  # struts from the mast to the panel undersides
+        y0, y1 = Ht - 8, top(xe) + ph + 1
+        n = max(abs(xe - xm), abs(y1 - y0), 1)
+        for i in range(n + 1):
+            P(img, int(round(y0 + (y1 - y0) * i / n)), int(round(xm + (xe - xm) * i / n)), (104, 110, 134))
+    for x0 in (0, mx + 3):
+        for i in range(pw):
+            x = x0 + i
+            for j in range(ph):
+                y = top(x) + j
+                c = (22, 40, 88)
+                if i % 4 == 2 or j == 3:
+                    c = (38, 68, 128)
+                if (x - y * 2) % 15 in (0, 1) and 0 < j < ph - 1 and 0 < i < pw - 1:
+                    c = (62, 104, 176)
+                if j == 0:
+                    c = (182, 190, 210)
+                elif j == ph - 1:
+                    c = (58, 64, 88)
+                if i == 0:
+                    c = (160, 168, 192)
+                elif i == pw - 1:
+                    c = (70, 76, 100)
+                P(img, y, x, c)
+    for x in range(mx - 1, mx + 4):  # bracket joining the panels over the mast
+        P(img, top(x) + ph, x, (120, 126, 150))
+        P(img, top(x) + ph + 1, x, (84, 90, 114))
+    if side < 0:
+        img = img[:, ::-1].copy()
+    return _sp_up(img, k)
+
+
+def _d_space_shadow(W, H, color, rng, k=5, skew=0.0):
+    """Texel-snapped ground shadow: a flat ellipse in `color` with a hard core and a checkerboard-dithered rim.
+    skew = texels the top row is shifted to the right of the bottom row (cast away from a light on the left).
+    Use the layer alpha (0.4-0.6) for strength."""
+    k = max(1, int(k))
+    Wt, Ht = max(4, W // k), max(2, H // k)
+    img = np.zeros((Ht, Wt, 4), np.float32)
+    ys, xs = np.mgrid[0:Ht, 0:Wt].astype(np.float32)
+    ex = (xs + 0.5 - Wt / 2.0 - skew * (0.5 - (ys + 0.5) / Ht)) / (Wt / 2.0)
+    ey = (ys + 0.5 - Ht / 2.0) / (Ht / 2.0)
+    dd = ex * ex + ey * ey
+    chk = ((xs + ys) % 2 == 0)
+    core = dd <= 0.62
+    rim = (dd > 0.62) & (dd <= 1.0) & chk
+    m = core | rim
+    img[..., :3] = (np.array(color, np.float32) / 255.0)
+    img[..., 3] = m.astype(np.float32)
+    return _sp_up(img, k)
+
+
+def _d_space_tracks(W, H, color, rng, k=5, kind="tread", sep=4, amp=1.0, fade=0.4):
+    """Marks on the regolith on a k-px texel grid, running along the box from right to left. kind 'tread' =
+    two parallel rows of 3-on / 1-off tyre dashes `sep` texels apart on a gentle wave of amplitude `amp`;
+    'prints' = alternating boot prints (2 x 1 texels, a lighter texel above). `color` = dark mark colour;
+    opacity fades by `fade` towards the left end. Use the layer alpha for strength."""
+    k = max(1, int(k))
+    Wt, Ht = max(8, W // k), max(4, H // k)
+    img = np.zeros((Ht, Wt, 4), np.float32)
+    base = np.array(color, np.float32)
+    hi = np.clip(base * 1.5 + 22, 0, 255)
+    mid = Ht / 2.0
+    ph = rng.uniform(0, 6.28)
+    if kind == "prints":
+        step, n = 6, 0
+        for x in range(Wt - 3, 1, -step):
+            fy = int(round(mid + math.sin(x * 0.07 + ph) * amp)) + (1 if n % 2 else -1)
+            a = 1.0 - fade * (Wt - x) / float(Wt)
+            for dx in range(2):
+                _sp_put(img, fy, x + dx, base, a)
+                _sp_put(img, fy - 1, x + dx, hi, a * 0.8)
+            _sp_put(img, fy, x - 1, base, a * 0.7)
+            n += 1
+    else:
+        for row in (-1, 1):
+            for x in range(Wt):
+                if x % 4 == 3:
+                    continue
+                fy = int(round(mid + row * sep / 2.0 + math.sin(x * 0.09 + ph) * amp))
+                a = 1.0 - fade * (Wt - 1 - x) / float(Wt)
+                _sp_put(img, fy, x, base, a)
+                if x % 4 in (0, 1):
+                    _sp_put(img, fy - 1, x, hi, a * 0.75)
+    return _sp_up(img, k)
+
+
+def _d_space_mast(W, H, color, rng, k=5, side=1):
+    """Radio mast: a 2-texel pole on a small foot, a tilted dish bowl with a feed horn and a red light on top.
+    About 9 x 12 texels (w 1.9, h 2.5 units at k 5). `color` is required but unused. side = -1 mirrors it."""
+    k = max(1, int(k))
+    Wt, Ht = max(9, W // k), max(10, H // k)
+    img = np.zeros((Ht, Wt, 4), np.float32)
+    P = _sp_put
+    cx = Wt // 2
+    for y in range(5, Ht):
+        P(img, y, cx, (180, 186, 206))
+        P(img, y, cx + 1, (96, 102, 126))
+    for x in range(cx - 2, cx + 4):
+        P(img, Ht - 1, x, (132, 140, 162))
+    for x in range(cx - 1, cx + 3):
+        P(img, Ht - 2, x, (150, 158, 182))
+    for x in range(cx - 3, cx + 5):  # dish bowl, facing up and to the left
+        P(img, 3, x, (196, 202, 220))
+    for x in range(cx - 2, cx + 4):
+        P(img, 4, x, (150, 158, 182))
+    for x in range(cx - 1, cx + 3):
+        P(img, 5, x, (104, 110, 134))
+    P(img, 2, cx - 2, (150, 158, 182))
+    P(img, 1, cx - 3, (226, 232, 244))
+    P(img, 2, cx + 4, (150, 158, 182))
+    P(img, 0, cx + 1, (255, 70, 60))
+    P(img, 1, cx + 1, (150, 158, 182))
+    if side < 0:
+        img = img[:, ::-1].copy()
+    return _sp_up(img, k)
+
+
+_DECOR.update({"space_sun": _d_space_sun, "space_stars": _d_space_stars, "space_satellite": _d_space_satellite,
+               "space_solar": _d_space_solar, "space_mast": _d_space_mast, "space_shadow": _d_space_shadow, "space_tracks": _d_space_tracks})
+
+
+# ---------------------------------------------------------------- create chapter, round 2 (additive): machines
+# A tiny texel painter (oblique 3-face boxes like `blocks`) plus the press / mixer station, the steam boiler with a lit
+# firebox and a hard-edged smoke plume. Everything lives on a k-px texel grid and is NEAREST-upscaled.
+def _cx_arr(name):
+    return np.asarray(tex(name).convert("RGBA"), np.float32) / 255
+
+
+def _cx_fit(src, w, h, tx=False, ty=False):
+    """Face source (texture array, flat 0..255 rgb tuple, or fn(i, j) -> rgb 0..1 | None) -> (h, w, 4) float array."""
+    out = np.zeros((h, w, 4), np.float32)
+    if callable(src):
+        for j in range(h):
+            for i in range(w):
+                c = src(i, j)
+                if c is not None:
+                    out[j, i, :3], out[j, i, 3] = c, 1.0
+        return out
+    a = np.asarray(src, np.float32)
+    if a.ndim == 1:
+        out[..., :3], out[..., 3] = a[:3] / 255, 1.0
+        return out
+    th, tw = a.shape[:2]
+    for j in range(h):
+        v = j % th if ty else min(th - 1, int(j * th / h))
+        for i in range(w):
+            u = i % tw if tx else min(tw - 1, int(i * tw / w))
+            px = a[v, u]
+            if a.shape[2] < 4 or px[3] > 0.5:
+                out[j, i, :3], out[j, i, 3] = px[:3], 1.0
+    return out
+
+
+class _CxPaint:
+    """Texel painter: put / rect / blit and `box` = front face + top face sheared right + side face sheared up
+    (the same oblique view as the `blocks` layer)."""
+
+    def __init__(self, w, h):
+        self.w, self.h = int(w), int(h)
+        self.c = np.zeros((self.h, self.w, 4), np.float32)
+
+    def put(self, x, y, rgb, mul=1.0):
+        if 0 <= x < self.w and 0 <= y < self.h:
+            self.c[y, x, :3] = np.clip(np.asarray(rgb, np.float32)[:3] * mul, 0, 1)
+            self.c[y, x, 3] = 1.0
+
+    def rect(self, x0, y0, x1, y1, rgb, mul=1.0):
+        for y in range(y0, y1):
+            for x in range(x0, x1):
+                self.put(x, y, rgb, mul)
+
+    def blit(self, x, y, arr, mul=1.0):
+        for j in range(arr.shape[0]):
+            for i in range(arr.shape[1]):
+                if arr[j, i, 3] > 0.5:
+                    self.put(x + i, y + j, arr[j, i, :3], mul)
+
+    def box(self, x, y, w, h, d, front, top=None, side=None, tm=1.16, sm=0.6, tx=False, ty=False, fm=0.96,
+            between=None):
+        if d > 0:
+            s = _cx_fit(front if side is None else side, d, h)
+            for i in range(d):
+                for j in range(h):
+                    if s[j, i, 3] > 0.5:
+                        self.put(x + w + i, y + j - i - 1, s[j, i, :3], sm)
+            t = _cx_fit(front if top is None else top, w, d, tx=tx)
+            for j in range(d):
+                for i in range(w):
+                    if t[j, i, 3] > 0.5:
+                        self.put(x + i + (d - j), y - d + j, t[j, i, :3], tm)
+        if between:
+            between()
+        self.blit(x, y, _cx_fit(front, w, h, tx=tx, ty=ty), fm)
+
+    def image(self, k, W, H):
+        im = _img(np.clip(self.c, 0, 1), "RGBA").resize((self.w * k, self.h * k), Image.NEAREST)
+        res = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+        res.paste(im, (0, 0))
+        return res
+
+
+def _cx_plate(base, w, h, grain=0.4, bevel=True, seed=0):
+    """fn(i, j) painting a bevelled iron plate of colour `base` (0..255) with the grain of industrial_iron_block."""
+    iron = _cx_arr("create:block/industrial_iron_block")[..., :3].mean(axis=2)
+    m = float(iron.mean()) or 1.0
+    b = np.array(base, np.float32) / 255
+
+    def f(i, j):
+        g = iron[(j + seed) % 16, (i + seed * 3) % 16] / m
+        c = b * (1 - grain / 2 + grain * g)
+        if bevel:
+            if j == 0:
+                c = c * 1.28
+            elif j == h - 1:
+                c = c * 0.62
+            elif j == h - 2:
+                c = c * 0.84
+            if i == 0:
+                c = c * 1.12
+            elif i == w - 1:
+                c = c * 0.7
+        return np.clip(c, 0, 1)
+    return f
+
+
+def _cx_shade_rows(n):
+    """Brightness per row of a lit horizontal cylinder (bright top, dark belly)."""
+    out = []
+    for j in range(n):
+        t = (j + 0.5) / n
+        out.append(1.4 - 0.5 * t if t < 0.25 else 1.18 - 0.62 * (t - 0.25) / 0.75 - (0.28 if j == n - 1 else 0))
+    return out
+
+
+def _d_create_station(W, H, color, rng, kind="press", k=4, d=5, post=5, pole=6, head=9, basin_h=12):
+    """Create machine station on a gantry, front view (oblique like `blocks`): a casing block on top (andesite for
+    `kind` 'press', brass for 'mixer') on an iron beam between two iron posts that reach the floor (image bottom).
+    A brass-banded pole hangs from the casing. 'press': an iron press head `head` texels tall `pole` texels below
+    the beam (a belt passes between the posts under it). 'mixer': a silver whisk dips into an andesite basin full
+    of molten brass standing between the posts. Width W = (span + d) * k, span >= 24 (26 for a press, 32 for a
+    mixer); the power shaft goes behind the casing at its middle height (y = (d + 8) * k from the top)."""
+    k, w, h = _cx_grid(W, H, k)
+    P = _CxPaint(w, h)
+    bw = w - d
+    y0 = d
+    cx = (bw - 16) // 2
+    girder = _cx_plate((88, 92, 92), bw, 5, 0.35)
+    beam_y, post_top = y0 + 16, y0 + 21
+    gap0, gap1 = post, bw - post
+    mx = bw // 2
+    pole_img = _cx_arr("create:block/mechanical_press_pole")[:, 0:6]
+    if kind == "mixer":
+        bwid = gap1 - gap0 - 2
+        bx = gap0 + 1
+        bt = h - basin_h
+        rim = np.array([118, 120, 124], np.float32) / 255
+
+        def b_front(i, j):
+            if j == 0:
+                return rim * 1.1
+            if j == 1:
+                return rim * 0.8
+            g = 0.9 + 0.1 * ((i * 7 + j * 3) % 5) / 4
+            c = np.array([92, 92, 98], np.float32) / 255 * g * (1.0 - 0.34 * (j / basin_h))
+            if i == 0:
+                c = c * 1.1
+            if i == bwid - 1:
+                c = c * 0.7
+            if j == basin_h - 1:
+                c = c * 0.6
+            return c
+
+        paste = np.array([206, 160, 74], np.float32) / 255
+
+        def b_top(i, j):          # j = 0 far edge .. d-1 near edge
+            if j == d - 1 or i == 0 or i >= bwid - 1:
+                return rim * 1.2
+            r = (i * 5 + j * 11) % 7
+            return paste * (1.14 if r == 0 else (0.82 if r == 3 else 1.0))
+
+        wy = bt - 3                       # whisk centre, dips 3 texels behind the front wall
+
+        def whisk():
+            sil = np.array([196, 202, 208], np.float32) / 255
+            ry, rx = 5, 6
+            for t in range(0, 360, 6):
+                a = math.radians(t)
+                xx, yy = int(round(mx + rx * math.cos(a))), int(round(wy + ry * math.sin(a)))
+                P.put(xx, yy, sil, 1.15 if (math.sin(a) < 0 and math.cos(a) < 0.3) else 0.72)
+            for dx in (-2, 2):
+                for yy in range(wy - ry + 1, wy + ry):
+                    if abs(dx) * 1.0 < rx:
+                        P.put(mx + dx, yy, sil, 0.9 if dx < 0 else 0.62)
+            for yy in range(y0 + 16, wy - ry + 1):                     # stem
+                P.put(mx - 1, yy, sil, 1.05)
+                P.put(mx, yy, sil, 0.7)
+
+        P.box(bx, bt, bwid, basin_h, d, b_front, b_top, b_front, tm=1.0, sm=0.72, between=whisk, fm=1.0)
+    # posts + beam
+    for px in (0, bw - post):
+        P.box(px, post_top, post, h - post_top, 2, _cx_plate((86, 90, 90), post, 8, 0.35, seed=px), tm=1.2, sm=0.6, fm=1.0)
+    P.box(0, beam_y, bw, 5, d, girder, (150, 154, 152), girder, tm=1.0, sm=0.62, fm=1.0)
+    if kind == "mixer":
+        cas = "create:block/brass_casing"
+        P.box(cx, y0, 16, 16, d, _cx_arr(cas), _cx_arr(cas), _cx_arr(cas), tm=1.1)
+    else:
+        P.box(cx, y0, 16, 16, d, _cx_arr("create:block/mechanical_press_side"), _cx_arr("create:block/mechanical_press_top"),
+              _cx_arr("create:block/andesite_casing"), tm=1.1)
+    # pole (banded brass) from the casing down
+    if kind == "press":
+        head_top = beam_y + 5 + pole
+        pole_end = head_top
+    else:
+        pole_end = beam_y + 5
+    P.blit(mx - 3, beam_y, _cx_fit(pole_img, 6, max(1, pole_end - beam_y), ty=True), 1.0)
+    if kind == "press":
+        hw = gap1 - gap0 - 2
+        hx = gap0 + 1
+        hf = _cx_plate((90, 92, 98), hw, head, 0.5, seed=3)
+        orn = (hw - 6, head - 4)
+
+        def head_front(i, j):
+            c = hf(i, j)
+            ox, oy = i - 3, j - 2
+            if 0 <= ox < orn[0] and 0 <= oy < orn[1]:
+                edge = ox in (0, orn[0] - 1) or oy in (0, orn[1] - 1)
+                c = c * (1.3 if edge and (ox == 0 or oy == 0) else (0.62 if edge else 0.82))
+            if (i in (1, hw - 2)) and j in (1, head - 3):
+                c = c * 1.6
+            return np.clip(c, 0, 1)
+        P.box(hx, head_top, hw, head, 3, head_front, (118, 120, 126), (46, 47, 52), tm=1.0, sm=1.0, fm=1.0)
+    return P.image(k, W, H)
+
+
+def _d_create_boiler(W, H, color, rng, k=4, tank_h=22, plinth_h=15, fire=True, d=4):
+    """Copper steam boiler (front view): a horizontal riveted copper tank (`color` = copper, default (186,104,74)) with
+    brass bands, a steam dome with a rod, a tall flared chimney near the right end, a brass pressure gauge, on a dark
+    iron plinth whose left part is a lit brass-framed firebox (3-tone orange / yellow fire). Canvas is
+    (tank width + d) x (chimney .. floor); the chimney reaches the image top; the plinth stands on the image bottom.
+    Pair it with scene `lights` and a soft_glow at the firebox."""
+    k, w, h = _cx_grid(W, H, k)
+    P = _CxPaint(w, h)
+    tw_ = w - d
+    cop = np.array(color if color else (186, 104, 74), np.float32) / 255
+    ty = h - plinth_h - tank_h                       # tank top row
+    shade = _cx_shade_rows(tank_h)
+    brass = np.array([200, 156, 70], np.float32) / 255
+    # chimney (behind the tank): 5 wide + flare cap + base collar
+    chx = tw_ - 8
+    for j in range(0, ty + 2):
+        for i in range(5):
+            m = (1.28, 1.12, 0.96, 0.8, 0.6)[i]
+            band = 0.78 if (j % 9 == 8) else 1.0
+            P.put(chx + i, j, cop, m * band)
+    for i in range(-1, 6):
+        for j in (0, 1):
+            P.put(chx + i, j, cop, (1.35 if j == 0 else 1.05) * (1.0 if i < 4 else 0.7))
+        P.put(chx + i, 2, cop, 0.5)
+    for i in range(-1, 6):
+        P.put(chx + i, ty - 1, cop, 1.2 if i < 3 else 0.8)
+        P.put(chx + i, ty - 2, cop, 0.9 if i < 4 else 0.6)
+    # steam dome + rod
+    dx0, dw = tw_ // 2 - 8, 12
+    for j in range(6):
+        for i in range(dw):
+            if (j == 0 and (i < 2 or i >= dw - 2)) or (j == 1 and (i < 1 or i >= dw - 1)):
+                continue
+            m = (1.36, 1.2, 1.05, 0.92, 0.78, 0.66)[j] * (1.1 if i < 2 else (0.68 if i >= dw - 2 else 1.0))
+            P.put(dx0 + i, ty - 5 + j, cop, m)
+    for i in range(dw):
+        P.put(dx0 + i, ty - 1, brass, 1.0 if i < dw - 2 else 0.7)
+    for j in range(3):
+        P.put(dx0 + dw // 2 - 1, ty - 8 + j, brass, 1.1)
+        P.put(dx0 + dw // 2, ty - 8 + j, brass, 0.7)
+    # plinth: dark iron with a brass trim; firebox opening on the left
+    pl = _cx_plate((54, 56, 58), tw_, plinth_h, 0.5, bevel=False, seed=5)
+    P.box(0, h - plinth_h, tw_, plinth_h, d, pl, (96, 98, 100), (40, 41, 44), tm=1.0, sm=1.0, fm=1.0)
+    for i in range(tw_):
+        P.put(i, h - plinth_h, brass, 1.05)
+        P.put(i, h - plinth_h + 1, brass, 0.6)
+    # small ash-pit door and bolts on the right part of the plinth
+    ax0 = tw_ - 18
+    for j in range(-1, 6):
+        for i in range(-1, 9):
+            edge = i in (-1, 8) or j in (-1, 5)
+            P.put(ax0 + i, h - plinth_h + 5 + j, brass if edge else np.array([0.12, 0.1, 0.1], np.float32),
+                  (1.0 if (i == -1 or j == -1) else 0.6) if edge else 1.0)
+    for bx_ in (20, 24, tw_ - 3):
+        P.put(bx_, h - plinth_h + 3, brass, 0.9)
+        P.put(bx_, h - 3, brass, 0.9)
+    # tank: rounded ends, shaded rows, seams + rivets, end bands
+    ncol = tw_
+    for j in range(tank_h):
+        for i in range(ncol):
+            r = 4
+            cut = 0
+            if j < r:
+                cut = r - j
+            elif j >= tank_h - r:
+                cut = r - (tank_h - 1 - j)
+            cut = {4: 3, 3: 2, 2: 1, 1: 1, 0: 0}.get(cut, 0) if cut else 0
+            if i < cut or i >= ncol - cut:
+                continue
+            m = shade[j]
+            m *= 1.0 + 0.05 * (((i // 3) + j // 5) % 2)
+            seam = i in (ncol // 4, ncol // 2, 3 * ncol // 4)
+            if seam:
+                m *= 0.6
+            elif (i - 1 in (ncol // 4, ncol // 2, 3 * ncol // 4)) and j % 6 == 2:
+                m *= 1.38
+            if i < 2 or i >= ncol - 2:
+                m *= 0.78
+            P.put(i, ty + j, cop, m)
+    for bxp in (4, ncol - 6):                      # brass bands
+        for j in range(tank_h):
+            if P.c[ty + j, bxp, 3] > 0:
+                P.put(bxp, ty + j, brass, shade[j] * 1.02)
+                P.put(bxp + 1, ty + j, brass, shade[j] * 0.7)
+    # pressure gauge
+    gx, gy = ncol // 2 + 4, ty + tank_h // 2 + 1
+    for yy in range(-5, 6):
+        for xx in range(-5, 6):
+            rr = math.hypot(xx, yy)
+            if rr <= 4.7:
+                if rr > 3.5:
+                    P.put(gx + xx, gy + yy, brass, 1.12 if (xx + yy) < 0 else 0.62)
+                else:
+                    P.put(gx + xx, gy + yy, np.array([0.9, 0.88, 0.8], np.float32), 1.0 if (xx + yy) < 2 else 0.86)
+    for t in range(0, 4):
+        P.put(gx + t, gy - t, np.array([0.18, 0.1, 0.08], np.float32))
+    P.put(gx, gy, np.array([0.18, 0.1, 0.08], np.float32))
+    # firebox door with fire
+    fx0, fw = 3, 13
+    fy0, fh = h - plinth_h + 3, plinth_h - 5
+    for j in range(-1, fh + 1):
+        for i in range(-1, fw + 1):
+            edge = i in (-1, fw) or j in (-1, fh)
+            if edge:
+                lit = (i == -1 or j == -1)
+                P.put(fx0 + i, fy0 + j, brass, 1.15 if lit else 0.6)
+    for j in range(fh):
+        for i in range(fw):
+            if (j == 0 and (i < 1 or i >= fw - 1)):
+                continue
+            P.put(fx0 + i, fy0 + j, np.array([0.2, 0.07, 0.05], np.float32))
+    if fire:
+        cols = []
+        for i in range(fw):
+            cols.append(3 + int(round(rng.random() * 3.0 + 2.0 * math.sin(i * 1.3 + 0.7) ** 2)))
+        for i in range(fw):
+            for t in range(min(cols[i], fh - 1)):
+                j = fh - 1 - t
+                rel = t / max(cols[i], 1)
+                if t >= cols[i] - 1 and cols[i] > 4:
+                    c = (0.86, 0.3, 0.1)
+                elif rel > 0.6:
+                    c = (0.98, 0.52, 0.12)
+                elif rel > 0.28:
+                    c = (1.0, 0.7, 0.18)
+                else:
+                    c = (1.0, 0.92, 0.52)
+                P.put(fx0 + i, fy0 + j, np.array(c, np.float32))
+        for i in range(0, fw, 2):                                   # grate bars
+            P.put(fx0 + i, fy0 + fh - 1, np.array([0.28, 0.1, 0.04], np.float32))
+    return P.image(k, W, H)
+
+
+def _d_create_smoke(W, H, color, rng, k=4, puffs=4, drift=-0.5):
+    """A short plume of hard-edged smoke puffs rising from the bottom centre of the box: `puffs` clumps growing
+    towards the top, three tones (light upper-left, `color` mid, dark lower-right), no soft alpha; the upper puffs are
+    semi-transparent in steps. `drift` leans the plume sideways (-1 left .. 1 right). Use unlit true, shadow 0."""
+    k, w, h = _cx_grid(W, H, k)
+    base = np.array(color, np.float32) / 255
+    out = np.zeros((h, w, 4), np.float32)
+    y, x = np.mgrid[0:h, 0:w].astype(np.float32)
+    r0 = max(2.0, min(w, h) * 0.13)
+    rs = [r0 * (1.0 + 1.0 * i / max(1, puffs - 1)) for i in range(puffs)]
+    span = h - 2 - 2 * rs[-1]
+    items = []
+    used = 0.0
+    for i, r in enumerate(rs):
+        t = i / max(1, puffs - 1)
+        cy = h - 1 - r - (span * t if puffs > 1 else 0)
+        cxp = w * 0.5 + drift * w * 0.22 * t + rng.uniform(-0.15, 0.15) * r
+        items.append((cxp, cy, r, 1.0 if i < puffs - 2 else (0.85 if i == puffs - 2 else 0.62)))
+    for cxp, cyp, r, al in reversed(items):
+        for ox, oy, rr in ((0.0, 0.0, r), (-0.78 * r, 0.3 * r, 0.62 * r), (0.8 * r, 0.34 * r, 0.56 * r)):
+            lx, ly = cxp + ox, cyp + oy
+            body = np.hypot(x + 0.5 - lx, y + 0.5 - ly) <= rr
+            inner = np.hypot(x + 0.5 - (lx - 0.3 * rr), y + 0.5 - (ly - 0.32 * rr)) <= rr * 0.92
+            cap = np.hypot(x + 0.5 - (lx - 0.38 * rr), y + 0.5 - (ly - 0.4 * rr)) <= rr * 0.42
+            tone = np.where(inner, 0.96, 0.74)
+            tone = np.where(cap & (rr > 2.4), 1.14, tone)[..., None] * base
+            out[..., :3] = np.where(body[..., None], np.clip(tone, 0, 1), out[..., :3])
+            out[..., 3] = np.where(body, al, out[..., 3])
+    return _cx_up(out, k, W, H)
+
+
+def _cx_up(out, k, W, H):
+    h, w = out.shape[:2]
+    im = _img(out, "RGBA").resize((w * k, h * k), Image.NEAREST)
+    res = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    res.paste(im, (0, 0))
+    return res
+
+
+_DECOR.update({"create_station": _d_create_station, "create_boiler": _d_create_boiler, "create_smoke": _d_create_smoke})
+
+
 DECOR_MOTIFS = set(_DECOR) | {"sprite", "sprite_row", "blocks"}
 
 
@@ -2228,6 +3798,10 @@ ATMOSPHERE = {"soft_glow", "sky_band", "nebula_glow", "aurora", "milky_way", "bl
 # big soft backdrops: the scene-wide 'pixelate' switch leaves them smooth too (a layer may still opt in)
 BACKDROP = {"mountain_range", "snowy_range", "strata_band", "tree_line", "wheat_field", "planet_horizon", "planet",
             "moon", "ringed_planet", "power_line", "castle"}
+# create chapter: pixel parts take the scene light / contact shadow like sprites and `blocks`
+PIXEL_MOTIFS.update({"create_cog", "create_wheel", "create_sails", "create_shaft", "create_belt", "create_water",
+                     "create_steam"})
+PIXEL_MOTIFS.update({"create_station", "create_boiler", "create_smoke"})
 
 
 def _motif_opts(fn, ly) -> dict:
