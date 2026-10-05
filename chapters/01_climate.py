@@ -169,7 +169,10 @@ ch.quest("weather_hazard", 0, 6.5, "风暴与龙卷风", icon="weather2:tornado_
                "&7- &6天气警报器&r：探测到危险天气后发出警报音，提醒及时避险",
                "&7- &6风速计 / 风向标&r：辅助判断风力和风向",
                "",
-               "&c警告：&r茅草屋、单层木板屋在龙卷风面前基本是纸糊的，第一年内尽快换成&6石头或砖&r建筑。"],
+               "&c警告：&r茅草屋、单层木板屋在龙卷风面前基本是纸糊的，第一年内尽快换成&6石头或砖&r建筑。",
+               "",
+               "&8本节不挡主线：警报器要用&6铸铁棒&8和工业警报器，天气预报要用铁、金、红石和指南针，"
+               "都是铁器时代以后的东西。先记住避险要点，到时候再回来做。"],
          tasks=[item("weather2:tornado_siren", title="天气警报器")],
          rewards=[item("weather2:tornado_sensor"), xp(40)])
 
@@ -194,7 +197,7 @@ ch.quest("sanity", 16.5, 6.5, "理智：别在黑暗中太久", icon="sanitydim:
          tasks=[item("sanitydim:garland", title="花冠")],
          rewards=[item("tfc:torch", 8), xp(30)])
 
-ch.quest("finale", 14, 6.5, "四季轮回，心中有数", icon="cold_sweat:goat_fur_chestplate", deps=["winter_ready", "storm_shelter"],
+ch.quest("finale", 14, 6.5, "四季轮回，心中有数", icon="cold_sweat:goat_fur_chestplate", deps=["winter_ready"],
          hide_lines=True, shape="gear", size=1.75,
          subtitle="活下来，才有下一步",
          desc=["&o&7「衣能遮体，火能驱寒，而真正让人活下去的，是提前的准备。」&r",
