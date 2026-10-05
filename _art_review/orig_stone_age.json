@@ -1,0 +1,27 @@
+{
+ "palette": {"panel_fill": [46, 32, 28], "accent": [220, 150, 100], "glow": [255, 124, 48], "text_key_hex": "#F4A877"},
+ "background": {"tiles": [{"asset": "tfc:block/rock/raw/basalt", "weight": 6}, {"asset": "tfc:block/rock/cobble/basalt", "weight": 3}], "target_brightness": 0.1, "saturation": 0.55, "tint": [255, 214, 186], "overlay": {"type": "speckle", "density": 0.15, "color": [255, 150, 70]}, "tile_size": 12},
+ "banner": {"ribbon_asset": "tfc:block/rock/raw/granite", "icons_left": ["minecraft:item/flint", "tfc:item/stone/knife", "tfc:item/stone/axe"], "icons_right": ["tfc:item/firestarter", "tfc:item/straw", "tfc:item/ceramic/vessel"], "motif": "flames", "motif_color": [255, 124, 48]},
+ "decor": [],
+ "shapes": {"normal": "circle", "milestone": "pentagon", "optional": "diamond", "gate": "gear"},
+ "scene": {
+  "layers": [
+  {"motif": "sky_band", "x": 0.5, "y": 0.2, "w": 70, "h": 14, "color": [150, 70, 40], "alpha": 0.4},
+  {"motif": "moon", "x": 0.3, "y": 0.19, "w": 3.4, "color": [188, 196, 214], "alpha": 0.6},
+  {"motif": "mountain_range", "x": 0.5, "y": 0.23, "w": 72, "h": 11, "color": [36, 40, 52], "alpha": 0.85},
+  {"motif": "mountain_range", "x": 0.45, "y": 0.27, "w": 66, "h": 8, "color": [24, 22, 26], "alpha": 0.85},
+  {"motif": "soft_glow", "x": 0.5, "y": 0.55, "w": 50, "h": 36, "color": [255, 120, 45], "alpha": 0.3},
+  {"motif": "soft_glow", "x": 0.6, "y": 0.4, "w": 16, "h": 13, "color": [255, 105, 35], "alpha": 0.3},
+  {"motif": "strata_band", "x": 0.5, "y": 0.86, "w": 70, "h": 9, "color": [110, 80, 60], "alpha": 0.35},
+  {"motif": "cave_painting", "x": 0.21, "y": 0.52, "w": 16, "h": 13, "color": [176, 84, 44], "alpha": 0.72},
+  {"motif": "cave_painting_herd", "x": 0.77, "y": 0.6, "w": 15, "h": 10, "color": [176, 84, 44], "alpha": 0.62},
+  {"motif": "hand_print", "x": 0.74, "y": 0.38, "w": 4.6, "color": [176, 84, 44], "alpha": 0.51, "rot": 12},
+  {"motif": "hand_print", "x": 0.8, "y": 0.34, "w": 4, "color": [176, 84, 44], "alpha": 0.43, "rot": -16},
+  {"motif": "hand_print", "x": 0.77, "y": 0.43, "w": 3.4, "color": [212, 194, 162], "alpha": 0.27, "rot": 24},
+  {"motif": "campfire", "x": 0.5, "y": 0.76, "w": 6, "h": 6, "color": [255, 120, 40], "alpha": 0.95},
+  {"motif": "embers", "x": 0.5, "y": 0.7, "w": 6, "h": 5, "color": [255, 140, 60], "alpha": 0.8},
+  {"motif": "arrowhead", "x": 0.7, "y": 0.8, "w": 5, "color": [92, 84, 82], "alpha": 0.8, "rot": -60},
+  {"motif": "arrowhead", "x": 0.27, "y": 0.78, "w": 3.6, "color": [86, 80, 80], "alpha": 0.75, "rot": -25}
+  ]
+ }
+}
