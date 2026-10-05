@@ -3771,6 +3771,1057 @@ def _cx_up(out, k, W, H):
 _DECOR.update({"create_station": _d_create_station, "create_boiler": _d_create_boiler, "create_smoke": _d_create_smoke})
 
 
+# ---------------------------------------------------------------- round 7: pixel winter landscape (climate)
+# Additive block (no existing code, default or motif output is touched): pixel mountains, snow-laden pines, snow
+# drifts, an aurora and a warm light pool, all on a k-px texel grid like the round-6 motifs (give each layer "k" =
+# the scene texel). None of them is in PIXEL_MOTIFS: they shade themselves, so set "shadow"/"unlit" per layer.
+def _p7_np(rng, seed=0):
+    return np.random.default_rng(int(seed) if seed else rng.randrange(1 << 30))
+
+
+def _p7_noise1(n, scale, g):
+    """Smooth 1-D value noise in 0..1, n samples, feature size `scale`."""
+    m = int(n / max(1.0, scale)) + 3
+    pts = g.random(m).astype(np.float32)
+    xs = np.arange(n, dtype=np.float32) / max(1.0, scale)
+    i = xs.astype(int)
+    f = xs - i
+    f = f * f * (3 - 2 * f)
+    return pts[i] * (1 - f) + pts[i + 1] * f
+
+
+def _p7_noise2(h, w, sx, sy, g):
+    """Smooth 2-D value noise (h, w) in 0..1, feature size sx x sy."""
+    gh, gw = int(h / max(1.0, sy)) + 3, int(w / max(1.0, sx)) + 3
+    pts = g.random((gh, gw)).astype(np.float32)
+    ys, xs = np.mgrid[0:h, 0:w].astype(np.float32)
+    fx, fy = xs / max(1.0, sx), ys / max(1.0, sy)
+    ix, iy = fx.astype(int), fy.astype(int)
+    tx, ty = fx - ix, fy - iy
+    tx, ty = tx * tx * (3 - 2 * tx), ty * ty * (3 - 2 * ty)
+    return ((pts[iy, ix] * (1 - tx) + pts[iy, ix + 1] * tx) * (1 - ty)
+            + (pts[iy + 1, ix] * (1 - tx) + pts[iy + 1, ix + 1] * tx) * ty)
+
+
+def _p7_bayer(h, w):
+    return np.tile(_SP_BAYER, (h // 4 + 1, w // 4 + 1))[:h, :w]
+
+
+def _d_pixel_peaks(W, H, color, rng, k=4, peaks=None, n=5, side=-1, snow=0.5, base=0.14, fade=0.45, rough=1.0,
+                   snow_lit=(238, 246, 255), snow_shade=(146, 170, 216), seed=0, taper=(0.0, 0.0), mottle=0.5, dust=1):
+    """Pixel mountain range on a k-px texel grid: straight-sloped peaks (`peaks` = [[x, height, half-width], ...]
+    as box fractions, or `n` random ones), a lit and a shaded flank split by a diagonal arete, radial gullies,
+    a ragged snow cap with snow tongues running down the gullies, a foothill base (`base`) and a bottom that dissolves
+    in a Bayer dither (`fade` = fraction of the height). `color` = rock tone, `side` -1 = light from the left,
+    `snow` = share of each peak's own height that is snow, `rough` scales the ragged edges, `seed` pins the shapes,
+    `taper` = (left, right) share of the width over which the range sinks to nothing (no cliff at the box edge),
+    `mottle` = strength of the lighter / darker rock patches, `dust` 1 = snow lodged in the gullies below the
+    snow line (0 = clean rock)."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    if not peaks:
+        peaks = [[(i + 0.5) / n + g.uniform(-0.04, 0.04), g.uniform(0.5, 1.0), g.uniform(0.7, 1.1) / n]
+                 for i in range(int(n))]
+    X = np.arange(w, dtype=np.float32)
+    profs = []
+    for cx, ph, hw in peaks:
+        cxt, A, HW = cx * w, ph * h * 0.985, max(4.0, hw * w)
+        al, ar = g.uniform(0.82, 1.22), g.uniform(0.82, 1.22)
+        dxn = np.where(X < cxt, (cxt - X) / (HW * al), (X - cxt) / (HW * ar))
+        prof = A * (1 - np.clip(dxn, 0, 1) ** g.uniform(0.85, 1.2))
+        prof = prof + (_p7_noise1(w, 3.2, g) - 0.5) * A * 0.075 * rough * (prof > 0)
+        profs.append(prof)
+    profs = np.stack(profs)
+    foot = base * h * (0.55 + 0.9 * _p7_noise1(w, 14, g))
+    ridge = np.maximum(profs.max(0), foot)
+    for tv, xs_ in ((taper[0], X), (taper[1], w - 1 - X)):
+        if tv and tv > 0:
+            tt = np.clip(xs_ / max(1.0, tv * w), 0, 1)
+            ridge = ridge * tt * tt * (3 - 2 * tt)
+    own = profs.argmax(0)
+    y_top = np.clip(np.round(h - ridge), 0, h - 1).astype(int)
+    yy, xx = np.mgrid[0:h, 0:w]
+    d = yy - y_top[xx]
+    inside = d >= 0
+    oc = own[xx]
+    pcx = np.array([p[0] * w for p in peaks], np.float32)
+    ptop = np.array([y_top[int(np.clip(round(p[0] * w), 0, w - 1))] for p in peaks], np.float32)
+    lean = g.uniform(-0.45, 0.45, len(peaks)).astype(np.float32)
+    xb = pcx[oc] + lean[oc] * (yy - ptop[oc])
+    lit = (xx < xb) if side < 0 else (xx >= xb)
+    ang = (xx - pcx[oc]) / (np.maximum(yy - ptop[oc], 0) + 3.0)          # radial gullies fan out from the summit
+    ns = _p7_noise1(120, 1.5, g)
+    sv = ns[np.clip(((ang + 3.0) * 11).astype(int), 0, 119)]
+    brk = _p7_noise2(h, w, 8.0, 9.0, g)
+    hi_s, lo_s = (sv > 0.64) & (brk > 0.3), (sv < 0.3) & (brk > 0.3)
+    rc = np.array(color, np.float32) / 255
+    rgb = np.where(lit[..., None], np.clip(rc * 1.16 + 0.02, 0, 1), rc * 0.64)
+    rgb = np.where((hi_s & lit)[..., None], np.clip(rc * 1.42 + 0.04, 0, 1), rgb)
+    rgb = np.where((lo_s & lit)[..., None], rc * 0.92, rgb)
+    rgb = np.where((hi_s & ~lit)[..., None], rc * 0.82, rgb)
+    rgb = np.where((lo_s & ~lit)[..., None], rc * 0.5, rgb)
+    mo = _p7_noise2(h, w, 6.0, 5.0, g)
+    mt = (mottle * 0.5)
+    rgb = np.where(((mo > 0.74) & (mt > 0))[..., None], np.clip(rgb * (1 + 0.28 * mt * 2), 0, 1), rgb)
+    rgb = np.where(((mo < 0.24) & (mt > 0))[..., None], rgb * (1 - 0.3 * mt * 2), rgb)
+    rgb = np.where(((d <= 1) & lit)[..., None], np.clip(rgb * 1.18 + 0.02, 0, 1), rgb)
+    pk_h = np.array([max(1.0, h - ptop[i]) for i in range(len(peaks))], np.float32)[oc]    # each peak's own height
+    tb = np.floor(np.clip(d / np.maximum(pk_h * 0.55, 10.0), 0, 1) * 3 + _p7_bayer(h, w)) / 3   # darker, bluer base
+    rgb = rgb * (1 - 0.3 * tb)[..., None] + np.array([0.0, 0.02, 0.05], np.float32) * tb[..., None]
+    sl_line = (pk_h * (1 - snow) + (_p7_noise2(h, w, 7, 4, g) - 0.5) * pk_h * 0.14 * rough
+               - np.clip(sv - 0.5, 0, 1) * pk_h * 0.22 * rough)
+    is_snow = inside & ((h - yy) > sl_line)
+    dusted = inside & ~is_snow & lit & (sv > 0.8) & (mo > 0.42) & ((h - yy) > sl_line - pk_h * 0.3) & (dust > 0)
+    is_snow = is_snow | dusted
+    sn_l, sn_s = np.array(snow_lit, np.float32) / 255, np.array(snow_shade, np.float32) / 255
+    snc = np.where(lit[..., None], sn_l, sn_s)
+    snc = np.where(dusted[..., None], snc * 0.9, snc)
+    snc = np.where((lo_s)[..., None], snc * 0.93, snc)
+    snc = np.where(((d <= 1) & lit)[..., None], np.clip(snc * 1.04 + 0.02, 0, 1), snc)
+    rgb = np.where(is_snow[..., None], snc, rgb)
+    af = np.clip((yy / max(1, h - 1) - (1 - fade)) / max(fade, 1e-3), 0, 1)
+    alpha = np.clip(np.floor((1 - af) * 4 + _p7_bayer(h, w)) / 4, 0, 1)
+    out = np.zeros((h, w, 4), np.float32)
+    out[..., :3] = np.clip(rgb, 0, 1)
+    out[..., 3] = np.where(inside, alpha, 0)
+    return _cx_up(out, k, W, H)
+
+
+def _p7_pine(img, cx, base, hgt, g, c, side, snow, fat, snows, tier_h):
+    """One snow-laden pine in `img` ((h, w, 4) float): trunk, stacked drooping tiers with scalloped hems and a snow
+    cap thickest at the centre of every tier, light side towards `side`."""
+    Hh, Ww = img.shape[:2]
+
+    def put(y, x, col):
+        if 0 <= y < Hh and 0 <= x < Ww:
+            img[y, x, :3], img[y, x, 3] = col, 1.0
+
+    light = np.clip(c * 1.45 + np.array([0.02, 0.07, 0.05], np.float32), 0, 1)
+    tones = [light, c, c * 0.66]
+    deep = c * 0.4
+    sn_l, sn_m, sn_s = snows
+    trunk = max(2, int(round(hgt * 0.1)))
+    fol = hgt - trunk
+    top = base - hgt
+    n = max(2, int(round(fol / tier_h)))
+    hw_max = fol * fat / 2.0
+    cuts = [fol * (i / n) ** 1.08 for i in range(n + 1)]
+    tw = 2 if hgt < 46 else 3
+    for yy in range(base - trunk - 2, base):
+        for j in range(tw):
+            put(yy, cx - tw // 2 + j, np.array([0.30, 0.21, 0.17], np.float32) * (1.25 if j == 0 else 0.8))
+    for i in range(n - 1, -1, -1):
+        y0 = top + int(round(cuts[i]))
+        y1 = top + int(round(cuts[i + 1])) + (0 if i == n - 1 else 2)
+        th = y1 - y0 + 1
+        hw_i = max(2.0, hw_max * ((i + 1) / n) ** 0.8 + g.uniform(-0.6, 0.6))
+        cxi = cx + (int(g.integers(-1, 2)) if hw_i > 5 else 0)
+        for dx in range(-int(math.ceil(hw_i)), int(math.ceil(hw_i)) + 1):
+            adx = abs(dx)
+            if adx > hw_i + 0.35:
+                continue
+            t_need = (min(adx, hw_i) / hw_i) ** (1 / 0.85)
+            yt = y0 + max(0, int(math.ceil(t_need * th)) - 1)
+            scallop = 1 if ((adx + i) % 3 == 0 and adx > 1) else 0
+            yb = y1 + int(round(1.7 * (adx / hw_i) ** 1.5)) - scallop
+            ts = int(round(snow * th * (0.95 - 0.5 * (adx / hw_i) ** 1.3) + g.uniform(-0.6, 0.6)))
+            rel = (dx + hw_i) / (2 * hw_i)
+            shade = rel if side < 0 else 1 - rel
+            for y in range(yt, yb + 1):
+                tone = 0 if shade < 0.34 else (1 if shade < 0.72 else 2)
+                if g.random() < 0.15:
+                    tone = min(2, max(0, tone + (1 if g.random() < 0.5 else -1)))
+                col = tones[tone]
+                if y == yb or (y == yb - 1 and adx > hw_i * 0.45):
+                    col = deep if y == yb else tones[2]
+                if y - yt < ts:
+                    sh = shade + (g.random() - 0.5) * 0.25
+                    col = sn_l if sh < 0.4 else (sn_m if sh < 0.62 else sn_s)
+                    if y - yt == ts - 1 and ts >= 2 and g.random() < 0.7:
+                        col = sn_m if sh < 0.62 else sn_s
+                put(y, cxi + dx, col)
+            for y in (yb + 1, yb + 2):                    # this tier's hem shades the one below it
+                px = cxi + dx
+                if 0 <= y < Hh and 0 <= px < Ww and img[y, px, 3] > 0 and i < n - 1:
+                    img[y, px, :3] *= 0.62 if y == yb + 1 else 0.8
+    put(top - 1, cx, light)
+    put(top - 2, cx, sn_l)
+
+
+def _d_pixel_forest(W, H, color, rng, k=4, n=10, hmin=14, hmax=26, side=-1, snow=0.5, fat=0.62, span=1.0, flat=2,
+                    tier=6.0, snow_lit=(240, 247, 255), snow_mid=(188, 208, 240), snow_shade=(130, 156, 206),
+                    vary=0.08, seed=0):
+    """A row of pixel pines on a k-px texel grid (n = 1 gives one big pine centred in the box). Heights `hmin`..`hmax`
+    texels (capped by the box), trunks end `flat` texels around the bottom edge (put a snow drift in front of it),
+    `fat` = tree width / height, `snow` = share of every tier under snow (0 = bare), `tier` = texels per tier.
+    `color` = mid needle tone (dark teal), each tree varies by `vary`."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    img = np.zeros((h, w, 4), np.float32)
+    c0 = np.array(color, np.float32) / 255
+    snows = tuple(np.array(s, np.float32) / 255 for s in (snow_lit, snow_mid, snow_shade))
+    n = int(n)
+    if n == 1:
+        xs = [w // 2]
+    else:
+        xs = list((np.linspace(0.05, 0.95, n) + g.uniform(-0.4, 0.4, n) / n) * span * w + (1 - span) * w / 2)
+    trees = []
+    for x in xs:
+        base = h - 1 - int(g.integers(0, int(flat) + 1))
+        hg = min(int(g.uniform(hmin, hmax)), base - 2)
+        trees.append((base, int(round(x)), hg))
+    for base, x, hg in sorted(trees):
+        c = np.clip(c0 * (1 + g.uniform(-vary, vary)), 0, 1)
+        _p7_pine(img, x, base, hg, g, c, side, snow, fat * g.uniform(0.9, 1.1), snows, tier)
+    return _cx_up(img, k, W, H)
+
+
+def _d_pixel_drift(W, H, color, rng, k=4, amp=0.3, waves=2.2, side=-1, deep=(58, 80, 126), sparkle=0.01,
+                   ripple=0.55, seed=0, dither=1.0, taper=0.0):
+    """Opaque snow hill on a k-px texel grid: a rolling surface in the top `amp` share of the box, lit / shaded
+    slopes, soft Bayer-dithered fall-off towards `deep` at the bottom, wind ripples, a bright crest and a few
+    sparkles. `color` = sunlit snow. Stack two or three at different heights for depth (far ones hazier).
+    `dither` 1 = Bayer-dithered fall-off (default), 0 = hard bands that follow the hill (no screen-door texture).
+    `taper` (round 7c) = share of the width over which each end sinks to the box bottom, so a short box is a mound."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    X = np.arange(w, dtype=np.float32)
+    p1, p2 = g.uniform(0, 6.28, 2)
+    prof = (0.5 * np.sin(2 * np.pi * waves * X / w + p1) + 0.28 * np.sin(2 * np.pi * waves * 2.37 * X / w + p2)
+            + 0.5 * (_p7_noise1(w, 9, g) - 0.5))
+    y_s = np.round(amp * h * (0.5 - 0.5 * prof / 1.1)).astype(int)
+    if taper and taper > 0:
+        te = np.clip(np.minimum(X, w - 1 - X) / max(1.0, taper * w), 0, 1)
+        te = te * te * (3 - 2 * te)
+        y_s = np.round(y_s + (h - 1 - y_s) * (1 - te)).astype(int)
+    yy, xx = np.mgrid[0:h, 0:w]
+    d = yy - y_s[xx]
+    inside = d >= 0
+    slope = (y_s[np.minimum(np.arange(w) + 2, w - 1)] - y_s[np.maximum(np.arange(w) - 2, 0)])[xx]
+    lit = (slope < 0) if side < 0 else (slope > 0)
+    shd = (slope > 0) if side < 0 else (slope < 0)
+    c, dp = np.array(color, np.float32) / 255, np.array(deep, np.float32) / 255
+    bay = _p7_bayer(h, w) * float(dither)
+    gm = np.floor(np.clip(d / max(1.0, h - amp * h), 0, 1) * 4 + bay) / 4 * 0.6
+    rgb = c * (1 - gm[..., None]) + dp * gm[..., None]
+    near = np.clip(1 - d / 7.0, 0, 1)
+    sm = (np.floor(near * 3 + bay) / 3 * 0.3 * shd)[..., None]
+    rgb = rgb * (1 - sm) + dp * sm
+    rip = ((d % 5) == 3) & (_p7_noise2(h, w, 9, 1.5, g) > 1 - ripple * 0.7) & (d > 2)
+    rgb = np.where(rip[..., None], np.where(shd[..., None], rgb * 0.93, np.clip(rgb * 1.07 + 0.01, 0, 1)), rgb)
+    rgb = np.where(((d == 0) & lit)[..., None], np.clip(c * 1.05 + 0.06, 0, 1), rgb)
+    sp = (g.random((h, w)) < sparkle) & (d >= 1) & (d < 16)
+    rgb = np.where(sp[..., None], np.array([1.0, 1.0, 1.0], np.float32), rgb)
+    out = np.zeros((h, w, 4), np.float32)
+    out[..., :3] = np.clip(rgb, 0, 1)
+    out[..., 3] = inside.astype(np.float32)
+    return _cx_up(out, k, W, H)
+
+
+def _d_pixel_aurora(W, H, color, rng, k=4, curtains=2, color2=(130, 110, 255), rays=1.0, sway=1.0, levels=5,
+                    reach=0.7, seed=0, dither=1.0):
+    """Pixel aurora on a k-px texel grid: `curtains` ribbons with vertical rays hanging up from a wavy lower edge,
+    `color` at the bright base fading to `color2` at the top, intensity quantised to `levels` steps with Bayer
+    dither (no smooth gradient). `rays` = ray contrast, `sway` = wave amount, `reach` = curtain height / box.
+    Keep it atmospheric (layer alpha 0.5-0.8) and behind the mountains. `dither` 0 = hard flat bands (round 7c)."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    out_rgb = np.zeros((h, w, 3), np.float32)
+    out_a = np.zeros((h, w), np.float32)
+    ys, xs = np.mgrid[0:h, 0:w].astype(np.float32)
+    X = np.arange(w, dtype=np.float32)
+    bay = _p7_bayer(h, w) * float(dither) + 0.5 * (1.0 - float(dither))
+    c1, c2 = np.array(color, np.float32) / 255, np.array(color2, np.float32) / 255
+    for c in range(int(curtains)):
+        ph1, ph2 = g.uniform(0, 6.28, 2)
+        base_y = (h * (0.66 - 0.14 * c) + sway * h * (0.1 * np.sin(2 * np.pi * X / (w * 0.6) + ph1)
+                                                      + 0.045 * np.sin(2 * np.pi * X / (w * 0.21) + ph2)))
+        env = np.clip((_p7_noise1(w, w * 0.22, g) - 0.28) * 2.6, 0, 1)
+        ed = np.clip(np.minimum(X, w - 1 - X) / (w * 0.1), 0, 1)
+        env = env * ed * ed * (3 - 2 * ed)
+        Bm = np.maximum(2.0, base_y * 0.9)
+        L = np.maximum(1.0, Bm * np.tanh(h * reach * (0.5 + 0.6 * _p7_noise1(w, 18, g)) / Bm) * env)   # soft cap, no flat top
+        ray = 0.5 + 0.5 * (0.55 * _p7_noise1(w, 2.1, g) + 0.45 * g.random(w))
+        ray = 1 - rays * (1 - ray)
+        t = (base_y[None, :] - ys) / L[None, :]
+        inten = np.where(t >= 0, np.clip(1 - t, 0, 1) ** 1.5, np.clip(1 + t * (L[None, :] / 2.4), 0, 1))
+        topf = np.clip(ys / max(1.0, h * 0.1), 0, 1)
+        inten = inten * ray[None, :] * (env[None, :] > 0.02) * topf
+        r = np.clip(t, 0, 1)[..., None] ** 0.9
+        rgb = c1 * (1 - r) + c2 * r
+        bottom = np.clip(1 - np.abs(t) * L[None, :] / 3.0, 0, 1)[..., None]
+        rgb = np.clip(rgb * (1 + 0.35 * bottom) + 0.12 * bottom, 0, 1)
+        iq = np.floor(inten * levels + bay) / levels
+        a = np.clip(iq, 0, 1) * 0.9
+        oa = a + out_a * (1 - a)
+        out_rgb = (rgb * a[..., None] + out_rgb * (out_a * (1 - a))[..., None]) / np.maximum(oa, 1e-4)[..., None]
+        out_a = oa
+    out = np.concatenate([np.clip(out_rgb, 0, 1), out_a[..., None]], axis=2)
+    return _cx_up(out, k, W, H)
+
+
+def _d_pixel_lightpool(W, H, color, rng, k=4, steps=6, peak=0.55, skew=0.0, power=1.4, core=0.15, dither=1.0):
+    """Warm light cast on the ground: a flat ellipse of `steps` Bayer-dithered alpha rings (peak alpha `peak`) on a
+    k-px texel grid, `skew` shears it (a window's light falls aslant), `core` whitens the middle. Draw it on the
+    snow, under the lit prop; pair it with a `lights` entry so nearby props pick up the glow."""
+    k, w, h = _cx_grid(W, H, k)
+    ys, xs = np.mgrid[0:h, 0:w].astype(np.float32)
+    cx, cy = w / 2.0, h / 2.0
+    u = (xs + 0.5 - cx - skew * (ys + 0.5 - cy)) / (w / 2.0)
+    v = (ys + 0.5 - cy) / (h / 2.0)
+    t = np.clip(1 - np.hypot(u, v), 0, 1) ** power
+    lev = np.floor(t * steps + _p7_bayer(h, w) * float(dither)) / steps
+    col = np.array(color, np.float32) / 255
+    rgb = col * (1 - core * t[..., None]) + core * t[..., None]
+    out = np.concatenate([np.clip(rgb, 0, 1), (np.clip(lev, 0, 1) * peak)[..., None]], axis=2)
+    return _cx_up(out, k, W, H)
+
+
+def _d_pixel_timber(W, H, color, rng, k=4, beams=None, asset="minecraft:block/spruce_log", snow=1.0, side=-1,
+                    depth=2, seed=0):
+    """Timber frame on a k-px texel grid: `beams` = [[x0, y0, x1, y1, thickness (texels)(, asset)], ...] in texel
+    coordinates of the box (any angle), real log / plank texels along the grain, a lit and a shaded edge, snow
+    resting on every upward-facing edge (`snow` 0 = none) and a dark extruded side (`depth` texels, like `blocks`).
+    Racks, posts, fences, sign boards, a lantern post. `color` multiplies the texture (255,255,255 = as is)."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    tint = np.array(color, np.float32) / 255
+    out = np.zeros((h, w, 4), np.float32)
+    ys, xs = np.mgrid[0:h, 0:w].astype(np.float32)
+    px, py = xs + 0.5, ys + 0.5
+    tl = np.array([float(side), -0.9], np.float32)
+    for bm in beams or []:
+        x0, y0, x1, y1, t = (float(v) for v in bm[:5])
+        T = np.asarray(tex(bm[5] if len(bm) > 5 else asset), np.float32)[..., :3] / 255
+        L = max(1.0, math.hypot(x1 - x0, y1 - y0))
+        ux, uy = (x1 - x0) / L, (y1 - y0) / L
+        nx, ny = -uy, ux
+        sg = 1.0 if (nx * tl[0] + ny * tl[1]) >= 0 else -1.0
+        a = (px - x0) * ux + (py - y0) * uy
+        b = ((px - x0) * nx + (py - y0) * ny) * sg
+        m = (a >= 0) & (a <= L) & (np.abs(b) <= t / 2.0)
+        off = int(g.integers(0, 16))
+        ti = (np.floor(a).astype(int) + off) % T.shape[0]
+        tj = (np.floor(b + t / 2.0).astype(int)) % T.shape[1]
+        col = T[ti, tj] * tint
+        rb = (b + t / 2.0) / max(t, 1e-3)                      # 0 = shaded edge .. 1 = lit edge
+        col = np.where((rb > 1 - 1.0 / max(t, 2))[..., None], np.clip(col * 1.4 + 0.03, 0, 1), col)
+        col = np.where((rb < 1.0 / max(t, 2))[..., None], col * 0.6, col)
+        col = col * (0.9 + 0.2 * rb[..., None])
+        out[..., :3] = np.where(m[..., None], col, out[..., :3])
+        out[..., 3] = np.where(m, 1.0, out[..., 3])
+    mask = out[..., 3] > 0.5
+    if depth:                                                   # extruded dark side, up and to the right
+        ext = np.zeros_like(mask)
+        ecol = np.zeros_like(out[..., :3])
+        for sd in range(1, int(depth) + 1):
+            sm = _shift(mask.astype(np.uint8), sd, -sd).astype(bool) & ~mask & ~ext
+            ecol = np.where(sm[..., None], _shift(out[..., 0], sd, -sd)[..., None] * 0 + np.stack(
+                [_shift(out[..., c], sd, -sd) for c in range(3)], -1) * 0.58, ecol)
+            ext |= sm
+        out[..., :3] = np.where(ext[..., None], ecol, out[..., :3])
+        out[..., 3] = np.where(ext, 1.0, out[..., 3])
+        mask = mask | ext
+    if snow:
+        sn_l, sn_m = np.array((240, 247, 255), np.float32) / 255, np.array((184, 204, 238), np.float32) / 255
+        top = mask & ~_shift(mask.astype(np.uint8), 0, 1).astype(bool)
+        thick = np.round(snow * (1.0 + 1.7 * _p7_noise1(w, 4.0, g))).astype(int)
+        for x in range(w):
+            for y in np.where(top[:, x])[0]:
+                for j in range(1, int(thick[x]) + 1):
+                    yy_ = y - j + 1
+                    if 0 <= yy_ < h:
+                        out[yy_, x, :3] = sn_l if j == int(thick[x]) or j == 1 else sn_m
+                        out[yy_, x, 3] = 1.0
+    return _cx_up(out, k, W, H)
+
+
+def _d_pixel_cloud(W, H, color, rng, k=4, puffs=16, side=-1, belly=0.62, streaks=0, seed=0):
+    """Storm / snow cloud on a k-px texel grid: `puffs` overlapping puffs of mixed size (a bank of big ones on the belly
+    line, smaller ones heaped on top) with a lit crescent towards `side`, four hard tones from `color` (mid), a flat
+    scalloped belly at `belly` of the box height with a deep-shadow band, and `streaks` slanted snow streaks falling
+    from it (fading). Draw a `pixel_bolt` on top for lightning."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    ys, xs = np.mgrid[0:h, 0:w].astype(np.float32)
+    c = np.array(color, np.float32) / 255
+    tones = np.stack([np.clip(c * 1.5 + 0.04, 0, 1), np.clip(c * 1.12, 0, 1), c * 0.82, c * 0.56])
+    yb = belly * h
+    img = np.zeros((h, w, 4), np.float32)
+    wob = 1.4 * np.sin(xs * 0.85 + g.uniform(0, 6)) + 0.9 * np.sin(xs * 0.31 + g.uniform(0, 6))
+    belly_cut = ys <= (yb + wob)
+    lx, ly = float(side), -0.9
+    ln = math.hypot(lx, ly)
+    lx, ly = lx / ln, ly / ln
+    items = []
+    nb = max(3, int(puffs * 0.55))
+    for i in range(nb):                                       # the bank on the belly line
+        cx = w * (0.1 + 0.8 * (i + g.uniform(0.2, 0.8)) / nb)
+        r = h * belly * (0.2 + 0.2 * math.sin(math.pi * cx / w) ** 1.1) * g.uniform(0.75, 1.15)
+        items.append((yb - r * g.uniform(0.35, 0.6), cx, r))
+    for i in range(int(puffs) - nb):                          # smaller puffs heaped on top
+        cx = w * g.uniform(0.18, 0.82)
+        r = h * belly * g.uniform(0.11, 0.2)
+        top = yb - h * belly * (0.3 + 0.4 * math.sin(math.pi * cx / w))
+        items.append((top + r * g.uniform(0.0, 0.8), cx, r))
+    for cy, cx, r in sorted(items):
+        d = np.hypot(xs + 0.5 - cx, ys + 0.5 - cy)
+        m = (d <= r) & belly_cut
+        nl = ((xs + 0.5 - cx) * lx + (ys + 0.5 - cy) * ly) / max(r, 1.0)        # -1 .. 1 (negative = towards light)
+        tone = np.where(nl < -0.45, 0, np.where(nl < 0.15, 1, np.where(nl < 0.6, 2, 3)))
+        tone = np.where((ys > yb - 0.2 * h * belly + wob), np.maximum(tone, 2), tone)     # underside is darker
+        tone = np.where((ys > yb - 2 + wob), 3, tone)
+        img[..., :3] = np.where(m[..., None], tones[tone], img[..., :3])
+        img[..., 3] = np.where(m, 1.0, img[..., 3])
+    for _ in range(int(streaks)):
+        x0, y0 = g.uniform(0.06, 0.94) * w, yb + g.uniform(2, 5)
+        ln_ = int(g.integers(6, 16))
+        for t in range(ln_):
+            xx_, yy_ = int(x0 + t * 0.32), int(y0 + t)
+            if 0 <= xx_ < w and 0 <= yy_ < h:
+                img[yy_, xx_, :3] = np.array([0.8, 0.86, 0.96], np.float32)
+                img[yy_, xx_, 3] = max(img[yy_, xx_, 3], 0.55 * (1 - t / ln_))
+    return _cx_up(img, k, W, H)
+
+
+def _d_pixel_bolt(W, H, color, rng, k=4, width=2, segs=9, branches=1, wander=0.28, seed=0):
+    """Lightning bolt on a k-px texel grid: a zig-zag from the top centre to the bottom of the box (`segs` segments,
+    sideways `wander` = share of the box width), `width` texels wide, a white-hot core inside a `color` sheath and a
+    faint outer glow, plus `branches` short forks. Draw it over the cloud's belly."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    core = np.zeros((h, w), bool)
+    sheath = np.zeros((h, w), bool)
+
+    def line(p, q, wd):
+        n = int(max(abs(q[0] - p[0]), abs(q[1] - p[1]))) * 2 + 1
+        for i in range(n + 1):
+            t = i / max(1, n)
+            x, y = p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t
+            for dx in range(-(wd // 2), wd - wd // 2):
+                xi, yi = int(round(x)) + dx, int(round(y))
+                if 0 <= xi < w and 0 <= yi < h:
+                    core[yi, xi] = True
+
+    x = w * 0.5
+    pts = [(x, 0.0)]
+    for i in range(1, int(segs) + 1):
+        x = float(np.clip(x + g.uniform(-1, 1) * w * wander, w * 0.12, w * 0.88))
+        pts.append((x, h * i / segs))
+    for p, q in zip(pts[:-1], pts[1:]):
+        line(p, q, int(width))
+    for _ in range(int(branches)):
+        i = int(g.integers(2, max(3, int(segs) - 1)))
+        p = pts[i]
+        d = 1 if g.random() < 0.5 else -1
+        q = (float(np.clip(p[0] + d * w * g.uniform(0.18, 0.32), 0, w - 1)), min(h - 1.0, p[1] + h * g.uniform(0.12, 0.22)))
+        line(p, q, max(1, int(width) - 1))
+    sheath = _shift(core.astype(np.uint8), 1, 0).astype(bool) | _shift(core.astype(np.uint8), -1, 0).astype(bool) | \
+        _shift(core.astype(np.uint8), 0, 1).astype(bool) | _shift(core.astype(np.uint8), 0, -1).astype(bool)
+    sheath &= ~core
+    glow = np.zeros((h, w), bool)
+    for dx, dy in ((2, 0), (-2, 0), (0, 2), (0, -2), (2, 2), (-2, -2), (2, -2), (-2, 2)):
+        glow |= _shift(core.astype(np.uint8), dx, dy).astype(bool)
+    glow &= ~core & ~sheath
+    col = np.array(color, np.float32) / 255
+    img = np.zeros((h, w, 4), np.float32)
+    img[glow, :3], img[glow, 3] = col, 0.3
+    img[sheath, :3], img[sheath, 3] = col, 0.9
+    img[core, :3], img[core, 3] = np.array([1.0, 1.0, 1.0], np.float32), 1.0
+    return _cx_up(img, k, W, H)
+
+
+def _d_pixel_flakes(W, H, color, rng, k=4, n=40, streak=0.25, big=0.1, seed=0):
+    """Sparse pixel snowflakes on a k-px texel grid: `n` single texels (alpha 0.3-0.85), `streak` share drawn as a short
+    diagonal dash, `big` share as a 2x2 flake. `color` = flake tint. Keep the box off the quest panels."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    img = np.zeros((h, w, 4), np.float32)
+    col = np.array(color, np.float32) / 255
+
+    def put(y, x, a):
+        if 0 <= y < h and 0 <= x < w:
+            img[y, x, :3], img[y, x, 3] = col, max(img[y, x, 3], a)
+
+    for _ in range(int(n)):
+        x, y = int(g.integers(0, w)), int(g.integers(0, h))
+        a = float(g.choice([0.3, 0.45, 0.6, 0.85]))
+        r = g.random()
+        if r < big:
+            for dy in (0, 1):
+                for dx in (0, 1):
+                    put(y + dy, x + dx, a * 0.8)
+        elif r < big + streak:
+            put(y, x, a)
+            put(y + 1, x - 1, a * 0.6)
+        else:
+            put(y, x, a)
+    return _cx_up(img, k, W, H)
+
+
+def _d_pixel_icicles(W, H, color, rng, k=4, n=14, minlen=2, maxlen=6, seed=0):
+    """A row of icicles hanging from the top edge of the box on a k-px texel grid: `n` 1-texel spikes of
+    `minlen`..`maxlen` texels (wider at the root, a white tip, fading alpha). `color` = ice tint. Hang them from
+    eaves, beams and ledges."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    img = np.zeros((h, w, 4), np.float32)
+    col = np.array(color, np.float32) / 255
+    xs = sorted(int(v) for v in g.choice(np.arange(1, max(2, w - 1)), size=min(int(n), max(1, w - 2)), replace=False))
+    for x in xs:
+        ln_ = int(g.integers(int(minlen), int(maxlen) + 1))
+        for y in range(min(ln_, h)):
+            c = col if y < ln_ - 1 else np.array([1.0, 1.0, 1.0], np.float32)
+            a = 0.85 - 0.3 * y / max(1, ln_)
+            img[y, x, :3], img[y, x, 3] = c, a if y < ln_ - 1 else 0.95
+            if y == 0 and x + 1 < w:
+                img[y, x + 1, :3], img[y, x + 1, 3] = col, 0.6
+    return _cx_up(img, k, W, H)
+
+
+def _d_pixel_moon(W, H, color, rng, k=4, r=10, halo=2.0, seed=0, light=(-0.55, -0.6), dither=1.0):
+    """Pixel moon on a k-px texel grid, centred in the box: a round disc of `r` texels in `color` (pale white-blue),
+    four hard tones lit from `light`, soft grey-blue maria, a few craters with a lit rim, and a Bayer-dithered halo
+    out to `halo` x r. Pair with a `lights` entry for the moonlight on the peaks."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    ys, xs = np.mgrid[0:h, 0:w].astype(np.float32)
+    cx, cy = w / 2.0, h / 2.0
+    d = np.hypot(xs + 0.5 - cx, ys + 0.5 - cy)
+    R = float(r)
+    Rh = R * float(halo)
+    c = np.array(color, np.float32) / 255
+    img = np.zeros((h, w, 4), np.float32)
+    t = np.clip(1 - (d - R) / max(1.0, Rh - R), 0, 1) ** 2
+    lev = np.floor(t * 6 + _p7_bayer(h, w) * float(dither) + 0.5 * (1.0 - float(dither))) / 6
+    img[..., :3] = np.array([0.62, 0.78, 1.0], np.float32)
+    img[..., 3] = np.where(d > R, np.clip(lev, 0, 1) * 0.55, 0)
+    ln = math.hypot(*light)
+    lx, ly = light[0] / ln, light[1] / ln
+    nl = ((xs + 0.5 - cx) * lx + (ys + 0.5 - cy) * ly) / R                      # -1 lit .. 1 shaded
+    tone = np.where(nl < -0.35, 1.06, np.where(nl < 0.3, 0.96, np.where(nl < 0.7, 0.84, 0.7)))
+    col = c * tone[..., None]
+    maria = _p7_noise2(h, w, R * 0.55, R * 0.55, g) > 0.56
+    col = np.where((maria & (d < R - 1))[..., None], col * np.array([0.8, 0.84, 0.95], np.float32), col)
+    for _ in range(5):
+        a = g.uniform(0, 6.28)
+        rr = g.uniform(0.15, 0.6) * R
+        ccx, ccy = cx + math.cos(a) * rr, cy + math.sin(a) * rr
+        cr = g.uniform(0.9, 1.9)
+        dd = np.hypot(xs + 0.5 - ccx, ys + 0.5 - ccy)
+        col = np.where(((dd <= cr) & (d < R - 1))[..., None], col * 0.82, col)
+        rim = (dd > cr - 1) & (dd <= cr) & (xs + 0.5 < ccx) & (ys + 0.5 < ccy + 1) & (d < R - 1)
+        col = np.where(rim[..., None], np.clip(col * 1.1, 0, 1), col)
+    disc = d <= R
+    img[..., :3] = np.where(disc[..., None], np.clip(col, 0, 1), img[..., :3])
+    img[..., 3] = np.where(disc, 1.0, img[..., 3])
+    return _cx_up(img, k, W, H)
+
+
+def _d_pixel_pond(W, H, color, rng, k=4, asset="minecraft:block/ice", reflect=(80, 255, 185), cracks=3, seed=0,
+                  bright=1.0):
+    """Frozen pond seen from above-front on a k-px texel grid: an irregular ellipse tiled with a real ice texture
+    (`asset`), a snow shore two texels wide with a lit inner lip, faint vertical reflections of the sky in `reflect`,
+    a few hairline cracks and sparkles. Flat: no shadow. `color` is the shore snow, `bright` scales the ice
+    (< 1 = a darker, bluer pond that stands out from pale snow)."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    ys, xs = np.mgrid[0:h, 0:w].astype(np.float32)
+    cx, cy = w / 2.0, h / 2.0
+    rx, ry = w / 2.0 - 1.0, h / 2.0 - 1.0
+    u_, v_ = (xs + 0.5 - cx) / rx, (ys + 0.5 - cy) / ry
+    ang = np.arctan2(v_, u_)
+    nz = _p7_noise1(64, 6.0, g)[np.clip(((ang + math.pi) / (2 * math.pi) * 63).astype(int), 0, 63)]
+    d = np.hypot(u_, v_) / (1 + 0.1 * (nz - 0.5) * 2)
+    inside = d <= 1.0
+    edge = (1 - d) * ry                                       # texels to the shore
+    T = np.asarray(tex(asset), np.float32)[..., :3] / 255
+    ox, oy = int(g.integers(0, 16)), int(g.integers(0, 16))
+    col = T[(ys.astype(int) + oy) % T.shape[0], (xs.astype(int) + ox) % T.shape[1]]
+    col = col * (0.7 + 0.35 * ys[..., None] / max(1, h)) * float(bright)
+    streak = _p7_noise1(w, 2.5, g)
+    ra = np.clip((streak[None, :] - 0.35) * 1.4, 0, 1) * np.clip(1 - ys / max(1.0, h * 0.9), 0, 1) * 0.5
+    refl = np.array(reflect, np.float32) / 255
+    col = col * (1 - ra[..., None]) + refl * ra[..., None]
+    for _ in range(int(cracks)):
+        x0, y0 = g.uniform(0.2, 0.8) * w, g.uniform(0.3, 0.8) * h
+        for _s in range(3):
+            a = g.uniform(-0.6, 0.6) + (0 if g.random() < 0.5 else math.pi)
+            for t in range(int(g.integers(5, 12))):
+                xi, yi = int(x0 + math.cos(a) * t), int(y0 + math.sin(a) * t * 0.5)
+                if 0 <= xi < w and 0 <= yi < h and inside[yi, xi] and edge[yi, xi] > 2.5:
+                    col[yi, xi] = np.clip(col[yi, xi] * 1.45 + 0.08, 0, 1)
+    sp = (g.random((h, w)) < 0.012) & inside & (edge > 2.5)
+    col = np.where(sp[..., None], 1.0, col)
+    shore = np.array(color, np.float32) / 255
+    sn = shore * (0.94 + 0.12 * _p7_noise2(h, w, 3.0, 2.0, g)[..., None])
+    col = np.where(((edge < 2.2) & inside)[..., None], np.clip(sn, 0, 1), col)
+    col = np.where(((edge >= 2.2) & (edge < 3.3))[..., None], np.clip(col * 1.22 + 0.04, 0, 1), col)
+    out = np.zeros((h, w, 4), np.float32)
+    out[..., :3] = np.clip(col, 0, 1)
+    out[..., 3] = inside.astype(np.float32)
+    return _cx_up(out, k, W, H)
+
+
+def _d_pixel_pine(W, H, color, rng, k=4, side=-1, snow=0.5, fat=0.62, tier=6.0, snow_lit=(240, 247, 255),
+                  snow_mid=(188, 208, 240), snow_shade=(130, 156, 206), seed=0):
+    """One big snow-laden pine filling the box (a single-tree `pixel_forest`, same colour options)."""
+    return _d_pixel_forest(W, H, color, rng, k=k, n=1, hmin=H, hmax=H, side=side, snow=snow, fat=fat, flat=0,
+                           tier=tier, snow_lit=snow_lit, snow_mid=snow_mid, snow_shade=snow_shade, vary=0, seed=seed)
+
+
+_DECOR.update({"pixel_peaks": _d_pixel_peaks, "pixel_forest": _d_pixel_forest, "pixel_drift": _d_pixel_drift,
+               "pixel_aurora": _d_pixel_aurora, "pixel_lightpool": _d_pixel_lightpool,
+               "pixel_pine": _d_pixel_pine, "pixel_timber": _d_pixel_timber, "pixel_cloud": _d_pixel_cloud,
+               "pixel_flakes": _d_pixel_flakes, "pixel_bolt": _d_pixel_bolt,
+               "pixel_icicles": _d_pixel_icicles, "pixel_moon": _d_pixel_moon, "pixel_pond": _d_pixel_pond})
+
+
+# ---------------------------------------------------------------- round 7b (climate cycle 2): height-field pixel mountains, hand-drawn pixel props
+def _p7_clean(idx, ntone):
+    """Remove 1-texel specks from an integer tone map: a texel none of whose 4 neighbours shares its tone takes the
+    majority tone of those neighbours. Keeps hard-edged pixel art free of salt-and-pepper noise."""
+    pad = np.pad(idx, 1, mode="edge")
+    nb = np.stack([pad[:-2, 1:-1], pad[2:, 1:-1], pad[1:-1, :-2], pad[1:-1, 2:]])
+    same = (nb == idx[None]).sum(0)
+    cnt = np.stack([(nb == t).sum(0) for t in range(ntone)])
+    return np.where(same == 0, cnt.argmax(0), idx)
+
+
+def _p7_box(a, r):
+    """Separable box average (radius r, edge padded) of a 2-D float array."""
+    r = int(r)
+    out = a.astype(np.float32)
+    if r <= 0:
+        return out
+    n = 2 * r + 1
+    for ax in (0, 1):
+        pad = [(0, 0), (0, 0)]
+        pad[ax] = (r, r)
+        p = np.pad(out, pad, mode="edge")
+        cs = np.cumsum(p, axis=ax, dtype=np.float64)
+        z = np.zeros_like(np.take(cs, [0], axis=ax))
+        cs = np.concatenate([z, cs], axis=ax)
+        hi = np.take(cs, np.arange(n, n + out.shape[ax]), axis=ax)
+        lo = np.take(cs, np.arange(0, out.shape[ax]), axis=ax)
+        out = ((hi - lo) / n).astype(np.float32)
+    return out
+
+
+def _d_pixel_alps(W, H, color, rng, k=4, peaks=None, n=4, side=-1, snow=0.5, relief=0.6, depth=110, tilt=0.32,
+                  scale=1.0, light=(0.9, 0.55, 0.3), snow_lit=(228, 238, 255), snow_shade=(124, 146, 196),
+                  mist=None, mist_amt=0.6, contrast=1.0, steps=5, strata=0.4, mottle=0.1, steep=3.4, taper=(0.0, 0.0),
+                  sharp=1.0, fill=0.0, foot=0.1, seed=0, oct=3, facet=0, profile=None, snow_steps=4):
+    """Pixel mountains rendered from a real height field on a k-px texel grid (the Comanche / voxel-space way): a ridged
+    noise relief sculpted by the `peaks` envelope ([[x, height, half-width], ...] as box fractions, or `n` random;
+    heights are the box share) is drawn near to far, so every ridge, gully, arete and shoulder is geometry, not
+    texture. Faces are lit by `light` (x towards the light, y up, z towards the viewer; `side` -1 = from the left,
+    +1 mirrors it), quantised to `steps` hard tones of a ramp built from `color` (the mid rock tone) - no dither, no
+    gradient; snow (`snow` = the snow line as a share of the tallest peak, only on slopes gentler than `steep`) takes
+    the same light in `snow_lit` / `snow_shade`. Rock strata run as contour lines (`strata` 0..1) and `mottle` adds
+    stepped patches; one-texel specks are cleaned away. Far ground steps through three hard haze bands toward `mist`
+    (RGB, None = bluer / darker rock) by `mist_amt`. `relief` = how much the ridged noise carves the cones (0 = smooth
+    cones), `sharp` = slope profile (1 = concave spires, 0.7 = fuller cones), `fill` = ambient light lifted into the shade (0..0.4), `foot` = rolling foothills behind and between the peaks as a
+    share of the box height (no flat horizon line), `depth` = samples towards the horizon, `tilt` = texels of screen height per depth sample (more = a steeper
+    camera), `scale` = overall height multiplier, `contrast` = light / dark spread, `taper` = (left, right) share of
+    the width over which the range sinks. The box bottom is solid: put the next layer (drift / forest) over it.
+    Round 7c (climate cycle 3), calm planes instead of streaky facets: `oct` 1..3 = noise octaves that carve the relief
+    (1 = only the broad ridges), `facet` = radius (texels) over which the surface normals are averaged before the light
+    is taken (4-8 = a few large flat planes), `profile` = peak flank exponent (None = random 1.15..1.7 concave spires;
+    0.9-1.0 = straight, full flanks), `snow_steps` 2..4 = snow tones."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    sgn = 1.0 if side < 0 else -1.0
+    nz = int(depth)
+    if not peaks:
+        peaks = [[(i + 0.5) / n + g.uniform(-0.05, 0.05), g.uniform(0.55, 1.0), g.uniform(0.7, 1.1) / n]
+                 for i in range(int(n))]
+    xs = np.arange(w, dtype=np.float32)[None, :]
+    zs = np.arange(nz, dtype=np.float32)[:, None]
+    env = np.zeros((nz, w), np.float32)
+    zmid = nz * 0.42
+    for cx, ph, hw in peaks:
+        zc = zmid + g.uniform(-0.2, 0.2) * nz
+        rx, rz = max(4.0, hw * w), max(6.0, nz * g.uniform(0.32, 0.5))
+        dist = np.hypot((xs - cx * w) / rx, (zs - zc) / rz * 0.8)
+        pw = g.uniform(1.15, 1.7)
+        env = np.maximum(env, ph * np.clip(1 - dist, 0, 1) ** (pw if profile is None else float(profile)) * float(sharp))
+    r1 = 1 - np.abs(2 * _p7_noise2(nz, w, 34.0, 26.0, g) - 1)
+    r2 = 1 - np.abs(2 * _p7_noise2(nz, w, 14.0, 11.0, g) - 1)
+    r3 = 1 - np.abs(2 * _p7_noise2(nz, w, 6.0, 5.0, g) - 1)
+    wo = (0.42, 0.32, 0.26) if int(oct) >= 3 else ((0.6, 0.4, 0.0) if int(oct) == 2 else (1.0, 0.0, 0.0))
+    rid = wo[0] * r1 + wo[1] * r2 + wo[2] * r3
+    Hf = env * (1 - relief + relief * 1.9 * rid)
+    Hf = Hf * (max(p[1] for p in peaks) / max(float(Hf.max()), 1e-3))      # the tallest summit reaches its requested height
+    fb = float(foot) * (0.35 + 0.65 * _p7_noise2(nz, w, 36.0, 28.0, g)) * (0.35 + 0.65 * zs / nz)
+    for tv, xs_ in ((taper[0], xs), (taper[1], w - 1 - xs)):
+        if tv and tv > 0:
+            tt = np.clip(xs_ / max(1.0, tv * w), 0, 1)
+            Hf = Hf * (tt * tt * (3 - 2 * tt))
+            fb = fb * (tt * tt * (3 - 2 * tt))
+    Hf = np.maximum(Hf, fb)
+    Hw = Hf * float(scale) * h * 0.98                        # world height in texels
+    gz = np.gradient(Hw, axis=0)                             # along the depth axis (index 0 = nearest)
+    gx = np.gradient(Hw, axis=1)
+    nrm = np.sqrt(gx * gx + 1.0 + gz * gz)
+    nx_, ny_, nz_ = -gx / nrm, 1.0 / nrm, gz / nrm
+    if facet and int(facet) > 0:                              # light from averaged normals: large flat planes
+        gxf, gzf = _p7_box(gx, int(facet)), _p7_box(gz, int(facet))
+        nrf = np.sqrt(gxf * gxf + 1.0 + gzf * gzf)
+        nx_, ny_, nz_ = -gxf / nrf, 1.0 / nrf, gzf / nrf
+    lx, ly, lz = light
+    lam = (nx_ * (abs(lx) * sgn) + ny_ * ly + nz_ * lz) / math.sqrt(lx * lx + ly * ly + lz * lz)
+    lam = 0.5 + (lam - 0.55) * 1.5 * contrast + (_p7_noise2(nz, w, 4.0, 4.0, g) - 0.5) * float(mottle)
+    lam = fill + (1 - fill) * lam
+    slope = np.hypot(gx, gz)
+    top_h = max(float(Hw.max()), 1.0)
+    ledge = np.where(((Hw / 9.0) % 1.0 < 0.14) & (_p7_noise2(nz, w, 16.0, 10.0, g) > 0.45), -0.18 * float(strata), 0.0)
+    lam = np.clip(lam + ledge, 0, 1)
+    nst = int(steps)
+    sline = snow * top_h + (_p7_noise2(nz, w, 9.0, 7.0, g) - 0.5) * top_h * 0.22 + np.clip(slope - 1.8, 0, 9) * top_h * 0.06
+    is_snow = (Hw > sline) & (slope < float(steep))
+    ssn = max(2, min(4, int(snow_steps)))
+    tone = np.where(is_snow, nst + (4 - ssn) + np.clip(np.floor(lam * ssn), 0, ssn - 1),
+                    np.clip(np.floor(lam * nst), 0, nst - 1)).astype(int)
+    # ---- paint near to far (index 0 = nearest = lowest on screen)
+    idx = np.full((h, w), -1, int)
+    band = np.zeros((h, w), np.float32)
+    ymin = np.full(w, h, int)
+    for zi in range(nz):
+        ys_ = np.round(h - 1 - zi * float(tilt) - Hw[zi]).astype(int)
+        bz = np.floor(min(1.0, zi / nz) * 3.0) / 3.0
+        for x in range(w):
+            y0, y1 = max(0, ys_[x]), ymin[x]
+            if y0 < y1:
+                idx[y0:y1, x] = tone[zi, x]
+                band[y0:y1, x] = bz
+                ymin[x] = y0
+    inside = idx >= 0
+    idx = _p7_clean(np.where(inside, idx, 0), nst + 4)
+    rc = np.array(color, np.float32) / 255
+    ramp = np.stack([np.clip(rc * (0.5 + 0.28 * i) + np.array([0.0, 0.004, 0.03], np.float32) * (nst - i) / nst, 0, 1)
+                     for i in range(nst)])
+    sl, ss = np.array(snow_lit, np.float32) / 255, np.array(snow_shade, np.float32) / 255
+    pal = np.concatenate([ramp, np.stack([ss * 0.8, ss, (sl + ss) / 2.0, sl])])
+    rgb = pal[idx]
+    mc = (np.array(mist, np.float32) / 255) if mist is not None else rc * 0.4 + np.array([0.0, 0.04, 0.1], np.float32)
+    mix = (band * float(mist_amt))[..., None]
+    rgb = rgb * (1 - mix) + mc * mix
+    out = np.zeros((h, w, 4), np.float32)
+    out[..., :3] = np.clip(rgb, 0, 1)
+    out[..., 3] = inside.astype(np.float32)
+    return _cx_up(out, k, W, H)
+
+
+_DECOR.update({"pixel_alps": _d_pixel_alps})
+
+
+def _d_pixel_art(W, H, color, rng, k=4, rows=None, pal=None, ox=0, oy=0, flip=False):
+    """Hand-drawn pixel prop on a k-px texel grid: `rows` = list of equally long strings (top row first), `pal` = {char:
+    [r, g, b(, a)]}; a space, '.' or any char missing from `pal` is transparent. `ox` / `oy` offset the drawing inside
+    the box (texels), `flip` mirrors it. A pixel motif: the scene light, contact `shadow` and `drop` shadow apply like
+    on a sprite. Size the box as (columns x k, rows x k) canvas px. `color` is unused."""
+    k, w, h = _cx_grid(W, H, k)
+    out = np.zeros((h, w, 4), np.float32)
+    pal = pal or {}
+    for j, row in enumerate(rows or []):
+        for i, ch in enumerate(row):
+            c = pal.get(ch)
+            if c is None or ch in " .":
+                continue
+            y, x = j + int(oy), i + int(ox)
+            if 0 <= y < h and 0 <= x < w:
+                out[y, x, :3] = np.array(c[:3], np.float32) / 255
+                out[y, x, 3] = (c[3] / 255.0) if len(c) > 3 else 1.0
+    if flip:
+        out = out[:, ::-1].copy()
+    return _cx_up(out, k, W, H)
+
+
+_DECOR.update({"pixel_art": _d_pixel_art})
+
+
+# ---------------------------------------------------------------- round 7c (climate cycle 3): hard-tone sun, gable snow roof
+def _d_pixel_sun(W, H, color, rng, k=4, r=9, glow=(255, 170, 90), glow2=(214, 96, 120), rings=5, reach=3.6,
+                 glow_alpha=0.5, seed=0):
+    """Pixel sun on a k-px texel grid, centred in the box: a round disc of `r` texels in three hard tones (`color` = the
+    pale core, then amber, then an orange rim) inside `rings` hard-edged glow bands out to `reach` x r that shift from
+    `glow` to `glow2` and fade from `glow_alpha` (no dither, no gradient - the same rendering language as the mountains).
+    Draw it before a mountain range so the range cuts it off; add a `lights` entry for the warm rim light."""
+    k, w, h = _cx_grid(W, H, k)
+    ys, xs = np.mgrid[0:h, 0:w].astype(np.float32)
+    d = np.hypot(xs + 0.5 - w / 2.0, ys + 0.5 - h / 2.0)
+    R = float(r)
+    img = np.zeros((h, w, 4), np.float32)
+    g1, g2 = np.array(glow, np.float32) / 255, np.array(glow2, np.float32) / 255
+    n = max(1, int(rings))
+    for j in range(n, 0, -1):                                   # outermost band first, inner bands overwrite
+        rad = R + (float(reach) - 1.0) * R * j / n
+        t = (j - 1) / max(1.0, n - 0.5)
+        col = g1 * (1 - t) + g2 * t
+        a = float(glow_alpha) * (1 - t) ** 1.15
+        m = d <= rad
+        img[..., :3] = np.where(m[..., None], col, img[..., :3])
+        img[..., 3] = np.where(m, a, img[..., 3])
+    c0 = np.array(color, np.float32) / 255
+    tone = np.where(d < R * 0.5, 1.0, np.where(d < R * 0.84, 0.0, -1.0))
+    col = np.where((tone > 0.5)[..., None], c0,
+                   np.where((tone > -0.5)[..., None], c0 * np.array([1.0, 0.84, 0.58], np.float32),
+                            c0 * np.array([1.0, 0.64, 0.36], np.float32)))
+    disc = d <= R
+    img[..., :3] = np.where(disc[..., None], np.clip(col, 0, 1), img[..., :3])
+    img[..., 3] = np.where(disc, 1.0, img[..., 3])
+    return _cx_up(img, k, W, H)
+
+
+def _d_pixel_roof(W, H, color, rng, k=4, d=14, t=6, ov=4, ridge=0.0, pad=0, asset="tfc:block/thatch",
+                  wall="minecraft:block/spruce_planks", snow=0.9, snow_lit=(240, 247, 255), snow_mid=(190, 208, 240),
+                  snow_shade=(140, 162, 210), chim=None, chim_asset="minecraft:block/bricks", seed=0):
+    """Snow-covered gable roof in the oblique front / top / right view of `blocks` (box = front width + `d` texels
+    wide, front height + `d` tall; the front is the bottom-left part, the roof recedes up and to the right by `d`
+    texels like the `depth` of a `blocks` wall). A thick two-slope fascia of `asset` (`t` texels, lit snow lip, dark
+    underside) overhangs the walls by `ov` texels on each side, a gable wall of `wall` planks (shadowed under the
+    eaves) fills the triangle under it, and the receding slopes seen from above are snow (`snow` = coverage, thatch
+    shows through the rest; left slope lit, right slope in half shade), the right end of the roof is a dark
+    face. `ridge` shifts the apex (fraction of the front width), `pad` = free rows above the ridge (for a chimney). `chim` = [x, w, top, z, depth] texels (front x of the
+    chimney's left edge, width, top row of its front plane, texels behind the front, depth): a brick chimney standing
+    on the right slope with a snow cap and a dark flue (use create_smoke on it; the flue centre is at screen texel
+    x + w/2 + z + depth/2, top - z - depth/2). Keep the pitch under 45 degrees: rise = box height - d - t over half
+    the front width."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    out = np.zeros((h, w, 4), np.float32)
+    d, t, ov = int(d), int(t), int(ov)
+    fw = w - d
+    ye = h - 1
+    xm = fw / 2.0 + float(ridge) * fw
+    y0 = ye - t + 1.0
+    ya = float(d + int(pad))
+    sl, sm, ss = (np.array(c, np.float32) / 255 for c in (snow_lit, snow_mid, snow_shade))
+    T = np.asarray(tex(asset), np.float32)[..., :3] / 255
+    Tw = np.asarray(tex(wall), np.float32)[..., :3] / 255
+
+    def up(x):
+        x = np.asarray(x, np.float32)
+        return np.where(x <= xm, y0 + (ya - y0) * (x / max(1.0, xm)),
+                        y0 + (ya - y0) * ((fw - 1 - x) / max(1.0, fw - 1 - xm)))
+
+    def put(px, py, col):
+        ok = (px >= 0) & (px < w) & (py >= 0) & (py < h)
+        c = np.broadcast_to(col, (px.shape[0], 3))
+        out[py[ok], px[ok], :3] = c[ok]
+        out[py[ok], px[ok], 3] = 1.0
+
+    mpitch = (y0 - ya) / max(1.0, xm)
+    sub = int(min(10, max(3, np.ceil(2.0 / max(0.12, 1.0 - mpitch)))))
+    xs_ = np.arange(0, fw * sub, dtype=np.float32) / sub
+    left = xs_ <= xm
+    yu = up(xs_)
+    nz_ = _p7_noise2(d * sub + 2, fw * sub + 2, 7.0 * sub, 4.0 * sub, g)
+    sp = g.random((d * sub + 2, fw * sub + 2))
+    # right end face (dark thatch), then the top surfaces far to near
+    ytop_end = int(round(float(up(fw - 1))))
+    for zi in range(d * sub, -1, -1):
+        z = zi / sub
+        yy = np.arange(ytop_end, ye + 1)
+        px = np.full(yy.shape, int(round(fw - 1 + z)))
+        col = T[(yy.astype(int) % 16), (int(z * 2) % 16)] * 0.36
+        put(px, np.round(yy - z).astype(int), col)
+    xi = np.arange(fw * sub)
+    for zi in range(d * sub, 0, -1):
+        z = zi / sub
+        px = np.round(xs_ + z).astype(int)
+        py = np.round(yu - z).astype(int)
+        n1 = nz_[zi, xi]
+        base = np.where(left[:, None], sl[None, :], sm[None, :])
+        tone = np.where((n1 < 0.34)[:, None], np.where(left[:, None], sm[None, :], ss[None, :]), base)
+        tone = np.where((sp[zi, xi] > 0.985)[:, None], np.array([1.0, 1.0, 1.0], np.float32)[None, :], tone)
+        peek = (n1 > 0.5 + 0.5 * float(snow)) | ((xs_ < 3) & (z < 2 + n1 * 3))
+        straw = T[(py % 16), (np.floor(xs_).astype(int) % 16)] * np.where(left, 0.85, 0.5)[:, None]
+        ridge_ln = ((zi // sub) % 6 == 5) & ~peek                    # soft snow ridges running down the slope
+        tone = np.where(ridge_ln[:, None], tone * 0.93, tone)
+        tone = np.where(peek[:, None], straw, tone)
+        put(px, py, tone)
+    # front fascia band (thatch seen from the front, lit snow lip, dark underside)
+    for x in range(fw):
+        r0 = int(round(float(up(x))))
+        for j in range(t):
+            y = r0 + j
+            if not (0 <= y < h):
+                continue
+            col = T[int(j * 16 / t) % 16, x % 16] * (0.78 + 0.22 * (1 - j / max(1, t - 1)))
+            lip = sl if x <= xm else sm
+            if j == 0:
+                col = lip
+            elif j == 1:
+                col = col * 0.8 + lip * 0.2
+            elif j >= t - 1:
+                col = col * 0.5
+            out[y, x, :3], out[y, x, 3] = np.clip(col, 0, 1), 1.0
+    # gable wall under the fascia, shadowed by the roof
+    for x in range(ov, fw - ov):
+        r1 = int(round(float(up(x)))) + t
+        for y in range(r1, ye + 1):
+            if not (0 <= y < h):
+                continue
+            board = ((x // 4) % 2) * 0.06
+            col = Tw[y % 16, (x // 4 * 5 + x % 4) % 16] * (0.8 + board)
+            col = col * (0.5 if y - r1 < 2 else (0.68 if y - r1 < 5 else (0.82 if y - r1 < 9 else 0.92)))
+            if x == ov or x == fw - ov - 1:
+                col = col * 0.7
+            out[y, x, :3], out[y, x, 3] = np.clip(col, 0, 1), 1.0
+    # brick chimney on the right slope
+    if chim:
+        cx, cw, ctop, cz, cd = (int(v) for v in chim)
+        B = np.asarray(tex(chim_asset), np.float32)[..., :3] / 255
+        yb_r = int(round(float(up(cx + cw - 1))))
+        for z in range(cz + cd, cz - 1, -1):                    # right face (dark), far to near
+            for yy in range(ctop, yb_r + 1):
+                px_, py_ = cx + cw + (z - cz), yy - z
+                if 0 <= px_ < w and 0 <= py_ < h:
+                    out[py_, px_, :3] = B[yy % 16, (z * 3) % 16] * 0.55
+                    out[py_, px_, 3] = 1.0
+        for z in range(cz + cd, cz - 1, -1):                    # top face: snow with the dark flue
+            for x in range(cx, cx + cw + 1):
+                px_, py_ = x + z, ctop - z
+                if 0 <= px_ < w and 0 <= py_ < h:
+                    flue = (cx + 2 <= x <= cx + cw - 2) and (cz + 2 <= z <= cz + cd - 2)
+                    out[py_, px_, :3] = np.array([0.1, 0.09, 0.11], np.float32) if flue else (
+                        sl if (x - cx + z - cz) % 5 else sm)
+                    out[py_, px_, 3] = 1.0
+        for x in range(cx, cx + cw):                            # front face
+            for yy in range(ctop, int(round(float(up(x)))) + 1):
+                px_, py_ = x + cz, yy - cz
+                if 0 <= px_ < w and 0 <= py_ < h:
+                    col = B[yy % 16, x % 16]
+                    if yy <= ctop + 1:
+                        col = sl if x < cx + cw - 1 else sm
+                    out[py_, px_, :3] = np.clip(col, 0, 1)
+                    out[py_, px_, 3] = 1.0
+    return _cx_up(out, k, W, H)
+
+
+_DECOR.update({"pixel_sun": _d_pixel_sun, "pixel_roof": _d_pixel_roof})
+
+
+# ---------------------------------------------------------------- round 7c: faceted pixel range (flat planes)
+def _d_pixel_range(W, H, color, rng, k=4, peaks=None, n=3, side=-1, snow=0.42, steps=4, rays=3, jag=0.16, flat=0.0, tongues=0, crags=0, edge_dither=0,
+                   snow_lit=(228, 238, 255), snow_shade=(118, 140, 192), mist=None, mist_amt=0.4, mist_from=0.55,
+                   seed=0):
+    """Calm faceted mountains on a k-px texel grid: every peak is a few large FLAT planes with diagonal aretes (no
+    texture, no noise): a straight-flanked silhouette with shoulders (`jag`), a ridge from the summit to the foot that
+    splits a lit flank (towards `side`, -1 = left) from a shaded one, `rays` extra crease lines per flank that fan out of
+    the summit region to the foot (facets alternate between two tones of `steps` rock tones built from `color`,
+    the mid tone), and a snow cap above `snow` (share of the peak height) with a stepped, jagged lower edge in 3
+    snow tones that keep the facets (`tongues` N = snow tongues running down the gullies, `crags` N = short darker rock strokes with a lit edge on the bare flanks, `edge_dither` 1 = a one-texel checker where two planes meet and along the snow line, hand-made pixel-art transitions). `peaks` = [[x, height, half-width]] as box fractions (taller peaks are drawn in
+    front); the box bottom is solid, `flat` > 0 draws the flanks `flat` x wider than tall (low, broad ranges).
+    Three hard haze bands from `mist_from` (share of the box height) down towards `mist` (RGB) by `mist_amt` push the
+    foot back. Stack a pale hazy range behind a darker nearer one; cover the foot with forest / drift layers."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    nst = max(3, int(steps))
+    yy, xx = np.mgrid[0:h, 0:w].astype(np.float32) + 0.5
+    tone = np.full((h, w), -1, int)
+    snw = np.zeros((h, w), bool)
+    lit_left = side < 0
+    if not peaks:
+        peaks = [[(i + 0.5) / n + g.uniform(-0.06, 0.06), g.uniform(0.55, 1.0), g.uniform(0.7, 1.0) / n] for i in range(int(n))]
+    for px, ph, hw in sorted(peaks, key=lambda p: p[1]):
+        ax, hwp = px * w, max(6.0, hw * w) * (1.0 + float(flat))
+        ay = (h - 1) - ph * (h - 1)
+        yb = h + 2.0
+        t = (yy - ay) / (yb - ay)
+        tc = np.clip(t, 0, 1)
+
+        def prof():
+            ts = np.array([0.0, g.uniform(0.18, 0.3), g.uniform(0.42, 0.58), g.uniform(0.7, 0.82), 1.0])
+            fs = ts * (1 + float(jag) * g.uniform(-1, 1, 5)) ** 1
+            fs[0], fs[-1] = 0.0, 1.0
+            fs = np.maximum.accumulate(np.clip(fs, 0, 1))
+            return ts, fs
+        tl, fl = prof()
+        tr, fr = prof()
+        WL = hwp * np.interp(tc, tl, fl)
+        WR = hwp * np.interp(tc, tr, fr)
+        inside = (t >= 0) & (xx >= ax - WL) & (xx <= ax + WR)
+        fx = g.uniform(-0.28, 0.28)
+        xr = ax + fx * hwp * tc
+        left = xx < xr
+        idn = np.zeros((h, w), int)
+        for flank in (0, 1):
+            for j in range(1, int(rays) + 1):
+                tj = g.uniform(0.03, 0.5)                     # creases fan out of the summit region, down to the foot
+                uj = (j + g.uniform(-0.3, 0.3)) / (int(rays) + 1)
+                yS = ay + tj * (yb - ay)
+                xS = ax + fx * hwp * tj
+                if flank == 0:
+                    xB = (ax + fx * hwp) + ((ax - hwp) - (ax + fx * hwp)) * uj
+                else:
+                    xB = (ax + fx * hwp) + ((ax + hwp) - (ax + fx * hwp)) * uj
+                xray = xS + (xB - xS) * (yy - yS) / (yb - yS)
+                act = yy >= yS
+                ridge_side = (xx > xray) if flank == 0 else (xx < xray)
+                idn += (act & ridge_side & (left if flank == 0 else ~left)).astype(int)
+        ph0 = int(g.integers(0, 2))
+        lit_flank = left if lit_left else ~left
+        t_lit = np.where((idn + ph0) % 2 == 0, nst - 1, nst - 2)
+        t_shd = np.where((idn + ph0) % 2 == 0, 1, 0)
+        tn = np.where(lit_flank, t_lit, t_shd)
+        sn_y = ay + float(snow) * (yb - ay)
+        tri = np.abs(((xx / max(4.0, hwp * 0.16)) + g.uniform(0, 2)) % 2 - 1)
+        sline = sn_y + (tri - 0.5) * float(jag) * (yb - ay) * 0.5 + (_p7_noise1(w, 10.0, g)[None, :] - 0.5)[0] * 6
+        if tongues:
+            for _ in range(int(tongues)):
+                tx = ax + g.uniform(-0.55, 0.55) * hwp
+                ln_, wd = g.uniform(8, 22), g.uniform(2.5, 5.5)
+                sline = sline + np.clip(1 - np.abs(xx - tx) / wd, 0, 1) * ln_
+        sm_ = inside & (yy < sline)
+        if crags:
+            tn = np.array(tn)
+            for _ in range(int(crags)):
+                cxp = ax + g.uniform(-0.8, 0.8) * hwp
+                cyp = ay + g.uniform(float(snow) + 0.1, 0.9) * (yb - ay)
+                dxs = -0.5 if cxp < ax + fx * hwp else 0.5
+                for i in range(int(g.integers(3, 9))):
+                    x_, y_ = int(cxp + dxs * i), int(cyp + i)
+                    if 0 <= x_ < w and 1 <= y_ < h and inside[y_, x_] and not sm_[y_, x_]:
+                        tn[y_, x_] = max(0, tn[y_, x_] - 1)
+                        x2 = x_ + (1 if dxs < 0 else -1)
+                        if 0 <= x2 < w and inside[y_, x2] and not sm_[y_, x2] and i % 2 == 0:
+                            tn[y_, x2] = min(nst - 1, tn[y_, x2] + 1)
+        tone = np.where(inside, tn, tone)
+        snw = np.where(inside, sm_, snw)
+    if edge_dither:
+        chk = ((np.arange(w)[None, :] + np.arange(h)[:, None]) % 2) == 0
+        pad_t = np.pad(tone, ((0, 0), (1, 0)), constant_values=-1)[:, :-1]          # left neighbour
+        pad_s = np.pad(snw, ((0, 0), (1, 0)), constant_values=False)[:, :-1]
+        edge = (tone >= 0) & (pad_t >= 0) & (pad_t != tone) & chk & ~snw & ~pad_s
+        tone = np.where(edge, pad_t, tone)
+        up_s = np.pad(snw, ((1, 0), (0, 0)), constant_values=False)[:-1, :]          # snow just above -> snow line row
+        sline_row = (tone >= 0) & ~snw & up_s & (np.arange(w)[None, :] % 2 == 0)
+        snw = snw | sline_row
+    rc = np.array(color, np.float32) / 255
+    ramp = np.stack([np.clip(rc * (0.5 + 0.28 * i) + np.array([0.0, 0.004, 0.03], np.float32) * (nst - i) / nst, 0, 1)
+                     for i in range(nst)])
+    sl, ss = np.array(snow_lit, np.float32) / 255, np.array(snow_shade, np.float32) / 255
+    sn = np.stack([ss * 0.86, ss, (sl + ss) / 2.0, sl])
+    ti = np.clip(tone, 0, nst - 1)
+    rgb = ramp[ti]
+    sidx = np.where(ti >= nst - 1, 3, np.where(ti == nst - 2, 2, np.where(ti == 1, 1, 0)))
+    rgb = np.where(snw[..., None], sn[sidx], rgb)
+    mc = (np.array(mist, np.float32) / 255) if mist is not None else rc * 0.45 + np.array([0.0, 0.04, 0.1], np.float32)
+    band = np.floor(np.clip((yy - float(mist_from) * h) / max(1.0, h * (1 - float(mist_from))), 0, 1) * 3) / 3
+    mix = (band * float(mist_amt))[..., None]
+    rgb = rgb * (1 - mix) + mc * mix
+    out = np.zeros((h, w, 4), np.float32)
+    out[..., :3] = np.clip(rgb, 0, 1)
+    out[..., 3] = (tone >= 0).astype(np.float32)
+    return _cx_up(out, k, W, H)
+
+
+_DECOR.update({"pixel_range": _d_pixel_range})
+
+
 DECOR_MOTIFS = set(_DECOR) | {"sprite", "sprite_row", "blocks"}
 
 
@@ -3802,6 +4853,7 @@ BACKDROP = {"mountain_range", "snowy_range", "strata_band", "tree_line", "wheat_
 PIXEL_MOTIFS.update({"create_cog", "create_wheel", "create_sails", "create_shaft", "create_belt", "create_water",
                      "create_steam"})
 PIXEL_MOTIFS.update({"create_station", "create_boiler", "create_smoke"})
+PIXEL_MOTIFS.add("pixel_art")  # hand-drawn pixel props take the scene light / contact shadow like sprites (climate, round 7b)
 
 
 def _motif_opts(fn, ly) -> dict:

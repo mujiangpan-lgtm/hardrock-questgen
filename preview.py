@@ -45,16 +45,64 @@ def _poly(shape, cx, cy, r):
     return [(cx + r * math.cos(k * math.pi / 16), cy + r * math.sin(k * math.pi / 16)) for k in range(32)]
 
 
+# Item ids whose in-game icon is not at item/<path> or block/<path> (nested / differently named / block-model items).
+# Preview only: the real game resolves these through the item models, so this just keeps the nodes from showing
+# blank discs. A string = one texture; a tuple of three = (top, left, right) faces of an inventory-style block icon.
+ICON_OVERRIDE = {
+    "cold_sweat:thermometer": "cold_sweat:item/thermometer/thermometer",
+    "cold_sweat:soulspring_lamp": "cold_sweat:item/soulspring_lamp/soulspring_lamp_body_3",
+    "cold_sweat:sewing_table": ("cold_sweat:block/sewing_table_top", "cold_sweat:block/sewing_table_side",
+                                "cold_sweat:block/sewing_table_front"),
+    "tfc_stone_tools:plant_chestplate": "tfc_stone_tools:item/plant_shirt",
+    "tfc_stone_tools:plant_helmet": "tfc_stone_tools:item/plant_hat",
+    "tfc_stone_tools:plant_leggings": "tfc_stone_tools:item/plant_pants",
+    "tfc_stone_tools:plant_boots": "tfc_stone_tools:item/plant_shoes",
+    "weather2:tornado_siren": "weather2:blocks/tornado_sensor",   # the siren block texture is a near-black grille
+    "weather2:tornado_sensor": "weather2:blocks/tornado_sensor",
+    "weather2:weather_forecast": "weather2:blocks/weather_forecast",
+}
+
+
+def _iso_cube(top, left, right):
+    """Inventory-style block icon (32x32) from three 16x16 face textures."""
+    import numpy as np
+    out = np.zeros((32, 32, 4), np.float32)
+    faces = ((top, (16.0, 2.0), (14.0, 7.0), (-14.0, 7.0), 1.0),     # texture, origin, u axis, v axis (px / 16 texels)
+             (left, (2.0, 9.0), (14.0, 7.0), (0.0, 14.0), 0.78),
+             (right, (16.0, 16.0), (14.0, -7.0), (0.0, 14.0), 0.58))
+    ys, xs = np.mgrid[0:32, 0:32].astype(np.float32)
+    for t, o, u, v, shade in faces:
+        a = np.asarray(t.convert("RGBA").resize((16, 16), Image.NEAREST), np.float32) / 255
+        det = u[0] * v[1] - u[1] * v[0]
+        px, py = xs + 0.5 - o[0], ys + 0.5 - o[1]
+        tu = (px * v[1] - py * v[0]) / det
+        tv = (u[0] * py - u[1] * px) / det
+        m = (tu >= 0) & (tu < 1) & (tv >= 0) & (tv < 1)
+        iu, iv = np.clip((tu * 16).astype(int), 0, 15), np.clip((tv * 16).astype(int), 0, 15)
+        col = a[iv, iu]
+        out[m, :3] = col[m][:, :3] * shade
+        out[m, 3] = col[m][:, 3]
+    return Image.fromarray((np.clip(out, 0, 1) * 255).astype(np.uint8), "RGBA")
+
+
 def _icon_tex(icon):
     import artlib
     iid = icon if isinstance(icon, str) else (icon or {}).get("id") if isinstance(icon, dict) else None
     if not iid or ":" not in iid:
         return None
+    ov = ICON_OVERRIDE.get(iid)
+    if isinstance(ov, str) and artlib.has_tex(ov):
+        return artlib.tex(ov)
+    if isinstance(ov, tuple) and all(artlib.has_tex(f) for f in ov):
+        return _iso_cube(*[artlib.tex(f) for f in ov])
     ns, path = iid.split(":", 1)
     for cand in (f"{ns}:item/{path}", f"{ns}:block/{path}", f"{ns}:item/{path.split('/')[-1]}",
-                 f"{ns}:block/{path.split('/')[-1]}"):
+                 f"{ns}:block/{path.split('/')[-1]}", f"{ns}:item/{path}/{path}"):
         if artlib.has_tex(cand):
             return artlib.tex(cand)
+    faces = [f"{ns}:block/{path}_{f}" for f in ("top", "side", "front")]
+    if all(artlib.has_tex(f) for f in faces):
+        return _iso_cube(*[artlib.tex(f) for f in faces])
     return None
 
 
