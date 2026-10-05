@@ -221,3 +221,12 @@ RS 段此前**从未核对过**，本轮按真实配方改了这些事实错误�
 部署：16 个 SNBT 更新（样板 3 章不变），主题文件 19 节，贴图 143 张 / 12 MB（章节打开时才加载，不影响启动）；1691 处 `&#RRGGBB` 关键词颜色全部格式正确。备份 `backups/ftbquests-before-art-rollout-20261005/`（含改前正式文件、贴图、主题文件与源码/规格）。全书屏幕预览与总览图在 `questgen/_stage_all/`（`contact_sheet.png`）。
 
 **未验证**：游戏内实际观感（只按屏幕预览判断）；各章细节仍有提升空间，评审建议见交接历史。若某章不满意，只改对应的 `art_styles.d/<key>.json` 或 `art_styles.py` 后重新 `build.py` 即可。
+
+### 第 5 轮：弱点修复 + 渲染器升级 + 云端会话（2026-10-05）
+
+- **渲染器**（见 `_art_review/renderer_changes.md`、ART_GUIDE.md "Round 5"）：场景级 `texel`/`light`/`shadow`/`lights`/`ambient`/`pixelate`，`blocks`（真实方块贴图拼的立体建筑）、`sprite_row` 的 `pile`/`scatter`、`light_rays`、闪电/太阳/铁砧/塔/抽油机/矿井口/牲畜重画、发光改为光池、窄面板标题改为两行（steel 第三节的小标签被评审认为是缺陷）。
+- **逐章修复**：7 章本地（欢迎/气候/饮食/健康/农耕/通用机械/钢铁），10 章在 GitHub 云端会话（公开仓库 `mujiangpan-lgtm/hardrock-questgen`，任务书 `CLOUD_TASK.md`，分支 `art-fixes`，用 Sonnet 子代理，贴图包加密为 `packdata.tar.gz.enc`，钥匙不入库）。云端结果 `_art_review/RESULTS.md`。
+- **盲评**（两位独立评审，平均）：19 章 6.24 → 7.28；云端 10 章 6.30 → 7.60。最高：pneumatic 8.25、storage/iron_age 8.0。没有任何章到 9，评审估计本做法上限约 8–8.5：9 分需要手绘/手工像素或"用方块搭景再截图"的插图。
+- **未编辑的 create / space** 仍是旧矢量风格，现在和其他章风格冲突（评审分降到 6.5/6.75），是下一批最明显的候选（用 `blocks`/`pixelate`/`texel` 重做）。
+- **部署**：`build.py` 正式构建通过（19 章 / 435 任务），贴图 143 张 15 MB，引用无缺失；备份 `backups/ftbquests-before-art-round5-20261005/`（线上 quests、贴图、主题文件、源码）。**未在游戏内验证**，只看过屏幕预览。
+- 注意：pneumatic 的横幅标题颜色取自 `qlib.py THEMES`（青色），预览里是规格的橙色，游戏内可能不同。云端环境没有 Windows 字体，`build.py` 会退到 Noto CJK。
