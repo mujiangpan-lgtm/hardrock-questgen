@@ -1,349 +1,71 @@
 {
- "palette": {
-  "panel_fill": [
-   22,
-   30,
-   42
-  ],
-  "accent": [
-   100,
-   178,
-   250
-  ],
-  "glow": [
-   70,
-   160,
-   255
-  ],
-  "text_key_hex": "#8CC8FF"
- },
- "background": {
-  "tiles": [
-   {
-    "asset": "tfc:block/wood/planks/spruce",
-    "weight": 6
-   },
-   {
-    "asset": "tfc:block/wood/planks/chestnut",
-    "weight": 2
-   }
-  ],
-  "target_brightness": 0.095,
-  "saturation": 0.5,
-  "tint": [
-   204,
-   216,
-   240
-  ],
-  "contrast_sd": 0.012,
-  "overlay": {
-   "type": "blueprint_grid",
-   "density": 0.14,
-   "color": [
-    90,
-    170,
-    240
-   ]
-  },
-  "tile_size": 12
- },
- "banner": {
-  "ribbon_asset": "tfc:block/wood/planks/spruce",
-  "icons_left": [
-   "sns:item/icon/straw_basket",
-   "tfc:item/ceramic/vessel",
-   "sns:item/icon/frame_pack"
-  ],
-  "icons_right": [
-   "refinedstorage:item/1k_storage_disk",
-   "refinedstorage:item/basic_processor",
-   "refinedstorage:item/pattern"
-  ],
-  "motif": "starfield",
-  "motif_color": [
-   110,
-   180,
-   255
-  ]
- },
+ "palette": {"panel_fill": [22, 28, 38], "accent": [64, 210, 178], "glow": [48, 200, 170], "text_key_hex": "#86F0DA"},
+ "background": {"tiles": [{"asset": "minecraft:block/dark_oak_planks", "weight": 5}, {"asset": "tfc:block/wood/planks/hickory", "weight": 3}], "target_brightness": 0.09, "saturation": 0.5, "tint": [214, 214, 228], "contrast_sd": 0.012, "overlay": {"type": "none", "density": 0, "color": [64, 210, 178]}, "tile_size": 12},
+ "banner": {"ribbon_asset": "minecraft:block/spruce_planks", "icons_left": ["sns:item/icon/straw_basket", "tfc:item/ceramic/vessel", "sns:item/icon/frame_pack"], "icons_right": ["refinedstorage:item/1k_storage_disk", "refinedstorage:item/basic_processor", "refinedstorage:item/pattern"], "motif": "strata", "motif_color": [60, 190, 160]},
  "decor": [],
- "shapes": {
-  "normal": "square",
-  "milestone": "octagon",
-  "optional": "diamond",
-  "gate": "gear"
- },
+ "shapes": {"normal": "square", "milestone": "octagon", "optional": "diamond", "gate": "gear"},
  "scene": {
+  "texel": 4,
+  "shadow": 0.5,
+  "light": {"dir": [-0.5, -0.85], "color": [255, 196, 140], "tint": 0.08, "rim": 0.5, "shade": 0.3},
+  "lights": [{"x": 0.8, "y": 0.4, "radius": 0.24, "strength": 0.7, "color": [255, 150, 60]}, {"x": 0.79, "y": 0.72, "radius": 0.16, "strength": 0.45, "color": [255, 150, 60]}, {"x": 0.27, "y": 0.33, "radius": 0.2, "strength": 0.8, "color": [255, 180, 100]}, {"x": 0.2, "y": 0.62, "radius": 0.17, "strength": 0.45, "color": [255, 176, 100]}, {"x": 0.42, "y": 0.66, "radius": 0.14, "strength": 0.7, "color": [255, 176, 100]}],
+  "ambient": 0.76,
+  "haze_color": [20, 26, 40],
   "layers": [
-   {
-    "motif": "soft_glow",
-    "x": 0.22,
-    "y": 0.5,
-    "w": 30,
-    "h": 30,
-    "color": [
-     255,
-     170,
-     90
-    ],
-    "alpha": 0.22
-   },
-   {
-    "motif": "soft_glow",
-    "x": 0.79,
-    "y": 0.48,
-    "w": 32,
-    "h": 32,
-    "color": [
-     70,
-     160,
-     255
-    ],
-    "alpha": 0.3
-   },
-   {
-    "motif": "circuit",
-    "x": 0.76,
-    "y": 0.2,
-    "w": 30,
-    "h": 8,
-    "color": [
-     90,
-     176,
-     250
-    ],
-    "alpha": 0.42
-   },
-   {
-    "motif": "shaft",
-    "x": 0.3,
-    "y": 0.22,
-    "w": 40,
-    "h": 1.3,
-    "color": [
-     104,
-     74,
-     48
-    ],
-    "alpha": 0.95
-   },
-   {
-    "motif": "sprite_row",
-    "assets": [
-     "firmalife:item/jar/honey",
-     "firmalife:item/jar/fig",
-     "firmalife:item/jar/pineapple",
-     "firmalife:item/jar/red_grapes",
-     "firmalife:item/jar/white_grapes"
-    ],
-    "x": 0.3,
-    "y": 0.193,
-    "w": 22,
-    "h": 3.2,
-    "alpha": 0.95
-   },
-   {
-    "motif": "hanging_cord",
-    "x": 0.29,
-    "y": 0.265,
-    "w": 0.8,
-    "h": 3.6,
-    "color": [
-     150,
-     112,
-     70
-    ],
-    "alpha": 0.95
-   },
-   {
-    "motif": "sprite",
-    "asset": "tfc:item/metal/lamp/copper",
-    "x": 0.29,
-    "y": 0.33,
-    "w": 3.5,
-    "alpha": 1.0,
-    "glow": [
-     255,
-     170,
-     80
-    ]
-   },
-   {
-    "motif": "hanging_cord",
-    "x": 0.15,
-    "y": 0.265,
-    "w": 0.8,
-    "h": 3.6,
-    "color": [
-     150,
-     112,
-     70
-    ],
-    "alpha": 0.95
-   },
-   {
-    "motif": "sprite",
-    "asset": "sns:item/icon/frame_pack",
-    "x": 0.15,
-    "y": 0.36,
-    "w": 6,
-    "alpha": 1.0
-   },
-   {
-    "motif": "plank_shelf",
-    "x": 0.207,
-    "y": 0.687,
-    "w": 13,
-    "h": 1.2,
-    "color": [
-     120,
-     86,
-     54
-    ],
-    "alpha": 1.0
-   },
-   {
-    "motif": "sprite",
-    "asset": "minecraft:block/barrel_side",
-    "x": 0.16,
-    "y": 0.62,
-    "w": 6,
-    "alpha": 1.0
-   },
-   {
-    "motif": "sprite",
-    "asset": "minecraft:block/barrel_side",
-    "x": 0.254,
-    "y": 0.62,
-    "w": 6,
-    "alpha": 1.0
-   },
-   {
-    "motif": "sprite",
-    "asset": "tfc:item/ceramic/vessel",
-    "x": 0.207,
-    "y": 0.51,
-    "w": 5.5,
-    "alpha": 1.0
-   },
-   {
-    "motif": "sprite",
-    "asset": "refinedstorage:block/controller/on",
-    "x": 0.786,
-    "y": 0.36,
-    "w": 9,
-    "alpha": 1.0,
-    "glow": [
-     70,
-     160,
-     255
-    ]
-   },
-   {
-    "motif": "sprite",
-    "asset": "refinedstorage:block/controller/cutouts/light_blue",
-    "x": 0.786,
-    "y": 0.36,
-    "w": 9,
-    "alpha": 1.0
-   },
-   {
-    "motif": "shaft",
-    "x": 0.786,
-    "y": 0.4925,
-    "w": 6.9,
-    "h": 0.55,
-    "rot": 90,
-    "color": [
-     90,
-     150,
-     210
-    ],
-    "alpha": 0.85
-   },
-   {
-    "motif": "shaft",
-    "x": 0.786,
-    "y": 0.687,
-    "w": 13,
-    "h": 0.8,
-    "color": [
-     96,
-     110,
-     130
-    ],
-    "alpha": 0.95
-   },
-   {
-    "motif": "sprite",
-    "asset": "refinedstorage:block/disk_drive",
-    "x": 0.74,
-    "y": 0.62,
-    "w": 6,
-    "alpha": 1.0
-   },
-   {
-    "motif": "sprite",
-    "asset": "refinedstorage:block/64k_storage_block",
-    "x": 0.832,
-    "y": 0.62,
-    "w": 6,
-    "alpha": 1.0
-   },
-   {
-    "motif": "shaft",
-    "x": 0.5,
-    "y": 0.815,
-    "w": 62,
-    "h": 0.6,
-    "color": [
-     90,
-     150,
-     210
-    ],
-    "alpha": 0.7
-   },
-   {
-    "motif": "shaft",
-    "x": 0.5,
-    "y": 0.84,
-    "w": 60,
-    "h": 0.5,
-    "color": [
-     70,
-     120,
-     180
-    ],
-    "alpha": 0.55
-   },
-   {
-    "motif": "sprite_row",
-    "assets": [
-     "sns:item/icon/straw_basket",
-     "sns:item/icon/ore_sack",
-     "minecraft:item/bundle_filled",
-     "sns:item/icon/leather_sack"
-    ],
-    "x": 0.3,
-    "y": 0.78,
-    "w": 18,
-    "h": 3.4,
-    "alpha": 0.95
-   },
-   {
-    "motif": "sprite_row",
-    "assets": [
-     "refinedstorage:item/1k_storage_disk",
-     "refinedstorage:item/4k_storage_disk",
-     "refinedstorage:item/basic_processor",
-     "refinedstorage:item/pattern"
-    ],
-    "x": 0.7,
-    "y": 0.78,
-    "w": 18,
-    "h": 3.4,
-    "alpha": 0.95
-   }
+  {"motif": "sky_band", "x": 0.5, "y": 0.14, "w": 72, "h": 12, "color": [10, 14, 24], "alpha": 0.5},
+  {"motif": "soft_glow", "x": 0.8, "y": 0.45, "w": 34, "h": 36, "color": [255, 150, 60], "alpha": 0.36},
+  {"motif": "soft_glow", "x": 0.215, "y": 0.36, "w": 18, "h": 14, "color": [255, 176, 96], "alpha": 0.22},
+  {"motif": "soft_glow", "x": 0.42, "y": 0.66, "w": 15, "h": 12, "color": [255, 170, 90], "alpha": 0.2},
+  {"motif": "soft_glow", "x": 0.79, "y": 0.76, "w": 22, "h": 9, "color": [255, 140, 50], "alpha": 0.26},
+  {"motif": "blocks", "x": 0.5078, "y": 0.1584, "w": 68.0, "h": 4.0, "rows": ["BBBBBBBBBBBBBBBBBBBBBBBBB"], "legend": {"B": {"front": "minecraft:block/stripped_dark_oak_log", "top": "minecraft:block/stripped_dark_oak_log", "side": "minecraft:block/stripped_dark_oak_log_top"}}, "depth": 0.3, "shadow": 0, "haze": 0.35},
+  {"motif": "blocks", "x": 0.5221, "y": 0.7886, "w": 69.8, "h": 5.8, "rows": ["PPPPPPPPPPPPPPPPPPPPPPPPP"], "legend": {"P": "minecraft:block/spruce_planks"}, "depth": 1.0, "shadow": 0, "haze": 0.3},
+  {"motif": "blocks", "x": 0.5026, "y": 0.7102, "w": 67.3, "h": 3.3, "rows": ["WWWWWWWWWWWWWWWWWWWWWWWWW"], "legend": {"W": "minecraft:block/deepslate_bricks"}, "depth": 0.06, "shadow": 0, "haze": 0.5},
+  {"motif": "blocks", "x": 0.2083, "y": 0.5453, "w": 11.3, "h": 24.7, "rows": ["BBBB", "BBBB", "BBBB", "BBBB", "BBBB", "BBBB", "BBBB", "BBBB", "BBBB"], "legend": {"B": "minecraft:block/deepslate_bricks"}, "depth": 0.06, "shadow": 0, "haze": 0.45},
+  {"motif": "plank_shelf", "x": 0.2109, "y": 0.6931, "w": 12.17, "h": 1.3, "color": [150, 106, 64], "alpha": 1.0, "lit": true, "pixelate": 4, "drop": 0.5},
+  {"motif": "plank_shelf", "x": 0.2109, "y": 0.6016, "w": 12.17, "h": 1.3, "color": [150, 106, 64], "alpha": 1.0, "lit": true, "pixelate": 4, "drop": 0.5},
+  {"motif": "plank_shelf", "x": 0.2109, "y": 0.5102, "w": 12.17, "h": 1.3, "color": [150, 106, 64], "alpha": 1.0, "lit": true, "pixelate": 4, "drop": 0.5},
+  {"motif": "plank_shelf", "x": 0.2109, "y": 0.4188, "w": 12.17, "h": 1.3, "color": [150, 106, 64], "alpha": 1.0, "lit": true, "pixelate": 4, "drop": 0.5},
+  {"motif": "plank_shelf", "x": 0.2109, "y": 0.3273, "w": 12.17, "h": 1.3, "color": [150, 106, 64], "alpha": 1.0, "lit": true, "pixelate": 4, "drop": 0.5},
+  {"motif": "plank_shelf", "x": 0.1211, "y": 0.5486, "w": 24.58, "h": 1.3, "color": [128, 88, 54], "alpha": 1.0, "rot": 90, "lit": true, "pixelate": 4, "drop": 0.4},
+  {"motif": "plank_shelf", "x": 0.3008, "y": 0.5486, "w": 24.58, "h": 1.3, "color": [128, 88, 54], "alpha": 1.0, "rot": 90, "lit": true, "pixelate": 4, "drop": 0.4},
+  {"motif": "blocks", "x": 0.2057, "y": 0.7086, "w": 9.7, "h": 7.0, "rows": ["C..", "CSK"], "legend": {"C": {"front": "minecraft:block/composter_side", "top": "minecraft:block/composter_top", "side": "minecraft:block/composter_side"}, "S": {"front": "tfcbarrels:block/wood/barrel/barrel_side_oak", "top": "tfcbarrels:block/wood/barrel/barrel_top_oak", "side": "tfcbarrels:block/wood/barrel/barrel_side_oak"}, "K": {"front": "tfcbarrels:block/wood/barrel/barrel_side_hickory", "top": "tfcbarrels:block/wood/barrel/barrel_top_hickory", "side": "tfcbarrels:block/wood/barrel/barrel_side_hickory"}}, "depth": 0.45, "haze": 0.0},
+  {"motif": "sprite", "asset": "tfc:item/ceramic/vessel", "x": 0.2852, "y": 0.7478, "w": 2.67, "alpha": 1.0},
+  {"motif": "blocks", "x": 0.2057, "y": 0.6449, "w": 9.7, "h": 4.3, "rows": ["H.V"], "legend": {"H": {"front": "minecraft:block/hay_block_side", "top": "minecraft:block/hay_block_top", "side": "minecraft:block/hay_block_side"}, "V": {"front": "minecraft:block/barrel_side", "top": "minecraft:block/barrel_top", "side": "minecraft:block/barrel_side"}}, "depth": 0.45},
+  {"motif": "sprite", "asset": "sns:item/icon/ore_sack", "x": 0.1992, "y": 0.6563, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "sns:item/icon/leather_sack", "x": 0.2279, "y": 0.6596, "w": 2.67, "alpha": 1.0, "flip": true},
+  {"motif": "blocks", "x": 0.2057, "y": 0.5535, "w": 9.7, "h": 4.3, "rows": ["CC."], "legend": {"C": {"front": "minecraft:block/composter_side", "top": "minecraft:block/composter_top", "side": "minecraft:block/composter_side"}}, "depth": 0.45},
+  {"motif": "sprite", "asset": "sns:item/icon/straw_basket", "x": 0.2617, "y": 0.5649, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "tfc:item/ceramic/brown_glazed_vessel", "x": 0.2839, "y": 0.5649, "w": 2.67, "alpha": 1.0},
+  {"motif": "blocks", "x": 0.2057, "y": 0.462, "w": 9.7, "h": 4.3, "rows": ["L.."], "legend": {"L": {"front": "supplementaries:block/safe_front", "top": "supplementaries:block/safe_side", "side": "supplementaries:block/safe_side"}}, "depth": 0.45},
+  {"motif": "sprite", "asset": "minecraft:item/bundle_filled", "x": 0.2057, "y": 0.4767, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "supplementaries:item/lunch_basket", "x": 0.2448, "y": 0.4735, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "woodenhopper:item/wooden_hopper", "x": 0.2799, "y": 0.4767, "w": 2.67, "alpha": 1.0},
+  {"motif": "blocks", "x": 0.2057, "y": 0.3706, "w": 9.7, "h": 4.3, "rows": ["C.."], "legend": {"C": {"front": "minecraft:block/composter_side", "top": "minecraft:block/composter_top", "side": "minecraft:block/composter_side"}}, "depth": 0.45},
+  {"motif": "sprite", "asset": "sns:item/icon/frame_pack", "x": 0.2135, "y": 0.382, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "sns:item/icon/burlap_sack", "x": 0.2552, "y": 0.3853, "w": 2.67, "alpha": 1.0},
+  {"motif": "blocks", "x": 0.2005, "y": 0.2792, "w": 4.3, "h": 4.3, "rows": ["I"], "legend": {"I": {"front": "refinedstorage:block/interface_connected", "top": "refinedstorage:block/side", "side": "refinedstorage:block/side"}}, "depth": 0.45},
+  {"motif": "sprite", "asset": "minecraft:item/lantern", "x": 0.2669, "y": 0.2971, "w": 2.67, "alpha": 1.0, "glow": [255, 176, 100], "glow_strength": 1.2},
+  {"motif": "blocks", "x": 0.7904, "y": 0.529, "w": 12.3, "h": 25.7, "rows": ["..C.", ".DD.", ".DD.", ".DDD", ".DRD", ".DDD", "GDXD", "1DDD", "1111"], "legend": {"C": {"front": "refinedstorage:block/controller/on", "top": "refinedstorage:block/side", "side": "refinedstorage:block/side"}, "D": {"front": "refinedstorage:block/disk_drive", "top": "refinedstorage:block/disk_drive_top", "side": "refinedstorage:block/disk_drive_side"}, "X": {"front": "refinedstorage:block/disk_manipulator/front", "top": "refinedstorage:block/disk_manipulator/side", "side": "refinedstorage:block/disk_manipulator/side"}, "G": {"front": "refinedstorage:block/grid/front", "top": "refinedstorage:block/grid/top", "side": "refinedstorage:block/grid/left"}, "1": {"front": "refinedstorage:block/1k_storage_block", "top": "refinedstorage:block/1k_storage_block", "side": "refinedstorage:block/1k_storage_block"}, "R": {"front": "refinedstorage:block/relay/relay", "top": "refinedstorage:block/side", "side": "refinedstorage:block/side"}}, "depth": 0.45, "tint": 0.03},
+  {"motif": "sprite", "asset": "refinedstorage:block/controller/cutouts/orange", "x": 0.8021, "y": 0.3314, "w": 2.67, "alpha": 1.0, "unlit": true, "shadow": 0, "glow": [255, 150, 60], "glow_strength": 1.5},
+  {"motif": "sprite", "asset": "refinedstorage:block/grid/cutouts/orange", "x": 0.7188, "y": 0.6449, "w": 2.67, "alpha": 1.0, "unlit": true, "shadow": 0, "glow": [255, 150, 60], "glow_strength": 0.8},
+  {"motif": "plank_shelf", "x": 0.7409, "y": 0.2833, "w": 5.67, "h": 1.3, "color": [150, 106, 64], "alpha": 1.0, "lit": true, "pixelate": 4, "drop": 0.5},
+  {"motif": "sprite", "asset": "refinedstorage:item/64k_storage_disk", "x": 0.7109, "y": 0.2514, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "refinedstorage:item/improved_processor", "x": 0.7357, "y": 0.2563, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "refinedstorage:item/storage_housing", "x": 0.7656, "y": 0.2514, "w": 2.67, "alpha": 1.0, "flip": true},
+  {"motif": "shaft", "x": 0.5163, "y": 0.2139, "w": 37.75, "h": 0.8, "color": [88, 98, 118], "alpha": 1.0, "lit": true, "pixelate": 4, "outline": 0.8, "drop": 0.5},
+  {"motif": "shaft", "x": 0.8112, "y": 0.2555, "w": 4.25, "h": 0.8, "rot": 90, "color": [88, 98, 118], "alpha": 1.0, "lit": true, "pixelate": 4, "outline": 0.8, "drop": 0.5},
+  {"motif": "shaft", "x": 0.2044, "y": 0.2327, "w": 1.92, "h": 0.8, "rot": 90, "color": [88, 98, 118], "alpha": 1.0, "lit": true, "pixelate": 4, "outline": 0.8, "drop": 0.5},
+  {"motif": "shaft", "x": 0.4316, "y": 0.8098, "w": 36.42, "h": 0.95, "color": [88, 98, 118], "alpha": 1.0, "lit": true, "pixelate": 4, "outline": 0.8, "drop": 0.5},
+  {"motif": "shaft", "x": 0.7135, "y": 0.7927, "w": 1.75, "h": 0.8, "rot": 90, "color": [88, 98, 118], "alpha": 1.0, "lit": true, "pixelate": 4, "outline": 0.8},
+  {"motif": "shaft", "x": 0.1497, "y": 0.7959, "w": 1.42, "h": 0.8, "rot": 90, "color": [88, 98, 118], "alpha": 1.0, "lit": true, "pixelate": 4, "outline": 0.8},
+  {"motif": "blocks", "x": 0.3939, "y": 0.7118, "w": 9.7, "h": 7.0, "rows": ["C..", "CVC"], "legend": {"C": {"front": "minecraft:block/composter_side", "top": "minecraft:block/composter_top", "side": "minecraft:block/composter_side"}, "V": {"front": "minecraft:block/barrel_side", "top": "minecraft:block/barrel_top", "side": "minecraft:block/barrel_side"}}, "depth": 0.45},
+  {"motif": "sprite", "asset": "tfc:item/metal/lamp/copper", "x": 0.4355, "y": 0.689, "w": 2.67, "alpha": 1.0, "glow": [255, 176, 96], "glow_strength": 1.1},
+  {"motif": "blocks", "x": 0.5417, "y": 0.738, "w": 4.3, "h": 4.3, "rows": ["S"], "legend": {"S": {"front": "tfcbarrels:block/wood/barrel/barrel_side_oak", "top": "tfcbarrels:block/wood/barrel/barrel_top_oak", "side": "tfcbarrels:block/wood/barrel/barrel_side_oak"}}, "depth": 0.45},
+  {"motif": "sprite", "asset": "minecraft:item/hopper", "x": 0.5417, "y": 0.689, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:item/chest_minecart", "x": 0.5898, "y": 0.751, "w": 2.67, "alpha": 1.0, "flip": true},
+  {"motif": "sprite", "asset": "sns:item/icon/burlap_sack", "x": 0.6406, "y": 0.751, "w": 2.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "sns:item/icon/ore_sack", "x": 0.6719, "y": 0.7478, "w": 2.67, "alpha": 1.0, "flip": true},
+  {"motif": "sprite", "asset": "sns:item/icon/leather_sack", "x": 0.6562, "y": 0.7167, "w": 2.67, "alpha": 1.0}
   ]
  }
 }
