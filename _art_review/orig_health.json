@@ -1,0 +1,28 @@
+{
+ "palette": {"panel_fill": [40, 20, 26], "accent": [234, 88, 124], "glow": [230, 60, 96], "text_key_hex": "#F28CA8"},
+ "background": {"tiles": [{"asset": "minecraft:block/white_wool", "weight": 1}], "target_brightness": 0.095, "saturation": 0.55, "tint": [255, 196, 206], "contrast_sd": 0.01, "overlay": {"type": "none", "density": 0, "color": [240, 120, 140]}, "tile_size": 12},
+ "banner": {"ribbon_asset": "minecraft:block/white_wool", "icons_left": ["firstaid:item/bandage", "firstaid:item/plaster", "htm:item/plant_fabric"], "icons_right": ["firstaid:item/morphine", "minecraft:item/totem_of_undying", "comforts:item/sleeping_bag_white"], "motif": "strata", "motif_color": [230, 80, 110]},
+ "decor": [],
+ "shapes": {"normal": "circle", "milestone": "heart", "optional": "diamond", "gate": "gear"},
+ "scene": {"layers": [
+  {"motif": "sky_band", "x": 0.5, "y": 0.17, "w": 72, "h": 16, "color": [120, 34, 52], "alpha": 0.35},
+  {"motif": "nebula_glow", "x": 0.2, "y": 0.55, "w": 26, "h": 24, "color": [150, 40, 72], "alpha": 0.32},
+  {"motif": "nebula_glow", "x": 0.8, "y": 0.52, "w": 26, "h": 24, "color": [120, 40, 90], "alpha": 0.3},
+  {"motif": "heartbeat", "x": 0.5, "y": 0.2, "w": 62, "h": 7, "color": [255, 96, 120], "alpha": 0.75},
+  {"motif": "soft_glow", "x": 0.5, "y": 0.5, "w": 50, "h": 34, "color": [230, 80, 100], "alpha": 0.16},
+  {"motif": "strata_band", "x": 0.5, "y": 0.85, "w": 72, "h": 9, "color": [150, 50, 72], "alpha": 0.42},
+  {"motif": "plank_shelf", "x": 0.142, "y": 0.615, "w": 16, "h": 1.0, "color": [92, 46, 56], "alpha": 1.0, "rot": 90},
+  {"motif": "plank_shelf", "x": 0.308, "y": 0.615, "w": 16, "h": 1.0, "color": [92, 46, 56], "alpha": 1.0, "rot": 90},
+  {"motif": "plank_shelf", "x": 0.225, "y": 0.452, "w": 12, "h": 1.2, "color": [112, 58, 68], "alpha": 1.0},
+  {"motif": "plank_shelf", "x": 0.225, "y": 0.6, "w": 11, "h": 1.0, "color": [112, 58, 68], "alpha": 1.0},
+  {"motif": "plank_shelf", "x": 0.225, "y": 0.775, "w": 12, "h": 1.2, "color": [112, 58, 68], "alpha": 1.0},
+  {"motif": "sprite", "asset": "sanitydim:item/garland", "x": 0.19, "y": 0.551, "w": 4.0, "alpha": 1.0},
+  {"motif": "sprite", "asset": "firstaid:item/bandage", "x": 0.262, "y": 0.551, "w": 4.0, "alpha": 1.0},
+  {"motif": "sprite", "asset": "firstaid:item/morphine", "x": 0.19, "y": 0.71, "w": 5.4, "alpha": 1.0},
+  {"motif": "sprite", "asset": "firstaid:item/plaster", "x": 0.265, "y": 0.724, "w": 4.0, "alpha": 1.0},
+  {"motif": "moon", "x": 0.8, "y": 0.33, "w": 6, "color": [232, 196, 204], "alpha": 0.85},
+  {"motif": "soft_glow", "x": 0.775, "y": 0.6, "w": 18, "h": 16, "color": [255, 200, 120], "alpha": 0.22},
+  {"motif": "sprite", "asset": "minecraft:item/totem_of_undying", "x": 0.775, "y": 0.6, "w": 5.4, "alpha": 1.0, "glow": [255, 200, 120]},
+  {"motif": "sprite", "asset": "minecraft:block/wither_rose", "x": 0.84, "y": 0.745, "w": 5.4, "alpha": 1.0, "glow": [240, 140, 160]}
+ ]}
+}

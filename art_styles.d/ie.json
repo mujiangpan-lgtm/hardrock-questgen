@@ -1,0 +1,28 @@
+{
+ "palette": {"panel_fill": [22, 34, 38], "accent": [84, 214, 200], "glow": [60, 200, 220], "text_key_hex": "#80E8DA"},
+ "background": {"tiles": [{"asset": "immersiveengineering:block/stone_decoration/concrete/concrete0", "weight": 5}, {"asset": "immersiveengineering:block/stone_decoration/concrete/concrete1", "weight": 2}], "target_brightness": 0.095, "saturation": 0.5, "tint": [176, 214, 214], "contrast_sd": 0.012, "overlay": {"type": "blueprint_grid", "density": 0.12, "color": [90, 200, 210]}, "tile_size": 12},
+ "banner": {"ribbon_asset": "immersiveengineering:block/wooden_decoration/treated_wood_horizontal", "icons_left": ["immersiveengineering:item/tool_hammer", "immersiveengineering:item/material_coal_coke", "immersiveengineering:item/fluid_containers_bucket_creosote"], "icons_right": ["immersiveengineering:item/wirecoil_copper", "immersiveengineering:item/wirecoil_electrum", "immersiveengineering:item/graphite_electrode"], "motif": "starfield", "motif_color": [90, 210, 220]},
+ "decor": [],
+ "shapes": {"normal": "rsquare", "milestone": "octagon", "optional": "diamond", "gate": "gear"},
+ "scene": {"layers": [
+  {"motif": "sky_band", "x": 0.5, "y": 0.15, "w": 72, "h": 12, "color": [36, 100, 112], "alpha": 0.42},
+  {"motif": "tree_line", "x": 0.5, "y": 0.235, "w": 74, "h": 7, "color": [18, 30, 34], "alpha": 0.85},
+  {"motif": "nebula_glow", "x": 0.8, "y": 0.24, "w": 20, "h": 10, "color": [60, 80, 90], "alpha": 0.4},
+  {"motif": "power_line", "x": 0.25, "y": 0.18, "w": 84, "h": 13, "color": [58, 66, 72], "alpha": 0.95},
+  {"motif": "power_line", "x": 0.82, "y": 0.42, "w": 24, "h": 9, "color": [44, 52, 58], "alpha": 0.85},
+  {"motif": "soft_glow", "x": 0.5, "y": 0.48, "w": 46, "h": 34, "color": [60, 190, 210], "alpha": 0.13},
+  {"motif": "soft_glow", "x": 0.22, "y": 0.47, "w": 18, "h": 18, "color": [70, 210, 230], "alpha": 0.3},
+  {"motif": "soft_glow", "x": 0.78, "y": 0.7, "w": 22, "h": 20, "color": [255, 120, 50], "alpha": 0.32},
+  {"motif": "strata_band", "x": 0.5, "y": 0.885, "w": 72, "h": 7, "color": [96, 70, 52], "alpha": 0.35},
+  {"motif": "sprite", "asset": "immersiveengineering:block/multiblocks/coke_oven_on", "x": 0.78, "y": 0.7, "w": 10, "alpha": 1.0, "glow": [255, 120, 40]},
+  {"motif": "lightning", "x": 0.86, "y": 0.28, "w": 4, "h": 12, "color": [140, 240, 245], "alpha": 0.8},
+  {"motif": "sprite", "asset": "immersiveengineering:item/tool_hammer", "x": 0.22, "y": 0.47, "w": 6.67, "alpha": 1.0, "glow": [70, 220, 230]},
+  {"motif": "lightning", "x": 0.29, "y": 0.39, "w": 3, "h": 6, "color": [120, 235, 240], "alpha": 0.8, "rot": 35},
+  {"motif": "sprite", "asset": "immersiveengineering:block/metal_device/capacitor_lv_side_out", "x": 0.18, "y": 0.746, "w": 4.0, "alpha": 1.0},
+  {"motif": "sprite", "asset": "immersiveengineering:block/metal_device/capacitor_mv_side_none", "x": 0.18, "y": 0.6756, "w": 4.0, "alpha": 1.0},
+  {"motif": "sprite", "asset": "immersiveengineering:block/metal_device/capacitor_hv_side_none", "x": 0.18, "y": 0.6052, "w": 4.0, "alpha": 1.0},
+  {"motif": "sprite_row", "assets": ["immersiveengineering:item/wirecoil_copper", "immersiveengineering:item/wirecoil_electrum", "immersiveengineering:item/wirecoil_steel"], "x": 0.305, "y": 0.763, "w": 11, "h": 2.8, "alpha": 1.0},
+  {"motif": "shaft", "x": 0.42, "y": 0.79, "w": 36, "h": 1.0, "color": [96, 72, 52], "alpha": 0.92},
+  {"motif": "sprite_row", "assets": ["immersiveengineering:item/material_coal_coke", "immersiveengineering:item/fluid_containers_bucket_creosote", "immersiveengineering:item/graphite_electrode", "immersiveengineering:item/material_coal_coke"], "x": 0.54, "y": 0.76, "w": 15, "h": 2.8, "alpha": 1.0}
+ ]}
+}

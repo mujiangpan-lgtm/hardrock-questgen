@@ -1,0 +1,333 @@
+{
+ "palette": {
+  "panel_fill": [
+   22,
+   34,
+   26
+  ],
+  "accent": [
+   124,
+   228,
+   124
+  ],
+  "glow": [
+   70,
+   210,
+   96
+  ],
+  "text_key_hex": "#9DF59A"
+ },
+ "background": {
+  "tiles": [
+   {
+    "asset": "tfc:block/metal/smooth/steel",
+    "weight": 6
+   },
+   {
+    "asset": "tfc:block/metal/smooth/black_steel",
+    "weight": 2
+   }
+  ],
+  "target_brightness": 0.1,
+  "saturation": 0.5,
+  "tint": [
+   214,
+   236,
+   218
+  ],
+  "contrast_sd": 0.01,
+  "overlay": {
+   "type": "blueprint_grid",
+   "density": 0.06,
+   "color": [
+    110,
+    220,
+    120
+   ]
+  },
+  "tile_size": 12
+ },
+ "banner": {
+  "ribbon_asset": "tfc:block/metal/smooth/steel",
+  "icons_left": [
+   "mekanism:item/ingot_osmium",
+   "mekanism:item/alloy_infused",
+   "mekanism:item/basic_control_circuit"
+  ],
+  "icons_right": [
+   "mekanism:item/upgrade_speed",
+   "mekanism:item/energy_tablet",
+   "mekanism:item/hazmat_mask"
+  ],
+  "motif": "none",
+  "motif_color": [
+   110,
+   200,
+   120
+  ]
+ },
+ "decor": [],
+ "shapes": {
+  "normal": "square",
+  "milestone": "hexagon",
+  "optional": "diamond",
+  "gate": "gear"
+ },
+ "scene": {
+  "layers": [
+   {
+    "motif": "soft_glow",
+    "x": 0.5,
+    "y": 0.52,
+    "w": 56,
+    "h": 40,
+    "color": [
+     90,
+     220,
+     110
+    ],
+    "alpha": 0.14
+   },
+   {
+    "motif": "sky_band",
+    "x": 0.5,
+    "y": 0.17,
+    "w": 72,
+    "h": 12,
+    "color": [
+     40,
+     96,
+     64
+    ],
+    "alpha": 0.35
+   },
+   {
+    "motif": "shaft",
+    "x": 0.24,
+    "y": 0.35,
+    "w": 12,
+    "h": 0.9,
+    "color": [
+     200,
+     206,
+     204
+    ],
+    "alpha": 0.9,
+    "rot": 90
+   },
+   {
+    "motif": "shaft",
+    "x": 0.5,
+    "y": 0.755,
+    "w": 28,
+    "h": 0.7,
+    "color": [
+     110,
+     240,
+     120
+    ],
+    "alpha": 0.8
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.22,
+    "y": 0.62,
+    "w": 18,
+    "h": 20,
+    "color": [
+     110,
+     240,
+     120
+    ],
+    "alpha": 0.35
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/block_steel",
+    "x": 0.1562501,
+    "y": 0.50326807,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/induction_port",
+    "x": 0.2187501,
+    "y": 0.50326807,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/block_steel",
+    "x": 0.2812501,
+    "y": 0.50326807,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/block_steel",
+    "x": 0.1562501,
+    "y": 0.58169945,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/basic_induction_cell",
+    "x": 0.2187501,
+    "y": 0.58169945,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/block_steel",
+    "x": 0.2812501,
+    "y": 0.58169945,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/block_steel",
+    "x": 0.1562501,
+    "y": 0.66013082,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/basic_induction_provider",
+    "x": 0.2187501,
+    "y": 0.66013082,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/block_steel",
+    "x": 0.2812501,
+    "y": 0.66013082,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/block_steel",
+    "x": 0.1562501,
+    "y": 0.73856219,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/block_steel",
+    "x": 0.2187501,
+    "y": 0.73856219,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/block_steel",
+    "x": 0.2812501,
+    "y": 0.73856219,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "shaft",
+    "x": 0.785,
+    "y": 0.466,
+    "w": 20,
+    "h": 1.4,
+    "color": [
+     200,
+     206,
+     204
+    ],
+    "alpha": 0.95,
+    "rot": 90
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanismgenerators:item/turbine_blade",
+    "x": 0.785,
+    "y": 0.27,
+    "w": 8,
+    "alpha": 1.0
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.77,
+    "y": 0.74,
+    "w": 18,
+    "h": 12,
+    "color": [
+     110,
+     240,
+     120
+    ],
+    "alpha": 0.25
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/combiner/front_active",
+    "x": 0.705,
+    "y": 0.7,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/osmium_compressor/front_active",
+    "x": 0.77,
+    "y": 0.7,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/chemical_injection_chamber/front_active",
+    "x": 0.835,
+    "y": 0.7,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/energized_smelter/front_active",
+    "x": 0.705,
+    "y": 0.7784,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/factory/enriching/enriching_factory_front_active",
+    "x": 0.77,
+    "y": 0.7784,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanism:block/crusher/front_active",
+    "x": 0.835,
+    "y": 0.7784,
+    "w": 4.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "mekanismgenerators:item/turbine_blade",
+    "x": 0.24,
+    "y": 0.23,
+    "w": 4,
+    "alpha": 0.85
+   }
+  ]
+ }
+}

@@ -1,0 +1,237 @@
+{
+ "palette": {
+  "panel_fill": [
+   20,
+   26,
+   46
+  ],
+  "accent": [
+   104,
+   136,
+   244
+  ],
+  "glow": [
+   72,
+   104,
+   232
+  ],
+  "text_key_hex": "#A9BCFF"
+ },
+ "background": {
+  "tiles": [
+   {
+    "asset": "tfc:block/rock/smooth/slate",
+    "weight": 5
+   },
+   {
+    "asset": "tfc:block/rock/raw/slate",
+    "weight": 2
+   }
+  ],
+  "target_brightness": 0.1,
+  "saturation": 0.55,
+  "tint": [
+   200,
+   218,
+   245
+  ],
+  "contrast_sd": 0.012,
+  "overlay": {
+   "type": "none",
+   "density": 0,
+   "color": [
+    214,
+    196,
+    150
+   ]
+  },
+  "tile_size": 12
+ },
+ "banner": {
+  "ribbon_asset": "minecraft:block/sandstone_top",
+  "icons_left": [
+   "map_atlases:item/atlas",
+   "minecraft:item/compass_16",
+   "minecraft:item/spyglass"
+  ],
+  "icons_right": [
+   "minecraft:item/emerald",
+   "firmaciv:item/sextant",
+   "vc_gliders:item/paraglider_wood"
+  ],
+  "motif": "mountains",
+  "motif_color": [
+   112,
+   140,
+   230
+  ]
+ },
+ "decor": [],
+ "shapes": {
+  "normal": "circle",
+  "milestone": "pentagon",
+  "optional": "diamond",
+  "gate": "gear"
+ },
+ "scene": {
+  "layers": [
+   {
+    "motif": "sky_band",
+    "x": 0.5,
+    "y": 0.18,
+    "w": 74,
+    "h": 14,
+    "color": [
+     90,
+     150,
+     210
+    ],
+    "alpha": 0.38
+   },
+   {
+    "motif": "sun",
+    "x": 0.25,
+    "y": 0.2,
+    "w": 9,
+    "color": [
+     255,
+     196,
+     128
+    ],
+    "alpha": 0.8
+   },
+   {
+    "motif": "mountain_range",
+    "x": 0.55,
+    "y": 0.215,
+    "w": 74,
+    "h": 10,
+    "color": [
+     86,
+     110,
+     150
+    ],
+    "alpha": 0.85
+   },
+   {
+    "motif": "mountain_range",
+    "x": 0.42,
+    "y": 0.27,
+    "w": 62,
+    "h": 8,
+    "color": [
+     38,
+     50,
+     68
+    ],
+    "alpha": 0.9
+   },
+   {
+    "motif": "contour_map",
+    "x": 0.5,
+    "y": 0.53,
+    "w": 62,
+    "h": 40,
+    "color": [
+     150,
+     190,
+     230
+    ],
+    "alpha": 0.22
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.215,
+    "y": 0.5,
+    "w": 18,
+    "h": 18,
+    "color": [
+     250,
+     210,
+     140
+    ],
+    "alpha": 0.22
+   },
+   {
+    "motif": "compass_rose",
+    "x": 0.215,
+    "y": 0.5,
+    "w": 13,
+    "color": [
+     222,
+     196,
+     140
+    ],
+    "alpha": 0.92
+   },
+   {
+    "motif": "tower",
+    "x": 0.81,
+    "y": 0.45,
+    "w": 5,
+    "h": 13,
+    "color": [
+     62,
+     70,
+     96
+    ],
+    "alpha": 0.97
+   },
+   {
+    "motif": "tree_line",
+    "x": 0.8,
+    "y": 0.56,
+    "w": 16,
+    "h": 5,
+    "color": [
+     30,
+     52,
+     54
+    ],
+    "alpha": 1.0
+   },
+   {
+    "motif": "tree_line",
+    "x": 0.3,
+    "y": 0.82,
+    "w": 44,
+    "h": 11,
+    "color": [
+     40,
+     70,
+     66
+    ],
+    "alpha": 1.0
+   },
+   {
+    "motif": "sky_band",
+    "x": 0.78,
+    "y": 0.845,
+    "w": 34,
+    "h": 5,
+    "color": [
+     70,
+     140,
+     200
+    ],
+    "alpha": 0.85
+   },
+   {
+    "motif": "sprite",
+    "asset": "firmaciv:item/sloop_icon_only",
+    "x": 0.79,
+    "y": 0.76,
+    "w": 8,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "immersive_aircraft:item/biplane",
+    "x": 0.735,
+    "y": 0.235,
+    "w": 6.67,
+    "alpha": 1.0
+   }
+  ]
+ }
+}

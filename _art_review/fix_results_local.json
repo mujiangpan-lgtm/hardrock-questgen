@@ -1,0 +1,230 @@
+[
+ {
+  "key": "health",
+  "changes": [
+   "Rebuilt the whole scene in D:/.minecraft/versions/HardRock TerraFirmaCraft 4 - realistic survival/questgen/art_styles.d/health.json as a candle-lit infirmary and apothecary at night. It has 70 layers. Palette, background, banner and shapes are unchanged.",
+   "Removed the saturated full-width ECG trace, the moon, the floating glowing totem and the lost wither rose.",
+   "Added scene-wide texel 4: every sprite and block is now at one pixel density, about 4.8 screen px per texel. This replaces the 10 px/texel giant items.",
+   "Added one warm scene light (dir [1,-0.45], rim 0.5, shade 0.3) and shadow 0.5. Two cast lights (from the bedside lantern and the lantern on the cabinet) with ambient 0.66 give a chiaroscuro look; each has a matching soft_glow pool.",
+   "Hero (bottom centre): a raised sickbed built as blocks: a sequoia headboard and legs, a white wool pillow and a red wool blanket, with a bedroll stored underneath. Next to it is a barrel bedside table (blocks, barrel textures) holding a lantern, which is the main light. This fills the old empty lower centre.",
+   "Left frame: a medicine cabinet with a dark hickory back panel (blocks, hazed), lit and pixelated plank boards and posts, and small jars, bottles, a bandage, morphine, cloth, honey, a vessel and beeswax grouped by hand rather than in even rows. Books and a lantern sit on top.",
+   "Right frame: an apothecary work table built as blocks, holding a brewing stand, a ceramic bowl used as a mortar, wool cloth and a bone suture needle, with a pot underneath. Two wall shelves above it hold a medical journal, jars and bottles; the totem of undying now rests on a shelf.",
+   "Top band: a dark hickory ceiling beam (blocks) with drying herb bundles hung upside down on cords at uneven lengths (rosemary, thyme, flax, bay, oregano, basil, and a garland on the centre cord). They stay at least 0.04 above the banner and use a drop shadow and no contact shadow.",
+   "Bottom band: a dark-oak plank floor as blocks with depth 1.0, so the furniture stands on a floor plane.",
+   "Everything stays clear of the panels and header text. The section-2 header is now readable at screen29 because of the renderer fix.",
+   "Scratch tools left in _art_review: _gen_health.py (generates the spec from canvas-pixel placement), _scan_health.py, orig_health.json (the original spec), and health_v2.json / health_v3.json (intermediate rounds). build.py --check: OK, 19 chapters, 435 quests."
+  ],
+  "remaining_issues": [
+   "The bed is made of full wool cubes, so the blanket top is a flat, bright red slab. It reads as a Minecraft build, not a crafted bed; a half-height mattress is not possible with the blocks motif.",
+   "The shelf boards are vector plank_shelf layers (pixelated and lit), while the bed, table, floor and beam use textured blocks. This is a small style difference.",
+   "Some shelf items still sit in short rows. Bandage and morphine textures fill their whole 16 px square, so they look larger than the jars.",
+   "The scene light has one global direction, so the work table to the right of the main lantern is rim-lit from the right, not from the lantern.",
+   "hanging_cord draws a small grey hook arc under some herb bundles. The upper wall between the herbs and the panels is calm and dark, which is intended but plain.",
+   "No ECG or injury motif remains. The injury theme comes only from the infirmary props (bed, bandages, morphine, sutures)."
+  ],
+  "renderer_requests": [
+   "blocks: a per-legend 'height' (or slab) fraction, e.g. 0.5, so a cell's front and side are shorter and its top face is drawn at that height. This would allow real half-height beds (tfc thatch_bed textures), thin table tops and shelves.",
+   "hanging_cord: an option to drop the grey hook arc at the bottom (hook: false), for herb bundles and lanterns hung on twine.",
+   "scene light: an option to take each pixel layer's light direction from the nearest 'lights' entry instead of the global dir, so props on either side of a lantern are lit toward it.",
+   "plank_shelf: an optional 'asset' that textures the board with real plank pixels at the scene texel, so boards match blocks furniture.",
+   "A small 'flame' or lit-candle motif at texel scale. Minecraft candle items have no flame, so candles cannot act as visible light sources; lanterns are the only option now."
+  ],
+  "self_score": 7.5,
+  "kept_original": false
+ },
+ {
+  "key": "climate",
+  "changes": [
+   "Picked one weather mood, a cold night with aurora. Removed the sun, the lightning bolt, the lightning cloud (nebula_glow) and the snowfall particles. Added a small pixelated moon at the top left, partly hidden behind a far peak, with a soft halo.",
+   "New hero prop: a snowed-in spruce log cabin built with the 'blocks' motif at x 0.65-0.88, y 0.57-0.85. It has a stepped gable roof of spruce planks with snow on every step, corner logs, a lit redstone-lamp window, a spruce door and a cobblestone chimney with a faint smoke plume. On the wall hang a frozen Cold Sweat thermometer and a goat-fur coat, and a lantern hangs from the eave, all at the same texel size. Temperature and clothing are now shown in context, not as giant stickers.",
+   "Snowy ground plane: the cabin and the ground are one blocks layer, 32 columns wide, of snow blocks running across the whole bottom edge. It includes a frozen pond of translucent ice under the middle panels and a snow-capped andesite outcrop under the left trees. The brown dirt band is gone.",
+   "One pixel density and one light: scene texel 3 (about 3.6 screen px per texel). Light comes from above in a cold moonlight colour (tint 0.2, shade 0.35). A warm cast light at the cabin door uses lights radius 0.16 with ambient 0.8, so the cabin front and the snow in front of it glow orange while the rest of the world stays blue.",
+   "Removed the giant pixel jacket, the giant glowing thermometer and the two sapling sprites with their outline glows. They are replaced by three pixelated vector spruces on the left at different heights (7x17, 5x12, 3.6x8). Each has a pale 'snow underlay' copy two texels higher, so the branch edges look frosted. One more spruce peeks out behind the cabin on the right edge.",
+   "Depth layers: two offset snowy_range layers, far and near, both pixelated to texel 3, lit with a soft rim and haze. A dark mid-ground mountain_range sits at y 0.73, then a faint teal horizon glow, a pixelated far tree_line, and three small hazy pixel spruces on the far shore of the pond to fill the lower middle.",
+   "Moved the aurora down (y 0.27, w 68, plus a second fainter curtain), so the curtains rise from behind the peaks. This removes most of the dark wavy gap between the aurora and the mountains.",
+   "Palette, background, banner and shapes are unchanged: ice-blue accent, packed-ice tiles, still distinct from every other chapter (no other chapter uses aurora, snowy_range or snow blocks). build.py --check passes: 19 chapters, 435 quests. The original spec is backed up at _art_review/orig_climate.json. The generator script is _art_review/climate_tmp/gen.py and the final preview is _art_review/climate_tmp/final_screen29_climate.png."
+  ],
+  "remaining_issues": [
+   "The snowy_range mountains still look a bit like clip art: evenly spaced zigzag peaks with identical triangle snow caps. Doubling the ranges added depth but also busyness behind the banner.",
+   "The spruces are pixelated vector triangles with faceted highlight polygons. They read as stylised and are not true pixel art. The snow underlay is only about one texel wide on the steep slopes, so it reads as a frosted outline rather than snow-laden branches.",
+   "The rim light on pixelated layers comes out dotted or dashed along staircase edges. I kept it low (0.15-0.35) to hide this.",
+   "The lower middle (y 0.64-0.78, under the lower panels) is still a quiet dark band, with only faint hills, a horizon glow and small far trees.",
+   "The snow strip at the bottom edge is the brightest large area in the view, and the ice pond is a hard-edged rectangle.",
+   "The redstone-lamp window reads as a 'lamp block' rather than a framed window with mullions. The wall details (thermometer, coat) are small at the player's zoom.",
+   "There are 27 layers (the guide suggests 10-16) because of the 4 snow underlays and 3 distant trees."
+  ],
+  "renderer_requests": [
+   "Compute the rim light for pixel and pixelated layers on the texel grid: downsample the alpha by k, shift by whole texels toward the light, then upsample with nearest. The current shift in canvas px (round(lx*k), round(ly*k)) gives 1-px slivers and dotted rims on staircase edges when the light is diagonal.",
+   "Add a 'snow' option (0-1) to the 'tree' motif: snow caps lying on top of each conifer tier, two or three texels thick after pixelate. Even better, a native pixel-art spruce drawn on the texel grid instead of pixelated vector triangles.",
+   "snowy_range: use irregular peak spacing and heights instead of np.linspace with 7 equal peaks, add per-peak lit and shadow faces, and make the snow caps follow the slopes with ragged lower edges instead of identical triangle caps.",
+   "blocks: add a per-legend 'tint' (e.g. {'front': 'minecraft:block/spruce_leaves', 'tint': [70,110,80]}) so grayscale leaf textures can be used and trees can be built from real blocks. Also add an 'emissive' flag per legend entry, so lit cells (windows, furnaces) skip ambient dimming and get a small bloom.",
+   "A partial-block or stair option for blocks (half-height rows or slabs) would let roofs read as sloped instead of a stepped ziggurat.",
+   "moon: an optional soft luminous halo and a cooler, slightly brighter limb. At small sizes it reads as a flat grey ball."
+  ],
+  "self_score": 7,
+  "kept_original": false
+ },
+ {
+  "key": "00_welcome",
+  "changes": [
+   "I rebuilt the scene in D:/.minecraft/versions/HardRock TerraFirmaCraft 4 - realistic survival/questgen/art_styles.d/00_welcome.json as one side-view diorama: a traveller's camp at dusk on a grassy ledge, looking over a mountain valley toward the sunset. The original spec is saved at _art_review/orig_00_welcome.json.",
+   "One pixel density and one light: scene keys texel 4, shadow 0.5, a warm sunset light from the upper right (rim 0.55, haze_color [40,33,42]), the lantern as a cast light (lights at x0.145 y0.66), and ambient 0.88.",
+   "The vector table and its floating legs are gone. The ground is now one 24x4 'blocks' terrain layer (grass block side with moss_block tops, TFC loam dirt): a high left ledge with the camp, one step down, low grass in the bottom centre, and a right ledge. It is darkened with haze 0.5 and tint 0.16 so it sits in the dusk mood. This fills the empty bottom band and gives every prop ground contact.",
+   "The hero camp is small and at the shared texel size. An oak log stump (a 1-block 'blocks' layer with a log_top top face) holds the writable book; a lantern with a glow pool, a soft_glow and the cast light lights the stump, book and ground; a TFC stone axe leans on the stump; a bundle and an oak signpost stand at the ledge step (the trailhead).",
+   "Bottom centre is no longer empty. TFC first-day finds sit on the low ground: a granite loose rock and a stick bunch as one pair, a poppy and a dandelion as another. A sweet-berry bush on the right ledge adds a colour accent.",
+   "The tower is gone, and so is the overlap with explore. Pixelated conifers with outline, lit by the scene light, stand on the ledges: two at the right and a taller one at the left edge, whose trunk the lantern lights. They frame the view at different heights.",
+   "There is no sun disc any more, because it kept reading as a moon or clip-art. The sun has just set: a golden sky_band and soft_glow sit at the horizon, and light_rays (angle 270, spread 80, alpha 0.3) fan up from behind the peaks. A violet upper sky_band gives a real dusk gradient.",
+   "Depth comes from layered mountain ranges (a rose-lilac far range, a darker violet range, mauve near hills), a faint valley mist band and three tree_line silhouettes. A small pale moon with a faint low-alpha star cluster fills the top-left sky, away from the panel.",
+   "I tried several ideas and dropped them: rim light on vector hills and tree lines (drew contour lines), a dirt-path centre (read as a slab), valley fireflies (read as dirt specks) and a pixelated broadleaf tree (blobby).",
+   "Palette, background, banner and shapes are unchanged: parchment cream with dusk mauve and gold, still distinct from the other chapters. build.py --check passes (19 chapters, 435 quests). Scratch files are removed."
+  ],
+  "remaining_issues": [
+   "The backdrop (mountain_range and tree_line) is still smooth vector behind a pixel-art foreground. It reads as a painted parallax background rather than one medium, so a director-level critic may still call it two styles.",
+   "The side-view block terrain is clean but a little 'platformer level': flat dirt cross-sections at bottom left and bottom right, with no organic edges or overhangs.",
+   "The moon is the generic cratered sphere and is slightly clip-art. The star cluster's cross flares are kept faint (alpha 0.22) for that reason.",
+   "The valley between the ledges (screen y 620-930) is quiet: dark tree silhouettes and mist with no focal detail. A village or fireflies would help, but particles read as dirt.",
+   "Item sprites at block texel size (book, bundle) are larger than real objects; this is accepted as a stylized diorama. The oak_sign board is plain and pale.",
+   "The camp hero is fairly small, about 300x170 screen px at the left edge; it reads as the focal point because of the lantern light, but it is not dominant."
+  ],
+  "renderer_requests": [
+   "A real crescent option for 'moon' (phase param), plus 'star_cluster' without cross flares (a 'flares': false or 'twinkle' param), so a dusk sky does not look like clip-art.",
+   "A 'rim' for vector backdrops that lights only the outer silhouette (top-most alpha edge) of mountain_range and tree_line, not the internal ridge layers, so ridges can catch sunset light without contour lines.",
+   "A blocks option for organic terrain edges, such as random grass overhang texels or a 'jagged' bottom fade that dissolves the lower rows into darkness, so terrain cross-sections do not end as hard flat dirt walls.",
+   "A 'tint_color' layer key (multiply colour) so grey biome-tinted textures (tfc:block/grass_top, grass_side, leaves, ferns) can be used with a chosen grass or foliage colour.",
+   "A distant 'village_lights' or 'window_glints' motif: a few warm rectangular points with a tiny bloom on a ridge or tree line, which do not read as dust the way fireflies do."
+  ],
+  "self_score": 7.5,
+  "kept_original": false
+ },
+ {
+  "key": "food",
+  "changes": [
+   "Rebuilt the scene in art_styles.d/food.json; palette, background, banner and shapes are unchanged. The original is backed up at _art_review/orig_food.json. Positions were computed from the textures' pixel bounding boxes by a scratch generator, _stage_fix_food/gen_food.py.",
+   "One pixel density: scene texel 5 for every sprite, sprite_row and blocks layer. The beam, shelves, brackets and cords are pixelated at 5 too. This fixes the mixed ~5 vs ~8 px/texel and the blurry upscaled jugs.",
+   "One warm light: scene light (warm, from below), contact shadow 0.5, ambient 0.75, cast light from the stove (radius 0.65) and a smaller one from the lantern. A broad firelight gradient on the back wall, plus flame glows in front of the two fireboxes.",
+   "New hero: a brick kitchen range built with blocks (BFFB: Farmer's Delight stove_side and stove_front_on, lit stove_top_on burners, firmalife brick countertop). Haze makes it look sooty instead of salmon. On it: a TFC clay pot with a glow pool, an FD cooking pot, a bowl of vegetable soup and a flatbread. This replaces the cauldron that sat on nothing.",
+   "Floor: a plank floor seen from above (one 22-block row of chestnut planks with its top face visible), so everything stands on a real ground line.",
+   "Storage as real 3-D structures: a minecraft barrel stack (B./BB), a log pile next to the stove, and FD potato and onion crates with a rice sack on top (.R/PO). A pile of brewery grain sacks, plus a jug and a pumpkin on the floor.",
+   "The hanging row is no longer a wallpaper border. Items hang on pixel cords tied at their stems, in two clusters. Left: onion braid, a lantern on a minecraft chain, a garlic braid of 3, hops. Right: thyme bundle, garlic braid, onion, a ham hung by its bone, a red pepper string. The centre above the banner title is left open, and cord lengths vary.",
+   "The meat is now physically on its hook: the smoked ham is flipped and rotated 180 so the shank's bone end sits in the cord's hook, at sprite scale (no longer oversized). The hanging items cast drop shadows.",
+   "Left wall: two shelves with pixel brackets and grouped, overlapping items (cheese wheel, plum and cherry jars, vessel; salt, honey, gouda, milk), not evenly spaced slots. Right wall: an FD spruce wall cupboard (blocks) with a bread pile, pie and jug on top.",
+   "Everything sits inside the actually visible area. The food canvas is 64 x 50.2 units, not 48, so the visible y range is about 0.14-0.86. Every element keeps at least ~30 px clear of the panels and banner; checked at screen29 and screen55.",
+   "build.py --check passes: 19 chapters, 435 quests."
+  ],
+  "remaining_issues": [
+   "The wall cupboard on the right is wall-mounted with only a drop shadow; it can read as slightly floating.",
+   "The ham is small at one texel scale, and the cord's hook is hidden behind the bone. It reads as 'meat on a string', not a butcher's hook.",
+   "The top beam and the shelves are simple pixelated vector planks, not real timber textures. The back wall is just the dark tiled thatch background, with no structure such as posts or plaster.",
+   "Still essentially a frontal wall of objects around the panels. Depth comes from blocks top faces and shadows, not from layered space, so it is close to the pipeline ceiling of about 8.",
+   "Plum panels on a warm amber scene: I kept the palette for distinctness from health (crimson) and twilight (violet). Plum now works as the shadow and UI colour against firelight, but some may still find the pink header text candy-like.",
+   "63 layers, which is above the guide's typical 10-16. That is needed for physically placed props, but the spec is hard to edit by hand. _stage_fix_food/gen_food.py regenerates it."
+  ],
+  "renderer_requests": [
+   "Sprite anchor placement: let a layer say 'put texture pixel (col,row) at x,y' or 'stand bottom on y', instead of centre fractions. Placing hanging and standing items exactly needed a generator script.",
+   "hanging_cord: an option for no hook or a smaller hook, and a 'chain' style. A pixel-native cord and chain motif with a set length would avoid stacking minecraft:item/chain sprites.",
+   "Document or expose each chapter's real scene canvas size and its visible fraction box. Food is 64 x 50.225 units (visible y ~0.14-0.86, x ~0.107-0.893), not the 0.12-0.88 the guide assumes. A --print-visible flag in preview.py would help.",
+   "blocks: slab or half-height rows (countertops, shelves, beams), and correct relighting when a blocks layer is rotated 90 degrees. That would allow horizontal log beams and wall posts built from real wood textures.",
+   "A small pixel steam/smoke wisp motif (rising, fading, on the texel grid) for cooking pots and chimneys.",
+   "A vertical flip ('flip_v') for sprites, so hung-upside-down produce keeps the texture's top-left shading instead of needing rot 180."
+  ],
+  "self_score": 7.5,
+  "kept_original": false
+ },
+ {
+  "key": "mekanism",
+  "changes": [
+   "Rebuilt the scene in art_styles.d/mekanism.json as an indoor Mekanism power hall on one pixel grid: scene texel 4, top-left cool light, contact shadows 0.55, two green lights cast from the matrix window and the machine bank, ambient 0.68, and a dark green haze colour. 23 layers. The spec is written by the scratch script _art_review/_gen_mek.py, which places everything in canvas pixels for this chapter's 64 x 50.95 unit canvas.",
+   "Hero (left): an induction matrix (4x7) built with the blocks motif instead of the flat 3x4 grid of sprites. It has induction casing, ports, and a 2x5 structural-glass window. Two layers with the same size sit behind it: a dark interior, and Mekanism's green energy fluid filled to about 80%, so the glass shows a glowing tank with a visible fluid surface. A soft glow and a cast light come from the window.",
+   "Right (background): an industrial turbine (3x10) with vents and a valve. Four turbine blades and a rotor shaft are visible behind a glass column (same three-layer trick). Haze 0.3 pushes it back, and its base sits higher, so it reads as further away. This replaces the two blurry wind-turbine sprites.",
+   "Centre bottom: a 4x2 bank of active Mekanism machines as 3-D blocks, using the real top and side textures, with a light pool on the floor in front. This replaces the flat 2x3 grid of machine fronts.",
+   "A 6-item pile of osmium/steel ingots and infused/reinforced alloys (sprite_row arrange pile) overlaps the turbine base, which adds depth.",
+   "Ceiling: a hazed steel-casing truss along the top with a drop shadow. Green and grey cables rise from the matrix and turbine into it, and faint light rays fall from the upper left. Floor: a hazed smooth-steel floor plate (blocks, depth 1.0). A green floor cable runs behind the machine bank.",
+   "Background grid dimmed: blueprint_grid density 0.06 -> 0.0, colour [110,220,120] -> [50,110,70]. Palette, banner and shapes unchanged (green Mekanism palette).",
+   "Before/after previews: _art_review/before/preview_screen29_mekanism.png vs _art_review/try/mek_r4.png (also mek_r1..r3 and spec snapshots _art_review/mek_r1..r3.json). The original spec is in _art_review/orig_mekanism.json. build.py --check passes (19 chapters, 435 quests). Every build used --stage."
+  ],
+  "remaining_issues": [
+   "The truss along the top is a row of identical X-braced squares cut off by the screen edge. Even dimmed, it can read as a decorative frieze or border.",
+   "The large casing faces (the turbine's 3x10, the matrix's outer ring) are still regular grids of framed squares. This is true to the game, but a critic may still call them 'walls of texture squares'. Multiblock casings would need connected (borderless) textures to read as one structure.",
+   "The tall masses frame the scene left and right, so the composition is still fairly symmetric. The band between the truss and the banner and the narrow strip between section 3 and the turbine are plain dark background.",
+   "The light rays are barely visible after the ambient dimming. Little light comes from the overhead area, so the light direction comes mostly from rim and shading.",
+   "At texel 4 the item pile is block-sized (an ingot as big as a machine block), which is Minecraft-icon logic, not physical scale. The machine bank's active fronts are busy and dark.",
+   "Honest ceiling: about 7-7.5 with this pipeline. A 9 needs a hand-composed diorama and connected-texture casings."
+  ],
+  "renderer_requests": [
+   "Bug: for lit pixel layers, _relight ignores the scene-level 'haze_color'. It uses only the layer's haze_color or light['haze_color'], with a hard-coded blue-grey (40,44,56) default, although ART_GUIDE says the scene key works. Workaround used here: haze_color inside the light dict. Fix: fall back to sc['haze_color'] in _layer_image.",
+   "blocks: a per-cell interior/behind texture (e.g. legend {'front': structural_glass, 'behind': 'mekanism:liquid/energy', 'fill': 0.8}) so glass windows over fluids or rotors don't need two or three identical blocks layers stacked exactly on top of each other.",
+   "blocks: a 'seamless': true / connected-texture option that removes the 1-texel frame on edges shared by neighbouring cells of the same legend char, or reads Mekanism's ctm/*.png sheets. Multiblocks (turbine, matrix, dynamic tank) would then read as one casing instead of a grid of framed squares.",
+   "A ceiling-girder motif (I-beam or truss with hanging light fixtures that emit a glow and rays) to replace repeated blocks rows in interiors.",
+   "Let atmosphere layers (light_rays, soft_glow) opt out of the ambient dimming in _light_pass (e.g. 'unlit': true), so faint shafts of light stay visible in dark interiors."
+  ],
+  "self_score": 7,
+  "kept_original": false
+ },
+ {
+  "key": "farming",
+  "changes": [
+   "Rebuilt the scene as one block diorama at golden hour. Scene keys: texel 3 (every sprite and block is drawn at 3.6 screen px per texel), shadow 0.45, light from the upper left [-1,-0.6], warm colour [255,198,122], tint 0.12, rim 0.55. The light comes from the same side as the sun, which matches how the blocks motif shades its faces (top lit, right side dark).",
+   "Removed the vector apple tree and its pasted apple sprites (the style clash). In their place is an apple tree built with 'blocks': canopy of red_apple_fruiting_leaves and red_apple_leaves, oak log trunk. Behind it sits a dark hazed moss_block copy, so the holes in the leaves show deep foliage instead of the background.",
+   "New hero prop in the empty right-middle area: a red barn built with 'blocks' (x 0.70-0.89, y 0.49-0.75). Stepped thatch roof, rosewood plank walls, oak log posts, a hay-bale loft and an oak door.",
+   "Replaced the sticker stack of flat hay faces plus the glowing wheat with a hay pyramid built from 3D blocks (hay_block side and top) at the barn's corner. Removed every sprite glow.",
+   "Livestock is now pixelated (pixelate 3, colors 24, outline 0.45, lit), scaled to the blocks and standing in front of the barn. The cows read as shaded animals, not beige ghosts.",
+   "Ground: a 31-block strip with grass_block_side fronts, moss tops and a tilled farmland/loam section, with dirt below. One row of ripe wheat crop sprites stands on the farmland at the same texel size, replacing the evenly spaced hotbar-like crop rail and the vector wheat_field noise.",
+   "Lowered the horizon so it is one landscape. Distant hills and a tree line sit just behind the farm. Above them: a warm sky_band glow at the horizon, a dusk teal band at the top, and a low sun at the upper left with a soft halo and no clip-art rays. Thin lit sunset cloud streaks fill the upper corners and stay clear of the panels.",
+   "Background tiles: dirt/loam only (was 5:2 farmland:dirt), contrast_sd 0.01. The vertical-stripe noise is gone and the background now reads as a calm dark sky.",
+   "Palette, banner and shapes unchanged. Backup of the original spec: _art_review/orig_farming.json. Scratch generator and per-round snapshots are in _stage_fix_farming/ (gen.py, v2.json, v3.json, v3b.json). build.py --check: OK, 19 chapters, 435 quests."
+  ],
+  "remaining_issues": [
+   "The apple tree is a blocky plus-shaped cube. The fruit-tree leaf texture repeats as a busy yellow-green pattern with apples on a regular grid: very Minecraft, not illustrative.",
+   "The barn's stepped full-block thatch roof is pale and top-heavy (no stairs or slopes are available). It reads like a beginner's Minecraft build rather than a crafted barn.",
+   "The sunset cloud streaks (sky_band strips) read partly like horizontal light lines, not clouds.",
+   "The wheat is still one even row (native to Minecraft farmland, but somewhat rail-like). The dirt cross-section band at the bottom (y > 0.75) is large and flat.",
+   "The sun is a soft pale disc, a bit moon-like against the darkish dusk sky. The sky is a sepia glow over the dark tile, not a real gradient.",
+   "Livestock is still a vector motif that was pixelated. It is cleaner than before, but its detail level differs a little from the real block textures, and the motif's own ground line shows on the grass."
+  ],
+  "renderer_requests": [
+   "blocks: a per-legend 'tint' (multiply colour), so biome-tinted greyscale textures (tfc grass_top, wood/leaves/oak) can be used for grass and natural tree canopies.",
+   "blocks: stair and slab cells (e.g. legend {'shape': 'stair_l'|'stair_r'|'slab'}), so roofs can slope instead of stepping in full blocks.",
+   "blocks: make the fixed face multipliers (top 1.18, right side 0.62) follow the scene 'light' direction, and/or add 'flip': true to show the left side face. Right now any scene lit from the right contradicts the block shading.",
+   "blocks: an optional 'backfill' colour for cutout textures (leaves), so holes show shaded foliage without a second underlay layer.",
+   "livestock: options for animal count, order and facing, and to switch off the drawn ground line, so animals can stand on a blocks ground.",
+   "A 'clouds' motif (soft or pixel cumulus, lit from below with a light colour) for sunset skies. sky_band strips read as lines.",
+   "sprite_row arrange 'field': two or three staggered rows with slight haze and scale on the back rows, for crop fields with depth.",
+   "A 'sky_gradient' atmosphere motif (vertical top-to-horizon colour ramp with optional alpha ramp), so skies are not built from overlapping sky_bands over the dirt tile."
+  ],
+  "self_score": 7,
+  "kept_original": false
+ },
+ {
+  "key": "steel_age",
+  "changes": [
+   "Rebuilt the scene in D:/.minecraft/versions/HardRock TerraFirmaCraft 4 - realistic survival/questgen/art_styles.d/steel_age.json. The original spec is saved at _art_review/orig_steel_age.json and the intermediate versions at _stage_fix_steel_age/v1-v5.json. Palette, background, banner and shapes are unchanged.",
+   "Added scene-wide keys: texel 5, shadow 0.5, a cool steel-blue key light from the upper left (dir [-1,-0.6], color [150,176,232]), and three warm cast lights (hearth and crucible, furnace throat, hot anvil) with ambient 0.85. Steel-blue ambient against orange firelight is the lighting idea for this chapter.",
+   "New hero: a blast furnace made with the 'blocks' motif at the right (fx 0.776, fy 0.603), about 330x620 screen px. It has a fire-brick body with a black-steel hoop band, a narrower black-steel throat whose top face is blast_furnace/top_lit (glowing), and a hearth row with the lit blast_furnace/side_lit door. It replaces the flat stack of brick sprites.",
+   "Molten tap: a crucible block (crucible sides, molten_lit top, glow) sits in front of the hearth on the left, with orange light pools on the ground plus throat glow, embers, and a smoke plume rising into the top-right band.",
+   "Second, distant blast furnace on the left (k 3, haze 0.55) on a dark slag heap, with its own throat glow and smoke. It fills the empty left middle and adds depth (two furnaces read as a steelworks).",
+   "Top band is now an industrial dusk: a deep steel-blue sky_band, a warm sunset horizon band, a dark mountain silhouette, smokestack silhouettes against the horizon to the left and right of the banner, and smoke clouds. This replaces the empty grey haze.",
+   "Removed the glowing crossed swords, the floating helmet shelf and the hotbar-like ingot row. The coloured steels are now an ingot pile (sprite_row arrange 'pile'). Added a charge pile of charcoal and iron ore next to the crucible, a pixelated lit anvil_hot with a steel hammer at the bottom left, and a ground strata band.",
+   "Every element stays inside the visible area and clear of the panels and the s3 header. Embers are kept away from panels. The screen55 view stays clean. build.py --check passes: OK, 19 chapters, 435 quests."
+  ],
+  "remaining_issues": [
+   "The two furnaces use the same block recipe. The distant one is only smaller and hazier, so it reads partly as a copy and not clearly as far away. It also breaks the single-texel rule on purpose (k 3 vs 5).",
+   "The hero is a Minecraft-style block multiblock (rectangular body, 1-wide throat). It is not the tapered stack with bosh, tuyeres and downcomer pipes that the critics asked for, because blocks can only make block-sized steps.",
+   "The bottom third is still a left-to-right sequence on one ground line: anvil, ingot pile, ore pile, crucible, furnace. Small base offsets help only a little.",
+   "The top-right corner (screen x 1130-1460, y 0-360) is still sparse: a thin distant stack, embers, and a smoke plume that barely shows.",
+   "The smoke from the smokestack motif is a straight translucent wedge that reads more like a searchlight beam than billowing smoke.",
+   "The slag heap is very faint, so the base of the distant furnace is only loosely grounded.",
+   "The molten flow is suggested only by glows. There is no visible stream of molten metal from the tap to the crucible.",
+   "Honest level: clearly better than the before (5.5): it has a hero, coherent warm/cool light, a filled top band, and no stickers or hotbar. It still reads as an assembled Minecraft diorama, not finished key art."
+  ],
+  "renderer_requests": [
+   "A 'smoke' or 'smoke_plume' motif: billowing, turbulent puffs that widen and drift with the wind, optionally lit from below by a colour. The smokestack plume is a straight wedge, and nebula_glow is too diffuse to read as smoke.",
+   "A 'molten_pour' / 'molten_stream' motif: a narrow, bright, slightly wavering stream of molten metal with a white-hot core and a splash or glow pool at the bottom, to connect a tap or ladle to a crucible or mould.",
+   "Blocks motif: support per-row width offsets or half-block steps (or a 'taper' option) so furnace stacks, chimneys and cooling towers can have a non-rectangular silhouette. Also optionally allow thin 'slab' rows (half height), for runners, platforms and charging decks.",
+   "Blocks motif: an optional emissive mask or per-legend 'emit' flag, so lit faces (blast_furnace side_lit, top_lit, molten_lit) glow on their own instead of needing hand-placed soft_glow layers.",
+   "A 'haze' setting strong enough to push a blocks or sprite layer clearly into the distance, for example haze up to 0.8 with desaturation plus a value lift toward the sky. At 0.55 the distant furnace still looks almost as saturated as the hero.",
+   "An industrial skyline backdrop motif (sheds with sawtooth roofs, chimneys, hot-blast stove domes, a gantry) as a BACKDROP silhouette band, so the top band of the industry chapters doesn't have to be assembled from thin smokestacks."
+  ],
+  "self_score": 6.5,
+  "kept_original": false
+ }
+]

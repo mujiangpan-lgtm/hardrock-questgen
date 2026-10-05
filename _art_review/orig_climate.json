@@ -1,0 +1,26 @@
+{
+ "palette": {"panel_fill": [22, 32, 44], "accent": [176, 226, 240], "glow": [130, 200, 255], "text_key_hex": "#B8E6F4"},
+ "background": {"tiles": [{"asset": "minecraft:block/packed_ice", "weight": 6}, {"asset": "minecraft:block/blue_ice", "weight": 2}], "target_brightness": 0.095, "saturation": 0.55, "tint": [196, 222, 255], "contrast_sd": 0.012, "overlay": {"type": "speckle", "density": 0.12, "color": [210, 236, 255]}, "tile_size": 12},
+ "banner": {"ribbon_asset": "tfc:block/sea_ice", "icons_left": ["cold_sweat:item/thermometer/thermometer", "firmaciv:item/sextant", "tfc:item/wool_cloth"], "icons_right": ["cold_sweat:item/goat_fur_chestplate", "cold_sweat:item/waterskin", "minecraft:item/snowball"], "motif": "starfield", "motif_color": [214, 238, 255]},
+ "decor": [],
+ "shapes": {"normal": "circle", "milestone": "octagon", "optional": "diamond", "gate": "gear"},
+ "scene": {"layers": [
+  {"motif": "sky_band", "x": 0.5, "y": 0.16, "w": 72, "h": 16, "color": [48, 96, 156], "alpha": 0.38},
+  {"motif": "aurora", "x": 0.3, "y": 0.165, "w": 46, "h": 15, "color": [90, 235, 190], "alpha": 0.6},
+  {"motif": "sun", "x": 0.83, "y": 0.19, "w": 10, "color": [255, 204, 130], "alpha": 0.85},
+  {"motif": "snowy_range", "x": 0.5, "y": 0.245, "w": 74, "h": 12, "color": [62, 84, 114], "alpha": 0.95},
+  {"motif": "soft_glow", "x": 0.5, "y": 0.5, "w": 52, "h": 34, "color": [110, 170, 255], "alpha": 0.2},
+  {"motif": "soft_glow", "x": 0.74, "y": 0.69, "w": 16, "h": 14, "color": [255, 140, 70], "alpha": 0.3},
+  {"motif": "nebula_glow", "x": 0.82, "y": 0.36, "w": 18, "h": 9, "color": [150, 160, 184], "alpha": 0.85},
+  {"motif": "lightning", "x": 0.81, "y": 0.53, "w": 7, "h": 15, "color": [220, 236, 255], "alpha": 0.95},
+  {"motif": "mountain_range", "x": 0.78, "y": 0.83, "w": 34, "h": 10, "color": [128, 86, 60], "alpha": 0.9},
+  {"motif": "tree_line", "x": 0.3, "y": 0.815, "w": 44, "h": 9, "color": [26, 44, 56], "alpha": 0.92},
+  {"motif": "sprite", "asset": "tfc:block/wood/sapling/spruce", "x": 0.145, "y": 0.7, "w": 6.7, "alpha": 1.0, "glow": [150, 205, 255]},
+  {"motif": "sprite", "asset": "tfc:block/wood/sapling/spruce", "x": 0.33, "y": 0.735, "w": 5.4, "alpha": 1.0, "glow": [150, 205, 255]},
+  {"motif": "snowfall", "x": 0.17, "y": 0.55, "w": 10, "h": 14, "color": [226, 240, 255], "alpha": 0.4},
+  {"motif": "soft_glow", "x": 0.24, "y": 0.72, "w": 16, "h": 13, "color": [150, 210, 255], "alpha": 0.28},
+  {"motif": "sprite", "asset": "cold_sweat:item/goat_fur_chestplate", "x": 0.24, "y": 0.715, "w": 6.7, "alpha": 1.0, "glow": [170, 220, 255]},
+  {"motif": "sprite", "asset": "cold_sweat:item/thermometer/thermometer", "x": 0.735, "y": 0.665, "w": 6.7, "alpha": 1.0, "glow": [255, 150, 80]},
+  {"motif": "sprite", "asset": "cold_sweat:item/thermometer/thermometer_level_4", "x": 0.735, "y": 0.665, "w": 6.7, "alpha": 1.0}
+ ]}
+}

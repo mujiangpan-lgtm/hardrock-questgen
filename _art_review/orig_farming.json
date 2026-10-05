@@ -1,0 +1,315 @@
+{
+ "palette": {
+  "panel_fill": [
+   28,
+   38,
+   26
+  ],
+  "accent": [
+   136,
+   206,
+   92
+  ],
+  "glow": [
+   116,
+   196,
+   78
+  ],
+  "text_key_hex": "#ACE48A"
+ },
+ "background": {
+  "tiles": [
+   {
+    "asset": "tfc:block/farmland/loam",
+    "weight": 5
+   },
+   {
+    "asset": "tfc:block/dirt/loam",
+    "weight": 2
+   }
+  ],
+  "target_brightness": 0.1,
+  "saturation": 0.6,
+  "tint": [
+   222,
+   236,
+   190
+  ],
+  "contrast_sd": 0.014,
+  "overlay": {
+   "type": "none",
+   "density": 0,
+   "color": [
+    196,
+    220,
+    120
+   ]
+  },
+  "tile_size": 12
+ },
+ "banner": {
+  "ribbon_asset": "tfc:block/thatch",
+  "icons_left": [
+   "tfc:item/seeds/wheat",
+   "tfc:item/metal/hoe/copper",
+   "tfc:item/food/wheat"
+  ],
+  "icons_right": [
+   "minecraft:item/egg",
+   "minecraft:item/milk_bucket",
+   "minecraft:item/saddle"
+  ],
+  "motif": "mountains",
+  "motif_color": [
+   108,
+   170,
+   78
+  ]
+ },
+ "decor": [],
+ "shapes": {
+  "normal": "circle",
+  "milestone": "heart",
+  "optional": "diamond",
+  "gate": "gear"
+ },
+ "scene": {
+  "layers": [
+   {
+    "motif": "sky_band",
+    "x": 0.5,
+    "y": 0.21,
+    "w": 70,
+    "h": 14,
+    "color": [
+     206,
+     170,
+     82
+    ],
+    "alpha": 0.38
+   },
+   {
+    "motif": "sun",
+    "x": 0.74,
+    "y": 0.225,
+    "w": 9,
+    "color": [
+     255,
+     214,
+     120
+    ],
+    "alpha": 0.85
+   },
+   {
+    "motif": "mountain_range",
+    "x": 0.5,
+    "y": 0.255,
+    "w": 72,
+    "h": 9,
+    "color": [
+     58,
+     78,
+     66
+    ],
+    "alpha": 0.82
+   },
+   {
+    "motif": "tree_line",
+    "x": 0.5,
+    "y": 0.28,
+    "w": 72,
+    "h": 5,
+    "color": [
+     32,
+     52,
+     32
+    ],
+    "alpha": 0.85
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.5,
+    "y": 0.5,
+    "w": 50,
+    "h": 36,
+    "color": [
+     150,
+     206,
+     110
+    ],
+    "alpha": 0.14
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.76,
+    "y": 0.64,
+    "w": 26,
+    "h": 18,
+    "color": [
+     255,
+     206,
+     96
+    ],
+    "alpha": 0.24
+   },
+   {
+    "motif": "tree",
+    "x": 0.2,
+    "y": 0.585,
+    "w": 12,
+    "h": 18,
+    "color": [
+     74,
+     128,
+     58
+    ],
+    "alpha": 0.97
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/food/red_apple",
+    "x": 0.16,
+    "y": 0.51,
+    "w": 2,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/food/red_apple",
+    "x": 0.21,
+    "y": 0.465,
+    "w": 2,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/food/red_apple",
+    "x": 0.25,
+    "y": 0.535,
+    "w": 2,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/food/red_apple",
+    "x": 0.195,
+    "y": 0.565,
+    "w": 2,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:block/fruit_tree/red_apple_sapling",
+    "x": 0.275,
+    "y": 0.705,
+    "w": 4.5,
+    "alpha": 0.95
+   },
+   {
+    "motif": "falling_leaves",
+    "x": 0.19,
+    "y": 0.6,
+    "w": 5,
+    "h": 4,
+    "color": [
+     150,
+     186,
+     70
+    ],
+    "alpha": 0.5
+   },
+   {
+    "motif": "tree_line",
+    "x": 0.83,
+    "y": 0.6,
+    "w": 20,
+    "h": 9,
+    "color": [
+     34,
+     56,
+     34
+    ],
+    "alpha": 0.9
+   },
+   {
+    "motif": "wheat_field",
+    "x": 0.5,
+    "y": 0.745,
+    "w": 72,
+    "h": 7,
+    "color": [
+     190,
+     156,
+     70
+    ],
+    "alpha": 0.6
+   },
+   {
+    "motif": "sprite_row",
+    "assets": [
+     "tfc:block/crop/wheat_7",
+     "tfc:block/crop/wheat_6",
+     "tfc:block/crop/wheat_7",
+     "tfc:block/crop/wheat_5",
+     "tfc:block/crop/wheat_7",
+     "tfc:block/crop/wheat_6"
+    ],
+    "x": 0.32,
+    "y": 0.728,
+    "w": 34,
+    "h": 3.6,
+    "alpha": 0.95
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:block/hay_block_side",
+    "x": 0.8,
+    "y": 0.7205,
+    "w": 4.5,
+    "alpha": 0.97
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:block/hay_block_side",
+    "x": 0.854,
+    "y": 0.7205,
+    "w": 4.5,
+    "alpha": 0.97
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:block/hay_block_side",
+    "x": 0.827,
+    "y": 0.6415,
+    "w": 4.5,
+    "alpha": 0.97
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/food/wheat",
+    "x": 0.827,
+    "y": 0.57,
+    "w": 4.5,
+    "alpha": 1.0,
+    "glow": [
+     255,
+     206,
+     96
+    ]
+   },
+   {
+    "motif": "livestock",
+    "x": 0.685,
+    "y": 0.7096,
+    "w": 16,
+    "h": 6.8,
+    "color": [
+     182,
+     152,
+     116
+    ],
+    "alpha": 0.95
+   }
+  ]
+ }
+}

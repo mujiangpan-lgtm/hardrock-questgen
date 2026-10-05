@@ -1,0 +1,346 @@
+{
+ "palette": {
+  "panel_fill": [
+   20,
+   36,
+   34
+  ],
+  "accent": [
+   118,
+   196,
+   168
+  ],
+  "glow": [
+   80,
+   190,
+   150
+  ],
+  "text_key_hex": "#A2E2CA"
+ },
+ "background": {
+  "tiles": [
+   {
+    "asset": "tfc:block/rock/raw/andesite",
+    "weight": 5
+   },
+   {
+    "asset": "tfc:block/rock/raw/gabbro",
+    "weight": 2
+   }
+  ],
+  "target_brightness": 0.095,
+  "saturation": 0.55,
+  "tint": [
+   196,
+   232,
+   220
+  ],
+  "contrast_sd": 0.014,
+  "overlay": {
+   "type": "speckle",
+   "density": 0.05,
+   "color": [
+    110,
+    210,
+    176
+   ]
+  },
+  "tile_size": 12
+ },
+ "banner": {
+  "ribbon_asset": "tfc:block/metal/smooth/bronze",
+  "icons_left": [
+   "tfc:item/ore/small_cassiterite",
+   "tfc:item/metal/ingot/tin",
+   "tfc:item/metal/ingot/copper"
+  ],
+  "icons_right": [
+   "tfc:item/metal/ingot/bronze",
+   "tfc:item/metal/sword/bronze",
+   "tfc:item/metal/pickaxe/bronze"
+  ],
+  "motif": "mountains",
+  "motif_color": [
+   86,
+   178,
+   150
+  ]
+ },
+ "decor": [],
+ "shapes": {
+  "normal": "rsquare",
+  "milestone": "hexagon",
+  "optional": "diamond",
+  "gate": "gear"
+ },
+ "scene": {
+  "layers": [
+   {
+    "motif": "sky_band",
+    "x": 0.5,
+    "y": 0.18,
+    "w": 70,
+    "h": 14,
+    "color": [
+     64,
+     160,
+     140
+    ],
+    "alpha": 0.4
+   },
+   {
+    "motif": "mountain_range",
+    "x": 0.5,
+    "y": 0.235,
+    "w": 72,
+    "h": 11,
+    "color": [
+     52,
+     84,
+     86
+    ],
+    "alpha": 0.82
+   },
+   {
+    "motif": "mountain_range",
+    "x": 0.56,
+    "y": 0.29,
+    "w": 66,
+    "h": 7,
+    "color": [
+     22,
+     34,
+     36
+    ],
+    "alpha": 0.9
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.5,
+    "y": 0.5,
+    "w": 48,
+    "h": 32,
+    "color": [
+     90,
+     200,
+     170
+    ],
+    "alpha": 0.16
+   },
+   {
+    "motif": "strata_band",
+    "x": 0.5,
+    "y": 0.86,
+    "w": 70,
+    "h": 9,
+    "color": [
+     70,
+     112,
+     102
+    ],
+    "alpha": 0.4
+   },
+   {
+    "motif": "tree",
+    "x": 0.125,
+    "y": 0.6468,
+    "w": 6.5,
+    "h": 15,
+    "color": [
+     42,
+     82,
+     70
+    ],
+    "alpha": 0.95
+   },
+   {
+    "motif": "tree",
+    "x": 0.3,
+    "y": 0.6876,
+    "w": 5,
+    "h": 11,
+    "color": [
+     42,
+     82,
+     70
+    ],
+    "alpha": 0.95
+   },
+   {
+    "motif": "mine_entrance",
+    "x": 0.2,
+    "y": 0.7,
+    "w": 10,
+    "h": 10,
+    "color": [
+     124,
+     94,
+     62
+    ],
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/ore/rich_cassiterite",
+    "x": 0.17,
+    "y": 0.775,
+    "w": 4,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/ore/rich_bismuthinite",
+    "x": 0.215,
+    "y": 0.785,
+    "w": 3.5,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/ore/rich_sphalerite",
+    "x": 0.25,
+    "y": 0.77,
+    "w": 3.5,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/metal/propick/bronze",
+    "x": 0.305,
+    "y": 0.73,
+    "w": 4.67,
+    "alpha": 1.0
+   },
+   {
+    "motif": "tree",
+    "x": 0.865,
+    "y": 0.5957,
+    "w": 7,
+    "h": 20,
+    "color": [
+     42,
+     82,
+     70
+    ],
+    "alpha": 0.95
+   },
+   {
+    "motif": "tree",
+    "x": 0.725,
+    "y": 0.6876,
+    "w": 5,
+    "h": 11,
+    "color": [
+     42,
+     82,
+     70
+    ],
+    "alpha": 0.95
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.785,
+    "y": 0.64,
+    "w": 18,
+    "h": 16,
+    "color": [
+     80,
+     210,
+     176
+    ],
+    "alpha": 0.26
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.625,
+    "y": 0.75,
+    "w": 11,
+    "h": 9,
+    "color": [
+     255,
+     150,
+     70
+    ],
+    "alpha": 0.55
+   },
+   {
+    "motif": "sprite_row",
+    "assets": [
+     "tfc:item/metal/ingot/copper",
+     "tfc:item/metal/ingot/tin",
+     "tfc:item/metal/ingot/bismuth",
+     "tfc:item/metal/ingot/zinc"
+    ],
+    "x": 0.46,
+    "y": 0.77,
+    "w": 16,
+    "h": 3.6,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/ceramic/unfired_crucible",
+    "x": 0.625,
+    "y": 0.755,
+    "w": 5,
+    "alpha": 1.0,
+    "glow": [
+     255,
+     150,
+     70
+    ]
+   },
+   {
+    "motif": "embers",
+    "x": 0.625,
+    "y": 0.69,
+    "w": 4,
+    "h": 3,
+    "color": [
+     255,
+     160,
+     80
+    ],
+    "alpha": 0.7
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/metal/ingot/bronze",
+    "x": 0.69,
+    "y": 0.775,
+    "w": 3.4,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:block/wood/log/oak",
+    "x": 0.79,
+    "y": 0.752,
+    "w": 4.67,
+    "alpha": 1.0
+   },
+   {
+    "motif": "anvil",
+    "x": 0.785,
+    "y": 0.651,
+    "w": 11,
+    "h": 5.5,
+    "color": [
+     176,
+     128,
+     76
+    ],
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/metal/sword/bronze",
+    "x": 0.79,
+    "y": 0.598,
+    "w": 5,
+    "alpha": 1.0,
+    "rot": 45
+   }
+  ]
+ }
+}

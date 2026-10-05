@@ -1,0 +1,325 @@
+{
+ "palette": {
+  "panel_fill": [
+   44,
+   28,
+   28
+  ],
+  "accent": [
+   244,
+   150,
+   128
+  ],
+  "glow": [
+   255,
+   110,
+   70
+  ],
+  "text_key_hex": "#FFB9A8"
+ },
+ "background": {
+  "tiles": [
+   {
+    "asset": "tfc:block/rock/raw/slate",
+    "weight": 5
+   },
+   {
+    "asset": "tfc:block/rock/raw/granite",
+    "weight": 2
+   }
+  ],
+  "target_brightness": 0.095,
+  "saturation": 0.5,
+  "tint": [
+   208,
+   212,
+   230
+  ],
+  "contrast_sd": 0.014,
+  "overlay": {
+   "type": "strata",
+   "density": 0.22,
+   "color": [
+    206,
+    112,
+    86
+   ]
+  },
+  "tile_size": 12
+ },
+ "banner": {
+  "ribbon_asset": "tfc:block/metal/smooth/copper",
+  "icons_left": [
+   "tfc:item/ore/small_native_copper",
+   "tfc:item/ceramic/vessel",
+   "minecraft:item/charcoal"
+  ],
+  "icons_right": [
+   "tfc:item/metal/ingot/copper",
+   "tfc:item/metal/hammer/copper",
+   "tfc:item/metal/pickaxe/copper"
+  ],
+  "motif": "strata",
+  "motif_color": [
+   214,
+   112,
+   84
+  ]
+ },
+ "decor": [],
+ "shapes": {
+  "normal": "circle",
+  "milestone": "pentagon",
+  "optional": "diamond",
+  "gate": "gear"
+ },
+ "scene": {
+  "layers": [
+   {
+    "motif": "sky_band",
+    "x": 0.5,
+    "y": 0.19,
+    "w": 70,
+    "h": 14,
+    "color": [
+     70,
+     86,
+     116
+    ],
+    "alpha": 0.34
+   },
+   {
+    "motif": "mountain_range",
+    "x": 0.5,
+    "y": 0.235,
+    "w": 72,
+    "h": 10,
+    "color": [
+     60,
+     58,
+     74
+    ],
+    "alpha": 0.85
+   },
+   {
+    "motif": "mountain_range",
+    "x": 0.42,
+    "y": 0.275,
+    "w": 66,
+    "h": 7,
+    "color": [
+     32,
+     30,
+     38
+    ],
+    "alpha": 0.88
+   },
+   {
+    "motif": "nebula_glow",
+    "x": 0.775,
+    "y": 0.45,
+    "w": 10,
+    "h": 16,
+    "color": [
+     150,
+     130,
+     132
+    ],
+    "alpha": 0.34
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.5,
+    "y": 0.55,
+    "w": 50,
+    "h": 34,
+    "color": [
+     220,
+     110,
+     100
+    ],
+    "alpha": 0.1
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.775,
+    "y": 0.68,
+    "w": 20,
+    "h": 16,
+    "color": [
+     255,
+     110,
+     50
+    ],
+    "alpha": 0.42
+   },
+   {
+    "motif": "strata_band",
+    "x": 0.5,
+    "y": 0.83,
+    "w": 70,
+    "h": 9,
+    "color": [
+     120,
+     74,
+     62
+    ],
+    "alpha": 0.4
+   },
+   {
+    "motif": "mountain_range",
+    "x": 0.2,
+    "y": 0.56,
+    "w": 22,
+    "h": 14,
+    "color": [
+     62,
+     50,
+     56
+    ],
+    "alpha": 0.9
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:block/rock/raw/basalt",
+    "x": 0.165,
+    "y": 0.71,
+    "w": 4.67,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:block/rock/raw/basalt",
+    "x": 0.238,
+    "y": 0.71,
+    "w": 4.67,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:block/rock/raw/basalt",
+    "x": 0.2015,
+    "y": 0.622,
+    "w": 4.67,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:block/ore/rich_native_copper",
+    "x": 0.2015,
+    "y": 0.622,
+    "w": 4.67,
+    "alpha": 1.0,
+    "glow": [
+     255,
+     140,
+     70
+    ]
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/metal/pickaxe/copper",
+    "x": 0.215,
+    "y": 0.555,
+    "w": 6,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:block/torch",
+    "x": 0.262,
+    "y": 0.64,
+    "w": 3,
+    "alpha": 1.0,
+    "glow": [
+     255,
+     160,
+     80
+    ]
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:block/devices/charcoal_forge/lit",
+    "x": 0.775,
+    "y": 0.715,
+    "w": 4.67,
+    "alpha": 1.0,
+    "glow": [
+     255,
+     110,
+     50
+    ]
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/ceramic/vessel",
+    "x": 0.775,
+    "y": 0.627,
+    "w": 4.0,
+    "alpha": 1.0,
+    "glow": [
+     255,
+     140,
+     70
+    ]
+   },
+   {
+    "motif": "embers",
+    "x": 0.775,
+    "y": 0.56,
+    "w": 5,
+    "h": 5,
+    "color": [
+     255,
+     150,
+     80
+    ],
+    "alpha": 0.75
+   },
+   {
+    "motif": "shaft",
+    "x": 0.5,
+    "y": 0.795,
+    "w": 28,
+    "h": 0.9,
+    "color": [
+     104,
+     74,
+     50
+    ],
+    "alpha": 0.9
+   },
+   {
+    "motif": "sprite_row",
+    "assets": [
+     "tfc:item/metal/pickaxe/copper",
+     "tfc:item/metal/hammer/copper",
+     "tfc:item/metal/double_ingot/copper",
+     "tfc:item/metal/saw/copper",
+     "tfc:item/metal/chisel/copper"
+    ],
+    "x": 0.5,
+    "y": 0.76,
+    "w": 28,
+    "h": 4,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:block/rock/raw/basalt",
+    "x": 0.702,
+    "y": 0.715,
+    "w": 4.67,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:block/devices/bellows/side",
+    "x": 0.848,
+    "y": 0.715,
+    "w": 4.67,
+    "alpha": 1.0
+   }
+  ]
+ }
+}

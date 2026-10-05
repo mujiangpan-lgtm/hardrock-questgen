@@ -1,0 +1,385 @@
+{
+ "palette": {
+  "panel_fill": [
+   30,
+   22,
+   40
+  ],
+  "accent": [
+   200,
+   118,
+   226
+  ],
+  "glow": [
+   166,
+   86,
+   214
+  ],
+  "text_key_hex": "#E0AAF6"
+ },
+ "background": {
+  "tiles": [
+   {
+    "asset": "twilightforest:block/mazestone",
+    "weight": 6
+   },
+   {
+    "asset": "twilightforest:block/weathered_deadrock",
+    "weight": 2
+   }
+  ],
+  "target_brightness": 0.1,
+  "saturation": 0.55,
+  "tint": [
+   176,
+   204,
+   222
+  ],
+  "contrast_sd": 0.012,
+  "overlay": {
+   "type": "speckle",
+   "density": 0.04,
+   "color": [
+    210,
+    240,
+    120
+   ]
+  },
+  "tile_size": 12
+ },
+ "banner": {
+  "ribbon_asset": "twilightforest:block/mazestone",
+  "icons_left": [
+   "twilightforest:item/naga_scale",
+   "twilightforest:item/magic_map",
+   "twilightforest:item/twilight_scepter"
+  ],
+  "icons_right": [
+   "twilightforest:item/knightmetal_sword",
+   "twilightforest:item/fiery_sword",
+   "twilightforest:item/lamp_of_cinders"
+  ],
+  "motif": "nebula",
+  "motif_color": [
+   176,
+   104,
+   206
+  ]
+ },
+ "decor": [],
+ "shapes": {
+  "normal": "circle",
+  "milestone": "pentagon",
+  "optional": "diamond",
+  "gate": "gear"
+ },
+ "scene": {
+  "layers": [
+   {
+    "motif": "sky_band",
+    "x": 0.5,
+    "y": 0.16,
+    "w": 74,
+    "h": 14,
+    "color": [
+     170,
+     70,
+     120
+    ],
+    "alpha": 0.42
+   },
+   {
+    "motif": "nebula_glow",
+    "x": 0.42,
+    "y": 0.19,
+    "w": 46,
+    "h": 9,
+    "color": [
+     176,
+     104,
+     206
+    ],
+    "alpha": 0.32
+   },
+   {
+    "motif": "sky_band",
+    "x": 0.5,
+    "y": 0.62,
+    "w": 74,
+    "h": 26,
+    "color": [
+     60,
+     70,
+     120
+    ],
+    "alpha": 0.22
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.8,
+    "y": 0.36,
+    "w": 20,
+    "h": 16,
+    "color": [
+     150,
+     90,
+     200
+    ],
+    "alpha": 0.28
+   },
+   {
+    "motif": "moon",
+    "x": 0.8,
+    "y": 0.22,
+    "w": 8,
+    "color": [
+     232,
+     222,
+     242
+    ],
+    "alpha": 0.92
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.8,
+    "y": 0.22,
+    "w": 16,
+    "h": 14,
+    "color": [
+     200,
+     140,
+     220
+    ],
+    "alpha": 0.3
+   },
+   {
+    "motif": "tree_line",
+    "x": 0.5,
+    "y": 0.27,
+    "w": 74,
+    "h": 8,
+    "color": [
+     30,
+     40,
+     58
+    ],
+    "alpha": 0.9
+   },
+   {
+    "motif": "castle",
+    "x": 0.785,
+    "y": 0.38,
+    "w": 14,
+    "h": 12,
+    "color": [
+     46,
+     38,
+     66
+    ],
+    "alpha": 0.97
+   },
+   {
+    "motif": "sky_band",
+    "x": 0.5,
+    "y": 0.82,
+    "w": 74,
+    "h": 8,
+    "color": [
+     90,
+     70,
+     150
+    ],
+    "alpha": 0.32
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.5,
+    "y": 0.79,
+    "w": 18,
+    "h": 5.5,
+    "color": [
+     130,
+     220,
+     255
+    ],
+    "alpha": 0.85
+   },
+   {
+    "motif": "tree_line",
+    "x": 0.81,
+    "y": 0.475,
+    "w": 15,
+    "h": 8,
+    "color": [
+     26,
+     40,
+     50
+    ],
+    "alpha": 1.0
+   },
+   {
+    "motif": "tree_line",
+    "x": 0.82,
+    "y": 0.85,
+    "w": 24,
+    "h": 18,
+    "color": [
+     18,
+     30,
+     36
+    ],
+    "alpha": 1.0
+   },
+   {
+    "motif": "nebula_glow",
+    "x": 0.5,
+    "y": 0.79,
+    "w": 13,
+    "h": 3.6,
+    "color": [
+     200,
+     130,
+     255
+    ],
+    "alpha": 0.5
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:block/poppy",
+    "x": 0.405,
+    "y": 0.785,
+    "w": 2.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:block/azure_bluet",
+    "x": 0.595,
+    "y": 0.785,
+    "w": 2.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:block/cornflower",
+    "x": 0.435,
+    "y": 0.825,
+    "w": 2.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:block/dandelion",
+    "x": 0.475,
+    "y": 0.84,
+    "w": 2.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "tree_line",
+    "x": 0.2,
+    "y": 0.87,
+    "w": 26,
+    "h": 10,
+    "color": [
+     18,
+     30,
+     36
+    ],
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:block/allium",
+    "x": 0.525,
+    "y": 0.84,
+    "w": 2.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:block/poppy",
+    "x": 0.565,
+    "y": 0.825,
+    "w": 2.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:block/oxeye_daisy",
+    "x": 0.445,
+    "y": 0.75,
+    "w": 2.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:block/cornflower",
+    "x": 0.5,
+    "y": 0.74,
+    "w": 2.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:block/dandelion",
+    "x": 0.555,
+    "y": 0.75,
+    "w": 2.0,
+    "alpha": 1.0
+   },
+   {
+    "motif": "fireflies",
+    "x": 0.85,
+    "y": 0.63,
+    "w": 6,
+    "h": 5,
+    "color": [
+     210,
+     240,
+     120
+    ],
+    "alpha": 0.8
+   },
+   {
+    "motif": "tree_line",
+    "x": 0.15,
+    "y": 0.5,
+    "w": 14,
+    "h": 30,
+    "color": [
+     28,
+     46,
+     54
+    ],
+    "alpha": 1.0
+   },
+   {
+    "motif": "fireflies",
+    "x": 0.25,
+    "y": 0.76,
+    "w": 8,
+    "h": 6,
+    "color": [
+     210,
+     240,
+     120
+    ],
+    "alpha": 0.85
+   },
+   {
+    "motif": "star_cluster",
+    "x": 0.33,
+    "y": 0.16,
+    "w": 26,
+    "h": 3,
+    "color": [
+     236,
+     220,
+     255
+    ],
+    "alpha": 0.7
+   }
+  ]
+ }
+}

@@ -1,0 +1,349 @@
+{
+ "palette": {
+  "panel_fill": [
+   22,
+   30,
+   42
+  ],
+  "accent": [
+   100,
+   178,
+   250
+  ],
+  "glow": [
+   70,
+   160,
+   255
+  ],
+  "text_key_hex": "#8CC8FF"
+ },
+ "background": {
+  "tiles": [
+   {
+    "asset": "tfc:block/wood/planks/spruce",
+    "weight": 6
+   },
+   {
+    "asset": "tfc:block/wood/planks/chestnut",
+    "weight": 2
+   }
+  ],
+  "target_brightness": 0.095,
+  "saturation": 0.5,
+  "tint": [
+   204,
+   216,
+   240
+  ],
+  "contrast_sd": 0.012,
+  "overlay": {
+   "type": "blueprint_grid",
+   "density": 0.14,
+   "color": [
+    90,
+    170,
+    240
+   ]
+  },
+  "tile_size": 12
+ },
+ "banner": {
+  "ribbon_asset": "tfc:block/wood/planks/spruce",
+  "icons_left": [
+   "sns:item/icon/straw_basket",
+   "tfc:item/ceramic/vessel",
+   "sns:item/icon/frame_pack"
+  ],
+  "icons_right": [
+   "refinedstorage:item/1k_storage_disk",
+   "refinedstorage:item/basic_processor",
+   "refinedstorage:item/pattern"
+  ],
+  "motif": "starfield",
+  "motif_color": [
+   110,
+   180,
+   255
+  ]
+ },
+ "decor": [],
+ "shapes": {
+  "normal": "square",
+  "milestone": "octagon",
+  "optional": "diamond",
+  "gate": "gear"
+ },
+ "scene": {
+  "layers": [
+   {
+    "motif": "soft_glow",
+    "x": 0.22,
+    "y": 0.5,
+    "w": 30,
+    "h": 30,
+    "color": [
+     255,
+     170,
+     90
+    ],
+    "alpha": 0.22
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.79,
+    "y": 0.48,
+    "w": 32,
+    "h": 32,
+    "color": [
+     70,
+     160,
+     255
+    ],
+    "alpha": 0.3
+   },
+   {
+    "motif": "circuit",
+    "x": 0.76,
+    "y": 0.2,
+    "w": 30,
+    "h": 8,
+    "color": [
+     90,
+     176,
+     250
+    ],
+    "alpha": 0.42
+   },
+   {
+    "motif": "shaft",
+    "x": 0.3,
+    "y": 0.22,
+    "w": 40,
+    "h": 1.3,
+    "color": [
+     104,
+     74,
+     48
+    ],
+    "alpha": 0.95
+   },
+   {
+    "motif": "sprite_row",
+    "assets": [
+     "firmalife:item/jar/honey",
+     "firmalife:item/jar/fig",
+     "firmalife:item/jar/pineapple",
+     "firmalife:item/jar/red_grapes",
+     "firmalife:item/jar/white_grapes"
+    ],
+    "x": 0.3,
+    "y": 0.193,
+    "w": 22,
+    "h": 3.2,
+    "alpha": 0.95
+   },
+   {
+    "motif": "hanging_cord",
+    "x": 0.29,
+    "y": 0.265,
+    "w": 0.8,
+    "h": 3.6,
+    "color": [
+     150,
+     112,
+     70
+    ],
+    "alpha": 0.95
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/metal/lamp/copper",
+    "x": 0.29,
+    "y": 0.33,
+    "w": 3.5,
+    "alpha": 1.0,
+    "glow": [
+     255,
+     170,
+     80
+    ]
+   },
+   {
+    "motif": "hanging_cord",
+    "x": 0.15,
+    "y": 0.265,
+    "w": 0.8,
+    "h": 3.6,
+    "color": [
+     150,
+     112,
+     70
+    ],
+    "alpha": 0.95
+   },
+   {
+    "motif": "sprite",
+    "asset": "sns:item/icon/frame_pack",
+    "x": 0.15,
+    "y": 0.36,
+    "w": 6,
+    "alpha": 1.0
+   },
+   {
+    "motif": "plank_shelf",
+    "x": 0.207,
+    "y": 0.687,
+    "w": 13,
+    "h": 1.2,
+    "color": [
+     120,
+     86,
+     54
+    ],
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:block/barrel_side",
+    "x": 0.16,
+    "y": 0.62,
+    "w": 6,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:block/barrel_side",
+    "x": 0.254,
+    "y": 0.62,
+    "w": 6,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "tfc:item/ceramic/vessel",
+    "x": 0.207,
+    "y": 0.51,
+    "w": 5.5,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "refinedstorage:block/controller/on",
+    "x": 0.786,
+    "y": 0.36,
+    "w": 9,
+    "alpha": 1.0,
+    "glow": [
+     70,
+     160,
+     255
+    ]
+   },
+   {
+    "motif": "sprite",
+    "asset": "refinedstorage:block/controller/cutouts/light_blue",
+    "x": 0.786,
+    "y": 0.36,
+    "w": 9,
+    "alpha": 1.0
+   },
+   {
+    "motif": "shaft",
+    "x": 0.786,
+    "y": 0.4925,
+    "w": 6.9,
+    "h": 0.55,
+    "rot": 90,
+    "color": [
+     90,
+     150,
+     210
+    ],
+    "alpha": 0.85
+   },
+   {
+    "motif": "shaft",
+    "x": 0.786,
+    "y": 0.687,
+    "w": 13,
+    "h": 0.8,
+    "color": [
+     96,
+     110,
+     130
+    ],
+    "alpha": 0.95
+   },
+   {
+    "motif": "sprite",
+    "asset": "refinedstorage:block/disk_drive",
+    "x": 0.74,
+    "y": 0.62,
+    "w": 6,
+    "alpha": 1.0
+   },
+   {
+    "motif": "sprite",
+    "asset": "refinedstorage:block/64k_storage_block",
+    "x": 0.832,
+    "y": 0.62,
+    "w": 6,
+    "alpha": 1.0
+   },
+   {
+    "motif": "shaft",
+    "x": 0.5,
+    "y": 0.815,
+    "w": 62,
+    "h": 0.6,
+    "color": [
+     90,
+     150,
+     210
+    ],
+    "alpha": 0.7
+   },
+   {
+    "motif": "shaft",
+    "x": 0.5,
+    "y": 0.84,
+    "w": 60,
+    "h": 0.5,
+    "color": [
+     70,
+     120,
+     180
+    ],
+    "alpha": 0.55
+   },
+   {
+    "motif": "sprite_row",
+    "assets": [
+     "sns:item/icon/straw_basket",
+     "sns:item/icon/ore_sack",
+     "minecraft:item/bundle_filled",
+     "sns:item/icon/leather_sack"
+    ],
+    "x": 0.3,
+    "y": 0.78,
+    "w": 18,
+    "h": 3.4,
+    "alpha": 0.95
+   },
+   {
+    "motif": "sprite_row",
+    "assets": [
+     "refinedstorage:item/1k_storage_disk",
+     "refinedstorage:item/4k_storage_disk",
+     "refinedstorage:item/basic_processor",
+     "refinedstorage:item/pattern"
+    ],
+    "x": 0.7,
+    "y": 0.78,
+    "w": 18,
+    "h": 3.4,
+    "alpha": 0.95
+   }
+  ]
+ }
+}

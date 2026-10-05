@@ -1,0 +1,626 @@
+
+######## age-kinetic-power
+* 动能 |  
+  你需要建造第一批由动能驱动的机器 —— 水车或风车能帮你驱动任何机器 —— 如果你不知道怎么做 —— 在 JEI 中按住 W 键可以查看动画
+* - | create:andesite_alloy 
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* SU 传输 |  
+  
+* - |  
+  
+* - |  
+  
+* 铁器时代之后 |  
+  
+* - |  
+  
+* - | tfc:metal/ingot/brass 
+  
+* - |  
+  你会需要一大堆这种东西，最好多囤点黄铜！
+* - |  
+  
+* - |  
+  
+* 想法 |  
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* - | create_sa:copper_jetpack_chestplate 
+  
+* - | create_sa:copper_exoskeleton_chestplate 
+  
+* - |  
+  加水槽和燃料槽可以自动为使用水或燃料（熔岩）的物品补充，无需手动添加。 / 如果你总是从天上掉下来，它会非常有用！
+* - | create_sa:andesite_jetpack_chestplate 
+  
+* - | create_sa:andesite_exoskeleton_chestplate 
+  
+* - | create_sa:brass_jetpack_chestplate 
+  
+* - | create_sa:brass_exoskeleton_chestplate 
+  
+* 更高的 SU 产出 |  
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* 更好的采矿 |  
+  
+* - |  
+  用鼠标指向它按 \\\"U\\\"，就能看到哪条矿脉里含有什么矿石！
+* - |  
+  用鼠标指向它按 \\\"U\\\"，就能看到哪条矿脉里含有什么矿石！
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* - | create_jetpack:jetpack 
+  
+
+######## age-nuclear
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* 核能时代 |  
+  随着铀的发现，你开启了一个全新的核能时代。大量新机器和新技术将带来更快的生产和更高的效率。但要小心铀：一旦污染了你的世界，你就不得不搬离家园
+* - |  
+  放射性废料桶用于储存放射性物质。 / 它们会以每分钟 1 mB 的速度清除内部内容物。 / 你可以在里面存储 512B。
+* 防化服 | mekanism:hazmat_gown,mekanism:hazmat_mask,mekanism:hazmat_pants,mekanism:hazmat_boots 
+  防化服可以保护玩家免受辐射伤害。 / cold_sweat:item_insulation / mekanism:hazmat_gown / 0000000000000892 / 0000000000000893 / mekanism:hazmat_mask / item / 0000000000000894 / mekanism:hazmat_gown / item / 0000000000000895 / mekanism:hazmat_pants / item / 0000000000000896 / mekanism:hazmat_boots / item
+* 感应矩阵 |  
+  感应矩阵是一种高度可配置的多方块储能结构。 / 只有当核心结构为 16x16x16 或更小的长方体、外壳结构为 18x18x18 或更小的长方体时，感应矩阵才会成型。 / 立方体内部可以填充感应供应器、感应电池或空气方块。
+* 热蒸发工厂 |  
+  热蒸发工厂是一种多方块结构，用于将水转化为卤水，再通过第二座热蒸发工厂进一步转化为锂。 / 该结构的底座为 4×4 方块，高度从 3 格起，最高 18 格。
+* 裂变反应堆 |  
+  裂变反应堆是一种多方块结构，能产生巨大的热量，但自身并不发电。 / 该结构必须是长方体，外部尺寸最小为 3x4x3（沿 X、Y、Z 轴），最大为 18x18x18。
+* 涡轮机 |  
+  工业涡轮机是一种多方块发电机，在供应大量蒸汽时可以产生能量。 / mekanismgenerators:rotational_complex / 1A8E113CE242F980 / 7EFCED42F0F8B232 / mekanismgenerators:turbine_casing / item / 4BE66A55A545E92B / mekanismgenerators:turbine_valve / item / 103D62E0B9F1777B / mekanism:structural_glass / item / 5A5D1360FD87D4C6 / mekanismgenerators:turbine_rotor / item / 6834398CA5E8ECA7 / mekanismgenerators:turbine_blade / item / 7F73B383D5C57D58 / mekanismgenerators:rotational_complex / item / 5DD421965D839417 / mekanismgenerators:saturating_condenser / item / 550DDE90DEBC18A3 / mekanism:pressure_disperser / item / 13BE0830AEB5604C / mekanismgenerators:electromagnetic_coil / item / 3D4B379D1B996E84 / mekanismgenerators:turbine_vent / item
+* 聚变反应堆 | mekanismgenerators:hohlraum 
+  聚变反应堆是一种多方块结构，可以调节 3 种燃料的输入速率：氘、氚和 D-T 燃料。 / 聚变反应堆不会自行启动。 / 它需要充能的激光增幅器提供一次外部能量脉冲，以及少量 D-T 燃料，才能启动聚变过程。 / 反应一旦被启动，就会开始消耗输入的氘和氚，产生等离子体并发电。
+* 超临界相移器 |  
+  超临界相移器是一种多方块结构，消耗大量能量和钋气体来产生反物质气体， / mekanism:supercharged_coil / 000000000000094B / 000000000000094C / mekanism:sps_casing / item / 000000000000094D / mekanism:structural_glass / item / 000000000000094E / mekanism:supercharged_coil / item / 000000000000094F / mekanism:sps_port / item
+* - |  
+  化学溶解仓使用硫酸把粗矿转化为浆液，或转化为氟石和氢氟酸。 / mekanism:chemical_dissolution_chamber / 0000000000000902 / 0000000000000903 / mekanism:chemical_dissolution_chamber / item / 1B1FE9FB64A84396 / mekanism:fluorite_gem / item
+* - |  
+  化学清洗机用水将浆液转化为纯净浆液。 / - 处理粗矿的效率提升 5 倍
+* - |  
+  化学灌注机将两种气体混合或反应，生成另一种气体。 / 六氟化铀
+* - |  
+  加压反应室主要用于制造基质、HDPE 颗粒、乙烯和硫磺。 / mekanism:pressurized_reaction_chamber / 000000000000090C / 000000000000090D / mekanism:pressurized_reaction_chamber / item / 1DF130A02DA309D9 / mekanism:substrate / item / 6617F49CA7696DC4 / mekanism:hdpe_pellet / item / 671EA94ECF5D9375 / tfc:powder/sulfur / item
+* - |  
+  提纯仓使用氧气，把矿石和碎片提纯成团块。 / - 处理粗矿的效率提升至 3 倍
+* - |  
+  化学结晶器把纯净浆液转化为晶体，把锂转化为锂粉。 / 你可以把反物质转化为反物质粒。
+* - |  
+  化学注射仓使用氯化氢气体，把矿石转化为 4 个碎片。 / - 处理原矿的效率提升 4 倍
+* - |  
+  富集仓用于将煤炭或木炭转化为压缩碳、将红石转化为压缩红石、将钻石转化为压缩钻石，以及将精炼黑曜石粉转化为压缩黑曜石，这些都用于冶金灌注机。 / 不过，我们将得到的最重要的东西是黄饼——裂变反应堆产能的中间产物
+* - |  
+  反质子核合成器利用反物质把一种物品转化为另一种物品。
+* - |  
+  在这个基础 QIO 驱动器里，你可以存储 16k 物品、共 128 种类型。
+* - |  
+  QIO 是游戏后期大量存储、搜索并远程访问物品的一种方式。 / mekanism:qio_drive_array / 00000000000008C1 / 00000000000008C2 / mekanism:qio_drive_array / item / 00000000000008C3 / mekanism:qio_dashboard / item
+* HDPE 板 |  
+  使用乙烯、基质和氧气获得一组 HDPE 板。
+* - |  
+  使用加压反应室，以水、钋和氟石粉制取钋丸。 / 注意，这个过程会产生乏核废料。
+* - |  
+  改造站用于消耗能量，为 MekaSuit 安装模块化升级。
+* - |  
+  太阳能中子激活器将太阳的中子辐射导入内部储罐，从而缓慢生成各种同位素。
+* - | mekanism:hdpe_elytra 
+  
+* - |  
+  QIO 输入端口安装在带有物品栏的方块上，将其内容无线传输到驱动器阵列。输入端口必须与驱动器阵列设置为相同的频率。 / 00000000000008DC / 00000000000008DD / mekanism:qio_importer / item / 00000000000008DE / mekanism:qio_exporter / item / 00000000000008DF / mekanism:qio_redstone_adapter / item
+* - |  
+  为 MekaSuit 加装 HDPE 强化鞘翅。
+* 强化锭 |  
+  用锇压缩机每种各收集 8 个锭。 / 022B48C17014A9F7 / 073FB78E25F6D0F7 / mekanism:ingot_refined_obsidian / item / 79AE4BF61B2BDCB0 / mekanism:ingot_refined_glowstone / item
+* - |  
+  锇压缩机用于从强化黑曜石粉制造强化黑曜石锭，以及从荧石粉制造荧石锭。
+* - |  
+  同位素离心机与裂变反应堆配合使用，可将六氟化铀加工为裂变燃料，或将核废料加工为钚。 
+* - |  
+  
+* - |  
+  化学氧化机用于把材料制成气体。 / -> 你需要氧化铀
+* - |  
+  回旋式气液转换机用于以 1:1 的比例在液态与气态之间转换物质。
+* - |  
+  电解分离器向流体中通入受控的直流电，使流体中的原子断开化学键。 / 例如，你可以从水中获取氧气和氢气。
+* - |  
+  量子传送装置是一种机器，可以让液体/物品/能量/气体通过频道从一个量子传送装置发送到另一个。
+* - |  
+  机器人是通用机械的机械伙伴。 / 他可以充当合成格、熔炉、砧、箱子，也可以只是个可爱的小伙伴。
+* Mekanism 内容 |  
+  剂量计会显示你受到的辐射剂量。 / 盖革计数器会显示你当前受到的辐射暴露量。 / 配置卡可以把一台机器的各面配置复制到另一台同类型的机器上。 / 纸板箱用于把其他方块装箱搬运，搬运时箱内的物品不会掉落。
+* - |  
+  速度升级能让它们更快地处理物品。 / 能量升级可以提高通用机械机器的能量容量，并降低每刻的能耗。 / 过滤升级可以把水和重水分离开。它唯一的用途是在电动泵中。 / 消音升级可以降低通用机械机器的噪音。 / 气体升级可提高 Mekanism 中气体类机器的效率。 / 锚升级可以确保 Mekanism 机器所在的区块保持加载。
+* - |  
+  燃气发电机通过消耗任何可燃气体来发电，例如电解分离器产生的氢气或乙烯。
+* - |  
+  风力发电机利用风被动地产生能量。 / 升得越高，能获得的能量越多。
+* - |  
+  新时代带来了其他发电方式
+* - |  
+  生物发电机使用生物燃料发电。
+* - |  
+  太阳能发电机利用阳光发电。请在采矿维度使用它。
+* - |  
+  热力发电机把热能转化为电力。
+* - |  
+  高级太阳能发电机是基础太阳能发电机的高度升级版。建造一台高级太阳能发电机需要四台太阳能发电机，但它的发电量是小型同类的六倍。
+* 为 MekaSuit 供能 | mekanism:mekasuit_bodyarmor 
+  MekaSuit 是一套高级盔甲，能保护你免受大多数威胁 / cold_sweat:item_insulation / mekanism:mekasuit_bodyarmor / 16000000 / 397EC47190CFD4D8 / 0F0CC6F5AEC61AD5 / mekanism:mekasuit_helmet / item / 74E6E3BC9639CC06 / mekanism:mekasuit_bodyarmor / item / 56D0979DB72C814F / mekanism:mekasuit_pants / item / 2C18A134E4BA00EE / mekanism:mekasuit_boots / item
+* 为 MekaSuit 供能 |  
+  能量单元可为你的 MekaSuit 盔甲提供升级
+* Meka 工具 | mekanism:meka_tool 
+  Meka 工具是一件先进设备，在任何场合都能派上用场 / mekanism:meka_tool / 16000000 / 107DA0BD545A710D / 522D23D740037E38 / mekanism:mekasuit_helmet / item / 53089BC64CC46250 / mekanism:mekasuit_bodyarmor / item / 06300EEA4A52919D / mekanism:mekasuit_pants / item / 2AD177D71A275855 / mekanism:mekasuit_boots / item
+* - |  
+  结晶器把浆液转化为 5 种晶体矿石 / 获取原料的效率更高，最高可达五倍
+* - |  
+  制造反物质将让你迈入太空征服的时代
+* Flux 复合材料 |  
+  通量粉尘是制作无线电力连接的基础材料 / 这将便于 FE 的使用与分配
+* 助焊剂 |  
+  通量控制器阈值是我们系统的核心，它会控制我们导向它的所有 FE / - 通量插头 - FE ''输入'' 系统通量 / - Flux 点 - FE ''输出'' 系统 Flux，可为机器供电  / - 通量存储 - 能量存储
+* 自动采矿机 |  
+  数字型采矿机是一种自动开采地下金属与矿物的机器——它需要大量能量，但能让原材料开采完全自动化
+
+######## age-pre-industrial
+* 陌生的新世界 |  
+  
+* 木棍与石头…… | itemfilters:tag #tfc:rock_knapping,forge:rods/wooden
+  
+* - |  
+  v4 中的石头塑形与 v3 不同。在 v4 里，不再是对着空气右键塑形，而是找到硬化岩石（在洞穴里或任何岩石悬空的地方都能找到），然后手持松散岩石对着硬化岩石左键点击。
+* 必需品 | itemfilters:tag #forge:head_axe/stone,forge:head_knifes/stone,forge:head_shovel/stone
+  注意，只用生植物纤维就能做出一把刀。 / 2C6F1AE31B278C51 / 斧、刀和铲是过渡到铜制工具的必备物品。 / 779A20CB66FF4E3C / itemfilters:tag / forge:head_axe/stone / 任意 #forge:head_axe/stone / item / 24584F648FD5804C / itemfilters:tag / forge:head_knifes/stone / 任意 #forge:head_knifes/stone / item / 13E9A83E8138F75E / itemfilters:tag / forge:head_shovel/stone / 任意 #forge:head_shovel/stone / item
+* - | tfc_stone_tools:plant_fiber,tfc_stone_tools:green_plant_fabric 
+  你可以从草中获取植物纤维 - 用手采集身边的草 / tfc_stone_tools:plant_fiber / 406DD16407D5F79D / 把生植物纤维或植物纤维放在这里，等待 7 分钟（如果没有露天则时间翻倍）让它晾干。 / 469E61887058311A / tfc_stone_tools:plant_fiber / item / 5C931B68AD4E7A94 / tfc_stone_tools:plant_string / item / 7F07EAF04066020C / tfc_stone_tools:green_plant_fabric / item / 46E58C8664AB4321 / firmalife:drying_mat / item
+* - |  
+  把植物纤维放在垫子上晾干，就能得到植物线， /  也可以把整块绿色纤维块晒干成茅草，从中还能获得干燥植物纤维
+* 你的第一批工具！ | itemfilters:tag #forge:axes/stone,forge:shovels/stone,forge:knifes/stone
+  
+* 狩猎与采集 | itemfilters:tag #forge:head_javelin/stone,forge:head_hoe/stone
+  
+* 一支标枪 | itemfilters:tag #tfc:javelins
+  
+* 农业 | itemfilters:tag #tfc:hoes
+  
+* 钓鱼！ | itemfilters:tag #forge:fishing_rods
+  TFC 的钓鱼方式和原版 Minecraft 不同。在 TFC 中，鱼竿会把鱼从水里拉向你，你必须在那条鱼蹦回水里之前把它杀死
+* - |  
+  探索时请留意野生作物。它们可能只会产出一次作物和种子，但你可以把种子种到农田里，种出新的作物。
+* 原木 | itemfilters:tag #minecraft:logs
+  
+* 狩猎 | itemfilters:tag #tfc:raw_hides
+  
+* 着火啦！ | tfc:firestarter 
+  
+* 光！  | tfc:dead_torch 
+  
+* 支撑梁 | itemfilters:tag #forge:supports
+  在 V4 中劈柴墩已被移除，现在要获得支撑梁，只需把原木放在地上，用斧头剥去树皮，然后再右键点击一次即可。
+* - |  
+  
+* 一个重生点 |  
+  茅草床由 2 个稻草块和 1 张大型兽皮制成：放下两个稻草块，手持大型兽皮右键点击其中任意一个即可。它不能用来睡觉，但右键点击可以设置你的重生点。 / 429F17D806E3DC45 / 你会需要这个的。 / 64509EF0FC5DA58B / tfc:thatch_bed / item / 594C9B8F54F5A595 / tfc:thatch / item / 185ACA40AB0FA01E / tfc:large_raw_hide / item
+* 陷阱捕捉 |  
+  用动物陷阱、一根木棍、一些麻线和少量动物诱饵，你就能做出一个能捕捉小动物的陷阱，抓到的动物可以吃。在你建起农场或畜栏之前，这在游戏前期很不错。
+* 陶器与陶瓷 | tfc:ceramic/unfired_vessel,tfc:ceramic/unfired_pan,tfc:ceramic/unfired_pickaxe_head_mold,tfc:ceramic/unfired_saw_blade_mold,tfc:ceramic/unfired_chisel_head_mold,tfc:ceramic/unfired_propick_head_mold,tfc:ceramic/unfired_large_vessel 
+  在塑形界面中用 5 个黏土球制作未烧制的陶器。在你完成塑形之前，黏土球不会被消耗。 / 4E257ABD6B6470A3 / 4B7C84B4838C8005 / tfc:item_heat / tfc:ceramic/unfired_vessel / item / 089CE3F255422AF0 / tfc:item_heat / tfc:ceramic/unfired_pan / item / 434FBB2E622E62E4 / tfc:item_heat / tfc:ceramic/unfired_pickaxe_head_mold / item / 6438E45161071227 / tfc:item_heat / tfc:ceramic/unfired_saw_blade_mold / item / 120B9BB330D226A2 / tfc:item_heat / tfc:ceramic/unfired_chisel_head_mold / item / 5AB5D706CD3BFC39 / tfc:item_heat / tfc:ceramic/unfired_propick_head_mold / item / 4047754CCBD8F148 / tfc:item_heat / tfc:ceramic/unfired_large_vessel / item
+* 陶瓷 | tfc:ceramic/vessel,tfc:ceramic/chisel_head_mold,tfc:ceramic/pickaxe_head_mold,tfc:ceramic/saw_blade_mold,tfc:ceramic/propick_head_mold 
+  
+* 淘洗 |  
+  要得到你的第一套（像样的）工具，你需要淘洗。淘洗时，手持淘金盘站在水中，右键点击砂砾方块，然后按住右键直到淘金盘再次变空，重复这一过程，直到攒够约 300mb 铜，用来制作最基本的工具。
+* 采集铜 | itemfilters:tag,tfcorewashing:pellet_copper #tfc:powders/copper,forge:nuggets/copper
+  
+* - |  
+  把钳子放在副手，这样拿着高温物品时就不会烫到手。（否则你会立刻把那件物品掉在地上。）
+* 基础铜制工具 | tfc:metal/pickaxe/copper,tfc:metal/saw/copper,tfc:metal/chisel/copper 
+  
+* 木材 | itemfilters:tag #tfc:lumber
+  
+* 木材物品 | itemfilters:tag #tfc:lumber
+  
+* 工具架 | itemfilters:tag #tfc:tool_racks
+  
+* 织布机 | itemfilters:tag #tfc:looms
+  
+* - | itemfilters:tag #forge:workbench
+  
+* 勘矿 | itemfilters:tag #tfc:propicks
+  勘矿工具共有 4 种：勘矿镐、勘矿锤、矿物勘测仪和勘矿钻。四者用途各不相同  / 勘矿镐是一种大范围工具，用于确认矿石是否存在。它会搜索以目标方块为中心的 25x25x25 区域。根据所用材质不同，它可能漏报，但绝不会误报。 / 勘矿锤和勘矿钻类似，但作用范围小得多（7x7x7）。 / 勘矿钻是一种定向勘矿工具，会沿你点击的那个面做直线扫描，探测范围是一个 7x25x7 的区域。 / 矿物勘测仪会搜索以点击方块为中心的 45x45x45 区域，且只能探测非金属矿物（例如硫磺、石墨等）。  
+* 洗矿槽 | itemfilters:tag #tfc:sluices
+  洗矿槽用于处理精炼矿石得到的碎石块和脏粉，也能通过冲洗砂砾额外获取一些金属。（注意：在洗矿槽中冲洗砂砾时，金属的产出率较低）
+* 矿床 |  
+  在湖泊或河流中探索时，你有时会发现金属矿床，其中可能含有铜、金、银或锡石（锡）。用淘金盘或洗矿槽从砂砾中提取金属。
+* 蜜蜂！ |  
+  蜜蜂能产出蜂蜡，这是建造地窖的关键材料。 / 根据蜜蜂所拥有的性状，它们还能有许多其他用途。下面列出了我所知道的所有性状及其作用。 / 作物亲和——用全部 3 种养分给农田施肥，养分的数量取决于该特性的等级。 / 耐性 —— 让蜜蜂能在更极端的温度下工作。（每级特性 2℃） / 产量 - 提高产出蜂蜜的几率。 / 突变体——提高新蜂后特性升级的浮动范围。（每级 1） / 繁殖力——提高蜜蜂的繁殖速度，从而更快地筛选蜜蜂特性。 / 自然恢复 - 让蜜蜂慢慢地在蜂巢周围生成花朵
+* 木桶 | itemfilters:tag #tfc:barrels
+  
+* - |  
+  在 v4 中，小地图和地图被锁定在一件名为“GPS Maps”的物品之后，那是游戏后期的物品。前期请投资一本地图册，它会给你一张手持地图，只要你有足够的地图纸，就能记录你的位置并允许你设置路径点。
+* 矿石及其寻找方法 | itemfilters:tag #tfc:nuggets,tfc:ore_pieces
+  探索时，请留意地表上奇怪的矿物样本。它们只出现在同种矿物的大型地下矿床正上方。等你带着镐子和梦想回来时，会庆幸自己标记了发现这些样本的位置。 / 要把矿石从地下开采到地表，你需要一把镐。别忘了在地下使用支撑梁，以防危险的塌方。要高效处理采到的原材料，你还需要锤子、洗矿槽和手推磨。 / 在 TFC 指南的「世界」章节里，你可以找到关于矿石与矿物以及它们分布位置的信息。
+* 砂砾矿床 | itemfilters:tag #tfc:ore_deposits
+  在湖泊和河流的底部，你能找到含有金属沉积物的砂砾。这些沉积物是获取锡石、铜、金和银更可靠的途径。用洗矿槽或空淘金盘把金属沉积物从砂砾中洗出来。 / 寻找矿床时小心食人鱼！！！它们可迫不及待想把你吃掉。
+* 粉碎矿石 | tfc:handstone 
+  用平滑岩石和原石制作手推磨和手磨石。手推磨是一种手摇磨盘，用于研磨谷物、矿石、岩石和其他材料。 / 要想在不把岩石打碎成小块的情况下获得完整岩石方块，就得把它整块取出来。你必须挖掉一块完整岩石方块六个面上的方块——当它六面都被空气包围时，它就会以物品形式弹出，可以捡起来。
+* 矿物勘测仪 | itemfilters:tag #precisionprospecting:mineral_prospectors
+  
+* 一把锤子 | itemfilters:tag #tfc:hammers
+  
+* - | tfc:rock/raw/basalt,tfc:anvil 
+  第一块「砧」是用一块未加工的火成岩方块做成的，用锤子右键点击它即可。 / 这个砧不太实用，只能把铜锭焊接在一起，好让你做出铜砧——真正的乐趣从那里才开始！
+* 高岭土与高岭石粉 | tfc:kaolin_clay 
+  高岭土会在高海拔处生成，见于高原、古老山脉和高地，以及平均气温约 15°C、降雨量至少 250mm 的火山生物群系。血百合生长在高岭土上，是这种黏土存在的标志。 / 你需要好几组黏土，因为转化为高岭石粉的比例并非 1:1，而且合成一个耐火黏土需要 4 份粉。
+* - |  
+  脉状石墨只能在 y=60 以下的石英岩、片岩、片麻岩和大理岩中找到。 / 用勘矿镐寻找地下的石墨矿床。 / 石墨矿脉中也含有烟煤，如果你发现了一处，就能同时找到大量石墨
+* 坩埚 |  
+  与只用陶罐相比，坩埚能更快地合金化更大批量的金属，而且容许一定的误差。
+* 模具台与浇注槽 |  
+  铸造通道用来连接坩埚和模具台。右键点击通道即可倒出坩埚中的液体。模具台用来放置模具，当液态金属充满模具并冷却后，模具台下方的漏斗可以把固体成品吸出。只要规模够大，你就能一键把一整坩埚的金属倒成锭。（假设你铸造成锭，且坩埚容量为 4000mb，那么需要 40 个铸造台才能倒空一整坩埚。） / 0A852C630596BC7A / 0CBD9DF467660E3A / tfcchannelcasting:mold_table / item / 44A84FCFF3F37463 / tfcchannelcasting:channel / item
+* - | tfc:metal/double_ingot/copper 
+  你可以在石砧上把两块铜锭焊接在一起。你将用这些双锭来制作铜砧。 / 你的 TFC 指南在“砧”条目中说明了如何焊接金属物品。
+* - | tfc:metal/anvil/copper 
+  有了铜砧，你现在可以锻造真正的铜制工具，还能焊接青铜锭了！
+* - |  
+  铜制构件非常有用，可以用来制作你的第一套导航工具，以及建造地窖/温室所必需的气候控制器。
+* 早期导航 | firmaciv:sextant,firmaciv:nav_clock,firmaciv:barometer 
+  你已听说过导航工具有多重要。 / 掌握开采和加工铜的技巧之后，制作基础导航工具来辅助你的旅行。 / 学会读取纬度和经度，你就能随时确定自己的位置。 / 记下或记住你基地的坐标，无论你在哪里，这里都是你的起点；用导航设备读出自己的位置，再借助指南针就能前往目的地
+* - |  
+  你的第一套护甲多半是铜制的，需要在铜砧或更硬的金属砧上打造。 / 熟练的铁匠会尽量用最少的锤击次数打造金属工具或盔甲，这样成品的品质更高。
+* 一顶头盔 | itemfilters:tag #tfc:mob_head_armor
+  
+* 一件胸甲 | itemfilters:tag #tfc:mob_chest_armor
+  
+* 一些护腿 | itemfilters:tag #tfc:mob_leg_armor
+  
+* 一双靴子 | itemfilters:tag #tfc:mob_feet_armor
+  
+* 一面盾牌 | itemfilters:tag #tfc:shields
+  
+* 青铜砧 | itemfilters:tag #tfc:bronze_anvils
+  青铜是更硬的材质，能做出更耐用的物品。
+* - | tfc:metal/anvil/wrought_iron 
+  青铜砧固然不错，但铁砧更好。
+* 合金  | itemfilters:tag #forge:ingots/allbronze
+  铜是许多合金的基础，比如非常有用的青铜。普通青铜、铋铜和黑铜都能制成更好的工具和盔甲，更重要的是还能造出锻铁炉——你需要它才能迈入铁器时代。
+* - |  
+  锻铁炉是一种多方块结构，用煤炭熔炼铁来产出粗铁方坯。这个过程相当复杂，你需要仔细研究锻铁炉，  / 锻铁炉每消耗 1 份木炭粉和 100 mB 铸铁，就能产出 1 个方坯。用木炭搭配铁矿石/铁团矿/铁煤砖填满锻铁炉后，点燃锻铁炉方块，等待 15 小时让它熔炼。锻铁炉熄火后会留下一块方坯方块，其中含有粗铁方坯，用镐反复开采方坯即可获得。
+* - |  
+  
+* - | musketmod:blunderbuss 
+  你的第一把枪！ / 喇叭枪比弓和箭更能保护你，也能更快地杀死野生动物。
+* - |  
+  风箱能把木炭炉的温度提升到 2000℃，足以熔炼铁。 / 在此之前你没有风箱也能应付，但如果你想发展到钢，就确实需要一台风箱。
+* - | tfc:metal/sheet/wrought_iron 
+  高炉是一座大型多方块结构，能带你迈入钢铁时代。和锻铁炉一样，你需要研读 TFC 指南才能建造它。 / ……哇，它可真是吃木炭的大户。
+* - | tfc:metal/ingot/steel 
+  高炉产出的是生铁，生铁可以精炼成钢。TFC 指南会告诉你具体做法。 / 解锁钢铁时代
+* - | tfc:metal/anvil/steel 
+  与铁相比，钢制物品的强度要高得多。
+* - | tfc:metal/anvil/black_steel 
+  一种更好的钢，耐久和各项属性更高
+* - | tfc:metal/anvil/blue_steel 
+  作为两种后期金属之一，蓝钢有着红钢所不具备的优势。
+* - | tfc:metal/anvil/red_steel 
+  作为两种后期金属之一，红钢有着蓝钢所不及的优势。
+* 奶酪制作 | tfc:food/cheese 
+  Firmalife 的奶酪制作需要凝乳酶和奶酪布来制作凝乳，不需要醋奶。凝乳随后可以制成用途广泛的奶酪轮。没有一片奶酪，三明治可就不完整了！
+* 熟石灰 |  
+  用木桶制取熟石灰 - 这是一种液体，除其他用途外，制作皮革也需要它
+* 地窖 |  
+  地窖是一种用于储存食物的多方块建筑。某些食物可以放进食物架或吊架里，保存时间比放在陶罐里更久。奶酪轮可以在地窖里熟成。 / 你的 TFC 指南在 Firmalife 章节中介绍了地窖。
+* 温室 | itemfilters:tag #firmalife:greenhouse
+  温室是一座多方块建筑，能保护你的作物免受恶劣环境的影响。它还有其他好处，比如产出种子、培育新的灌木。更高等级的温室能种植更多种类的植物。 / 你的 TFC 指南在 Firmalife 章节中介绍了温室。
+* - |  
+  把原木堆封起来点燃，就能得到木炭。你可以在 TFC 指南的「高级机制」与「木炭窑」中了解具体做法，或者在 JEI 中按住 Shift 查看木炭。
+* 木炭炉 |  
+  在用岩石或岩石砖围成的坑里（类似坑窑），右键放置 7 份木炭。用起火器点燃木炭堆，它就会变成锻造炉。你可以用装满木炭的锻造炉加热物品，例如未烧制的陶器、装满矿石的陶罐，或是未点燃的火把。
+* 皮革及其获取方法 |  
+  要完成兽皮的加工，把刮制兽皮泡在一桶咸水里半天。这块预处理过的兽皮还需要泡进一桶鞣酸中，鞣酸是把某些特定木材泡在水里制成的。鞣制好的兽皮还需要上油，把它放在装满油的搅拌碗里搅拌即可。 / 4B252FE030F2D670 / 4855CD42E3268EB4 / kubejs:hide_oiled_l / item / 7D0EFBBC377BDBFC / tfc:large_prepared_hide / item / 2C89A3EA23B40AB6 / tfc:large_raw_hide / item
+* - |  
+  就像你之前刮制浸泡过的兽皮那样，把涂过油的兽皮刮制成皮革。之后还需要在缝纫台上把它裁成可用的皮革片。
+* 裁缝套件 | itemfilters:tag,sewingkit:bone_sewing_needle #tfc:shears
+  缝纫台、缝纫针和剪刀可用来把布料和皮革做成衣物、工具和材料。 / 125B9B8606454B34 / 1F735EAFD03F3BD1 / itemfilters:tag / tfc:shears / 任意 #tfc:shears / item / 31A6890BBDFEF7A6 / sewingkit:bone_sewing_needle / item / 4DA177E6F8508AC7 / sewingkit:sewing_station / item
+* 动物油脂 | itemfilters:tag #forge:tallow_source
+  把鲸脂或腐肉放进装满水的锅里煮沸，就能得到油脂。油脂很有用，尤其是作为灯笼的燃料。
+* 正经种田 |  
+  建起农场，为过冬囤积食物。 / 用锄头右键点击泥土方块的表面，把它耕成农田。在农田上可以种下你从筛选和野生作物中收集到的种子。 / 你可以给农田施肥（氮、磷、钾，即 N、P、K）来提高作物产量。
+* 家畜 |  
+  用谷物和种子可以驯化许多动物（羊驼、鸡、牛、驴、鸭、山羊、马、骡、麝牛、猪、鹌鹑、绵羊和牦牛）。驯化动物后，你就能获得蛋、奶、羊毛以及屠宰系统的产物。
+* 动能时代 | create:andesite_alloy 
+  解锁动能时代。
+
+######## age-space
+* 太空 - 最后的边疆 | ad_astra:tier_1_rocket 
+  科技的发展让你能够建造太空火箭，飞向太空获取新的资源与材料。解锁 ???????? 的最终冒险。  / 你将不得不造访太阳系中的各个行星，找到能解锁最终时代的材料之一
+* - |  
+  NASA 工作台可以让你建造太空火箭，以及进入太空所需的所有设备和组件
+* 太空服 | ad_astra:space_helmet,ad_astra:space_suit,ad_astra:space_pants,ad_astra:space_boots 
+  太空服能让你在其他行星的恶劣条件下生存 / 在造出小型栖息地之前，别忘了随身携带氧气补给 / 在这里你必须确保通道安全
+* - |  
+  氧气装载机从周围的绿色树木中获取氧气
+* - |  
+  火箭发射台是火箭升空的地面平台
+* 1 级火箭 | ad_astra:tier_1_rocket 
+  1 型火箭能让你第一次飞向外太空 / 别忘了带上太空补给，那里可没有东西吃。别指望这趟旅程轻松，那些行星上可能住着居民 / 寻找新材料 / 寻找戴斯
+* - | ad_astra:tier_1_rover 
+  自行车能让你在新行星上快速移动，从而找到制作后续太空旅行所需新物品的材料
+* 戴斯材料 |  
+  制造新火箭需要这些材料 / ad_astra:desh_fluid_pipe / 2E9090AEA16B3AEB / 02F84289FD46E018 / ad_astra:desh_ingot / item / 6CD8B10260C01FDE / ad_astra:desh_plate / item
+* - | ad_astra:tier_2_rocket 
+  2 型火箭能让你飞得更远，前往另一颗行星 / 别忘了带上太空补给，那里可没有东西吃 / 寻找新材料 / 寻找紫金
+* 奥斯特鲁姆材料 |  
+  制造新火箭需要这些材料 / ad_astra:ostrum_fluid_pipe / 4EA9D7CB7F844B01 / 18BF5660940C5049 / ad_astra:ostrum_ingot / item / 718D13BA6EB1AAAF / ad_astra:ostrum_plate / item
+* - | ad_astra:tier_3_rocket 
+  3 级火箭能让你飞得更远，抵达另一颗行星 / 别忘了带上太空补给，那里可没有东西吃 / 寻找新材料 / 寻找耐热金属
+* 耐热金属材料 |  
+  制造新火箭需要这些材料 / ad_astra:calorite_panel / 1BC965DFE6A9E6B2 / 545C0B2BEBA1BD9B / ad_astra:calorite_ingot / item / 67A898CF5D6DF2B1 / ad_astra:calorite_plate / item
+* - | ad_astra:tier_4_rocket 
+  4 型火箭能让你飞得更远，前往另一颗行星 / 别忘了带上太空补给，那里可没有东西吃 / 寻找新材料 / 寻找紫金
+* 魔法水晶 |  
+  你已经找到了制作魔法物品所需的全部材料，它能打开通往广阔冒险世界的传送门 / 这并不是冒险的终点，也许一切都才刚刚开始
+* 冰碎片 |  
+  这将是制作魔法物品所需的最后一件材料
+* 火箭燃料 |  
+  如果你已经掌握制作火箭燃料的方法 —— 加入下一个时代 —— 征服太空
+
+######## age-steel
+* 钢铁工程 |  
+  一切都在这里 —— 关于钢和高级机械你需要知道的一切
+* 更多钢 | immersiveengineering:hammer,tfc:metal/ingot/steel 
+  你需要大量钢材，还需要工程师锤来制作工业机器
+* 电力  |  
+  使用动能发电机把水车运动的能量转化为电力 / 你也可以借助 Create 模组发电
+* 粉碎机 | ftbquests:custom_icon 
+  建造粉碎机 - 大型粉碎设备 / 使用工程投影仪 / 阅读工程师手册
+* 气动系统 | patchouli:guide_book 
+  全都在这里——关于压缩技术与高级机械，你想知道的一切
+* 压缩铁 | pneumaticcraft:ingot_iron_compressed,tfc:metal/double_ingot/wrought_iron 
+  你需要压缩铁 / 在受控爆炸中，铁锭会被压制成压缩铁
+* 金属压模机 | ftbquests:custom_icon 
+  建造金属压床 / 使用工程投影仪 / 阅读工程师手册
+* 电弧炉 | ftbquests:custom_icon 
+  建造大型电弧炉 / 阅读工程师手册 / 大型结构需要大量电力，这一点请记在心里
+* 锯木机 | ftbquests:custom_icon 
+  建造大型锯木机 / 用最高效的方式生产木材
+* 矿物取样 |  
+  使用钻机寻找稀有矿脉
+* 精炼厂 | ftbquests:custom_icon 
+  建造大型精炼厂来加工原油
+* 柴油发电机 | ftbquests:custom_icon 
+  建造大型精炼厂来加工原油
+* 挖掘机 | ftbquests:custom_icon 
+  寻找矿脉 - 使用大型挖掘机 / 重要 - 需要 4k FE/t
+* 焦炉 |  
+  建造焦炉 / 把煤炭转化为焦煤
+* 快速产钢 | tfc:metal/ingot/steel 
+  使用电弧炉 / 更快的炼钢速度
+* 压榨机 | ftbquests:custom_icon,immersiveengineering:steel_fence 
+  建造大型压榨机 / 生产种子油和生物燃料组分
+* 混合器 | immersiveengineering:steel_fence 
+  建造混合器 / 你需要他
+* 压力室 |  
+  建造压力室 / 怎么做？——你应该早就知道了，看看 PNC 手册
+* 空气压缩机 |  
+  建造第一台空气压缩机 / 怎么做？——你应该早就知道了，看看 PNC 手册
+* 塑料 |  
+  新技术将让你能够制造塑料材料
+* 硅 |  
+  硅为存储系统开启了新技术
+* 狼刷怪蛋 |  
+  使用加压室 - 取一枚蛋  / 以及腐肉来制造狼刷怪蛋
+* 稀有金属矿脉 |  
+  寻找稀有金属 - 针镍矿、铀矿、铬铁矿、黄铁矿等 /  - 使用大型挖掘机  / 重要 - 需要 4k FE/t
+* 焦煤粉 |  
+  . / 将煤炭转化为焦煤粉
+
+######## important
+* - |  
+  
+* - |  
+  
+* - | untamedwilds:food_bear_raw 
+  获取纯净水或开水以及食物来求生。直接饮用河水或湖水会让你生病，但总比喝咸水好。食物会腐坏，请用盐渍、烟熏或腌制来保存，并存放在陶罐和木桶里。 / 不要急着寻找金属、制作高级工具或过快探索世界。温暖的季节很快就会结束。最终，你可以建造一座特殊的地下地窖，它能长期保存你的物资。你还可以建造温室，全年种植食物。先从蜂房开始，从中获得的蜂蜡正是建造这些结构所需要的。 / 猎杀野生动物获取兽皮，再加工成皮革。驯养动物来获取羊毛，羊毛可以缝制成御寒的冬衣。没有这些材料你就活不下来，而在游戏初期，活下去才是最重要的事。
+* - |  
+  夏天炎热，冬天寒冷。为每个季节准备合适的衣服。要查看当前温度，你需要制作一个温度计。丝绸衣物和水能在夏天让你凉快下来。羊毛衣物和篝火等热源能在冬天为你保暖。 / 你需要进食，所以要在夏天采集补给，因为冬天什么都长不出来。当心龙卷风！它们会摧毁你的家，还可能把你和你的农场动物卷到一场极不情愿的旅途中。 / 游戏初期龙卷风非常危险。尽快把木头、茅草等轻质材料的建筑换成石头或砖块之类的坚固材料。利用天气警报器和天气偏转器来保护自己免受龙卷风破坏。
+* - | lithiccoins:coin/heart/red_steel 
+  想提升生命和耐力，就要吃得多样，并烹饪更复杂的菜肴。每吃满 5、10、30、60、90、120 种新菜式，你就会多获得一颗耐力之心。同时也要注意均衡饮食（营养——位于背包右侧的标签页之一）：你摄入的食材种类（蛋白质、谷物、乳制品、蔬菜）越多，饭菜就越丰盛，你的力量也会越强 / 要查看新的生命系统，请按 Control+H。 / 出门远行或探索危险区域前，务必准备好合适的膏药和绷带。你需要它们来治疗受伤的身体部位——再小的伤或意外都可能致命。
+* - | patchouli:guide_book 
+  你周围的整个世界都基于 TerraFirmaCraft。物品栏中的阿卡什宝典收录了所有书籍，在你等待黎明时会是你最好的伙伴。手持该书右键可挑选你需要的书，选中后再左键可另选一本。想学会如何生存，请阅读 TFC 指南，也可以从物品栏右侧的标签页打开它。 / 有些任务带有图标，可以跳转到特定模组的维基页面。 / 如果你弄丢了阿卡什宝典，可以用一个简单的配方快速拿回来：
+* - |  
+  一切都取决于你。照顾好自己，祝你好运。你可以用 ''FTB 任务书'' 的快捷键回到这个界面，这样就不必一直把书放在物品栏里。你可以在 选项 > 控制 > 按键绑定 中修改这个快捷键。 / 另外请记住，不要过早开始探索这片区域，这个世界对你来说并不安全——第一年请专注于发展、掌握简单的技术，并为过冬备好食物和住所。 / 一步一步跟着任务书走，它会引导你掌握游戏第一阶段所必需的技能
+* - |  
+  你可以驯服许多动物，比如牛、鸭、狗、马……但这个世界里也有把你当作食物的掠食者！！！最好步步留心，远离危险。蜘蛛、蛇和水虎鱼体型虽小，可并不友善。狮子、老虎和熊——更别说河马、黑豹等大型掠食者——都应该不惜一切代价避开。
+* 光影包 |  
+  在「选项 > 视频设置 > 光影包」（位于最上方）里可以找到光影文件夹。如果你的显卡够强，就开启这些选项吧。看看我为你准备了什么，让我们的世界更漂亮！
+
+######## magic_twilight_forrest
+* Twilight Forest | patchouli:guide_book 
+  在另一个世界开始冒险 —— 也许你会找到有用的东西，也许这只是一次伟大的冒险 / 你必须到不同区域寻找特殊材料，并用它们制作出一件能打开传送门的魔法物品。你一定会遇到它，但要在完成以下章节之后 / 石器、机械、钢铁、核能与太空
+* 传送门 |  
+  建造通往另一个维度的传送门——把水倒入 3x3 的方框中并填满花朵——再投入一颗魔法水晶，它可以用其他行星上找到的材料合成
+
+######## storage
+* 陶瓷 | tfc:ceramic/vessel,tfc:ceramic/unfired_vessel 
+  你发现了黏土 - 制作一个陶罐来存放物品吧。TFC 指南中说明了如何把黏土塑形为各种未烧制的形状。 / tfc:ceramic/vessel / 4A97A21CE49425F5 / 43FF063E5F058639 / tfc:item_heat / tfc:ceramic/unfired_vessel / 陶罐 / item / 4ABCEB8C4EB99C9A / tfc:ceramic/vessel / item
+* 大缸 | tfc:ceramic/unfired_large_vessel/orange,tfc:ceramic/unfired_large_vessel 
+  大缸能装更多物品。你可以随身携带一个装满的大缸，甚至能像背包一样背在背上。 / tfc:item_heat / tfc:ceramic/unfired_large_vessel/orange / 50B8838BD9145E3C / 63440B51E2E525BE / tfc:item_heat / tfc:ceramic/unfired_large_vessel / 陶罐 / item / 7CE812537F7596B1 / tfc:ceramic/large_vessel / item
+* 箱子 | itemfilters:tag #forge:chests/wooden
+  如果你已经做好了木板，就可以制作箱子了。动手吧！
+* 精炼存储系统 | tfc:ceramic/unfired_vessel 
+  一旦制得硅，你就能搭建特殊的精炼存储系统，它需要与电源保持持续连接。 / refinedstorage:crafting_monitor / 1CAF3AF81B2F92B9 / refinedstorage:silicon / 0F9EED435FCD5E51 / tfc:item_heat / tfc:ceramic/unfired_vessel / 硅 / item / 53F0F21FA19566D7 / refinedstorage:crafting_grid / item
+* 控制器 |  
+  控制器是我们系统的心脏，整个基础设施的运转都离不开它。 / refinedstorage:controller / 4B0318BD9F6E4DA4 / 76FDD408459EF455 / refinedstorage:controller / item / 6FBE7B0E8F2B2993 / refinedstorage:cable / item
+* - |  
+  用它连接你的木桶、箱子和抽屉，就能访问系统中的所有物品。
+* - |  
+  接好驱动器后，你就可以把所有物品存进里面。能存多少取决于磁盘的容量。记住，系统必须始终保持通电。 / refinedstorage:disk_drive / 7C5EB4766FB2E5BA / 0B1F8F58B4B35E8E / refinedstorage:disk_drive / item / 235EAD7800739AD7 / refinedstorage:1k_storage_disk / item
+* - |  
+  为你的整个物品栏添加无线访问。
+* - |  
+  
+* - |  
+  
+* - |  
+  
+
+######## survive
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* 冬天很冷 |  
+  天冷时，穿上保暖的衣物或靠近热源。建一座房子吧，因为室内更暖和。  / 当前温度由指示栏右侧的人物图标显示。如果是蓝色，说明你的身体正在降温。
+* 毛皮布 | cold_sweat:goat_fur_chestplate,cold_sweat:goat_fur_helmet,cold_sweat:goat_fur_leggings,cold_sweat:goat_fur_boots 
+  这些适合寒冷日子的好衣物能让你保持温暖，安然过冬 / 这件衣物能保暖 —— 但请记住，使用裁缝台可以把它与任何其他衣物（例如盔甲）结合，从而附加它的属性
+* 热源 |  
+  篝火是很好的热源，待在旁边就能取暖。
+* - |  
+  岩浆是强大的热源，到了冬天可能少不了它。
+* 夏天很暖和 |  
+  夏天很热，但要小心——机器和热源同样会让你变暖。 / 如果你的身体过热，信息栏右侧的人物图标会变成黄色甚至红色
+* 降温部件 |  
+  这些物品能降温 —— 在缝纫台上把它们添加到你的任何一件衣服上，就会为那件衣服增加降温效果 / tfc:silk_cloth / 51FC9CB225C9C78B / 6FD261D3C8263C81 / minecraft:clay_ball / item / 1B3BB767CC8801BA / textile:linen_cloth / item / 3D18BD3DAD443752 / tfc:silk_cloth / item / 568DE672DCD8B95A / checkmark
+* - |  
+  水不仅浑浊，还能在你体温过高时为你降温。
+* 疣猪兽布料 | cold_sweat:hoglin_chestplate,cold_sweat:hoglin_helmet,cold_sweat:hoglin_leggings,cold_sweat:hoglin_boots 
+  这套衣服很适合炎热的天气、酷暑或下界之旅 / 这件衣服能降温——但记住，用裁缝台可以把它和其他任何衣物组合，从而附加它的属性，比如加到盔甲上
+* 冰 |  
+  太热的时候，冰总能让你凉快下来。
+* 愤怒的动物 |  
+  许多动物对你并不友善。避开大型掠食者！游戏前期，如果你不想有意外访客，就拆掉周围的捕鸟蛛巢穴。河里有小巧却致命的水虎鱼，海里有鲨鱼。一开始会很难，但你能做到的！
+* 水 | minecraft:potion 
+  在湖泊或河流附近定居是个好主意：你不仅需要饮用水，这里还能轻松获得鱼类食物，而且河流的水流还能为最初的机器提供动力。 / 一定要净化或煮沸，因为喝脏水会导致疾病。 / 要从水源喝水，请选中一个空的快捷栏槽位，然后对着水右键。
+* 水源 |  
+  记住，水要净化后才能饮用。在锅或大桶中用草或木炭粉净化水。 / 不会产生不良副作用的可用饮用水 —— 开水、草药水、纯净水、矿泉水、牛奶
+* 输水渠 |  
+  水渠是为农田供水，并把水引到缺水之处的好办法。 / tfc:rock/aqueduct/granite / 4448FC9B28E30815 / 0C533BEDC941E405 / checkmark / 4C6004C7E83B8936 / tfc:rock/aqueduct/marble / item
+* 文明污染 | mekanism:hazmat_mask,adpother:iron_respirator,adpother:iron_vacuum_bag,itemfilters:tag,adpother:iron_vacuum_tube #minecraft:leaves
+  科技发展会污染环境。请确保这不会发生在你的世界里。 / 机器、熔炉、火把等都会产生碳、硫磺和粉尘污染物。 / 务必用烟囱通风过滤器来减轻这些颗粒的影响。否则你的世界会被污染，危害生命。 / 有些织物可以过滤掉危险颗粒——羊毛过滤硫，树叶过滤碳，纸或布过滤粉尘。 / 情况严重时，用吸尘器清除灰尘、碳和硫磺。 / 在污染的空气中呼吸，你需要佩戴呼吸器。
+* 气候 |  
+  在 TerraFirmaCraft 中，气候和时间都是非常重要的因素。 / 你的生存将受到季节、降雨量、温度以及周围地形生物群系的影响。 / 你也可以在物品栏右侧的气候标签页中找到相关信息 / 你能找到的果树和野生作物种类由气候和天气条件决定。同样，未经保护的作物在恶劣环境中也无法生长。
+* 保暖部件 |  
+  这些物品具有保暖效果 - 在缝纫台上把它们添加到任何衣物上，就能为那件衣物增加保暖性
+* 通用布料 | minecraft:leather_chestplate,textile:burlap_shirt 
+  有些衣物在寒冷和炎热的日子里都派得上用场 / 你可以往这些衣服上添加保暖或降温材料，来强化你想要的效果 / 重要 / 添加到套装上的材料随时可以用剪刀和裁缝台取下
+* - | itemfilters:tag #tfc:shears
+  这张桌子可以让你给每件衣物添加材料，为身体保暖（毛皮、羊毛）或降温（黏土、丝绸） / 把你的衣物以及降温或保暖部件放进桌子里 / 如果想从衣物上取下降温或保暖部件，用剪刀就行。 / 如果你想了解环境温度，可以制作一支温度计，放进物品栏或 Curios 饰品栏中
+* 原始布料 | textile:raw_shirt,textile:raw_hat,textile:raw_pants,tfc_stone_tools:plant_helmet,tfc_stone_tools:plant_chestplate,tfc_stone_tools:plant_leggings,tfc_stone_tools:plant_boots 
+  你最早能制作的衣物是用稻草和兽皮或植物制成的衣物 / 你可以往这些衣服上添加保暖或降温材料，来强化你想要的效果 / 重要 / 添加到套装上的材料随时可以用剪刀和裁缝台取下
+* 你的心智 |  
+  你的心智就是你的力量 —— 记住，在黑暗中待太久或失眠会让你变得虚弱，而长期忽视心智会导致精神疾病 / 在信息栏左侧有一个大脑图标：怪物、缺少食物、黑暗等所有负面因素都会削弱你的精神，而阳光、喂养动物、解渴与饱腹等正面因素则会提升你的健康状态。
+* 水下呼吸 | thinair:respirator,thinair:air_bladder,create:copper_diving_helmet,create:copper_backtank 
+  在这个世界里，你会遇到因空气质量和含氧量而不利的状况。 / 在没有呼吸器和氧气补给的情况下身处高山，你将很难生存，就像在深入地下的矿井中探索一样。 / 当你靠缺氧的火堆或营火太近时，也会发生中毒。 / 下界或末地完全没有氧气，没有必要的装备，这次探险注定失败。会飞的道具能让你轻松些：合适的衣物、面罩、氧气罐和特殊的灵魂灯。
+* 下界与末地 | cold_sweat:soul_sprout,cold_sweat:soulspring_lamp 
+  下界和末地一向危险，而现在，由于恶劣的环境，它们会让你付出更多努力。 / 除了缺氧之外——你，作为玩家，还会被高温折磨：大片熔岩湖、炽热的岩浆和玄武岩都需要你为身体降温 / 有一些特殊的灯和果实，一定会在这段旅程中帮到你。调整衣物尽可能降温，并带上灵魂灯和足量的灵魂幼苗来保护自己
+* 导航 | firmaciv:sextant,firmaciv:nav_clock,firmaciv:barometer 
+  你可以手持 &6六分仪&r 并右键点击来确定你的 &6纬度&r。记住，纬度以赤道以北或以南的度数计算，也就是说赤道为 0 度，极地为北纬或南纬 90 度。 / 手持 &6导航者怀表&r 就能确定你的 &6经度&r。记住，经度以东西度数计量，本初子午线为 0 度，360 度处气候相同。 / 气压计，握在手中即可测出你的海拔。记住，海拔是相对海平面基准面测量的高度。
+* 第一张地图 | map_atlases:atlas 
+  第一张地图是地图册 —— 用书和导航工具来制作它。 / map_atlases:atlas / 3BD7DD2BF896BA29 / 导航工具可用于合成地图册 / 74EE38D9DF626C48 / minecraft:map / item / 56DF57A7B2C08AA4 / map_atlases:atlas / item
+* FTB 地图与小地图 |  
+  制作 GPS 地图物品 —— 解锁 FTB 地图和高级小地图
+
+######## tips
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* - |  
+  
+* 矿石一览表 | tfc:metal/pickaxe/copper 
+  这张表能帮你快速找到特定岩层中的金属 / 点击放大镜中的链接查看表格
+* 砧助手 | tfc:metal/anvil/wrought_iron 
+  在砧上锻造可不容易 / 给你个小提示 / 该链接包含一些物品的图解，以及砧上最常用的锻造组合 / 点击放大镜中的链接
+
+######## transport
+* - |  
+  
+* - |  
+  
+* - |  
+  你的物品栏变小了。为了提升物品搬运能力，你需要用腰包升级、搭建装置，或使用其他技巧。普通 GUI 中有合成、日历、营养、气候和 TFC 指南等标签页 / 你可以用一个特殊的口袋物品解锁物品栏中的一个槽位
+* 动物 |  
+  骡子、马、驴和狗都是你的朋友。驯服它们之后，它们就能作为你和你物品的运输方式。
+* 船只 |  
+  船可以用来在河流和海洋中运输，载货量很大。 / 把它们拆解之后，你只能得到制作它们所用的材料 / 因此，请把大型船只建在你打算长途旅行的地方。记住，只有皮划艇可以随身携带。 / 大型船只具有运输优势：你可以在上面放好几个箱子，运输动物、大量材料和物品，甚至给船装上大炮。 / 不过它们需要更多时间建造，但这总是值得的
+* 矿车 | itemfilters:tag #tfcastikorcarts:supply_cart,tfcastikorcarts:animal_cart
+  一旦驯服了役用牲畜，你就可以用货车运送更多物品，跑更远的路。 / 把马牵到货车旁，按 ] 键套上挽具。
+* 铁轨 |  
+  铁轨是最快的地面运输方式。它需要大量材料，但它带来的运输选择非常值得。 / minecraft:rail / 5C7A721FD94CE50F / 43B38F6A0E6EC709 / 先读这个 / checkmark / 173091E1184FBB79 / create:track / item
+* - |  
+  用动物做出皮革之后，你可以把多余的装具存放在工具腰带里。这是一条非常有用的腰带。 / toolbelt:belt / 31234FC686AB4822 / 4D55D2EB19746340 / toolbelt:belt / item / 43ADF7AC8B774332 / toolbelt:pouch / item
+* 背包 | sns:frame_pack,sns:leather_sack,sns:burlap_sack,sns:ore_sack 
+  把动物制成皮革后，你就可以制作麻布袋或背包了。  / 它会让生存和生活轻松许多。
+* 第一艘船 |  
+  独木舟、皮划艇或木筏都是容易上手的入门小船。在 JEI 中对着独木舟图标按 Shift 即可查看合成方式。  / 你可以随身携带皮划艇或木筏，但没法用它运输东西；独木舟更大，还能额外放一个箱子。不过一旦损坏，它就会被毁掉。 / 还要记住，你可以用绳索把船连起来，组成一列船队。 / 或者点击放大镜
+* 陶罐或背包 |  
+  大缸可以在装满物品的情况下背在背上。它很重，空间也有限，但总比没有强。
+* - | vc_gliders:paraglider_wood 
+  你可以用滑翔翼从高处跨越很长的距离。它是更安全的降落方式，也是有趣的移动方式。注意不要一直飞，也不要飞太久。
+* - |  
+  吃饱喝足、腿脚有力，你就能飞起来，但只能在钢铁时代。用你的下马键下来。
+* - |  
+  比固定旋翼机更慢，但更小、用途更广。
+* - |  
+  一架大型燃油飞机，可在各个定居点之间快速往返。
+* - |  
+  一件可爱的小玩意儿，不需要跑道。
+* 热气球 | itemfilters:tag #forge:shears,forge:sand,breezy:ignition_sources
+  你可以飞了！ / 热气球能让你长途旅行，并从空中观察四周，建造简单，很早就能用上。 / 热气球靠暖气流移动，不受机械控制，升到合适高度后气流会改变方向 / 操控热气球需要 ''打火石'' 或 ''引火器'' 作为火源，还需要准备 ''沙子'' 和 ''剪刀''。想上升时，用火源对着气球；想下降时，往篮子里加沙子。沙子太多时，用剪刀把它剪掉
+* 望远镜 |  
+  望远镜是非常实用的仪器，可以用来观察远处的地形与景物，尤其是在海上或空中航行时。
+* 汽车 | ad_astra:tier_1_rover 
+  汽车是靠生物柴油驱动的实用载具。 / 它们的建造很费工，但后期能为快速运输材料和前往其他生物群系的地面旅行提供极大便利。

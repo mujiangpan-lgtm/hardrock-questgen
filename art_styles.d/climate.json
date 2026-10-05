@@ -1,0 +1,567 @@
+{
+ "palette": {
+  "panel_fill": [
+   22,
+   32,
+   44
+  ],
+  "accent": [
+   176,
+   226,
+   240
+  ],
+  "glow": [
+   130,
+   200,
+   255
+  ],
+  "text_key_hex": "#B8E6F4"
+ },
+ "background": {
+  "tiles": [
+   {
+    "asset": "minecraft:block/packed_ice",
+    "weight": 6
+   },
+   {
+    "asset": "minecraft:block/blue_ice",
+    "weight": 2
+   }
+  ],
+  "target_brightness": 0.095,
+  "saturation": 0.55,
+  "tint": [
+   196,
+   222,
+   255
+  ],
+  "contrast_sd": 0.012,
+  "overlay": {
+   "type": "speckle",
+   "density": 0.12,
+   "color": [
+    210,
+    236,
+    255
+   ]
+  },
+  "tile_size": 12
+ },
+ "banner": {
+  "ribbon_asset": "tfc:block/sea_ice",
+  "icons_left": [
+   "cold_sweat:item/thermometer/thermometer",
+   "firmaciv:item/sextant",
+   "tfc:item/wool_cloth"
+  ],
+  "icons_right": [
+   "cold_sweat:item/goat_fur_chestplate",
+   "cold_sweat:item/waterskin",
+   "minecraft:item/snowball"
+  ],
+  "motif": "starfield",
+  "motif_color": [
+   214,
+   238,
+   255
+  ]
+ },
+ "decor": [],
+ "shapes": {
+  "normal": "circle",
+  "milestone": "octagon",
+  "optional": "diamond",
+  "gate": "gear"
+ },
+ "scene": {
+  "texel": 3,
+  "shadow": 0.45,
+  "light": {
+   "dir": [
+    0,
+    -1
+   ],
+   "color": [
+    180,
+    205,
+    255
+   ],
+   "tint": 0.2,
+   "rim": 0.75,
+   "shade": 0.35
+  },
+  "lights": [
+   {
+    "x": 0.773,
+    "y": 0.803,
+    "radius": 0.16,
+    "strength": 1.0,
+    "color": [
+     255,
+     160,
+     80
+    ]
+   }
+  ],
+  "ambient": 0.8,
+  "layers": [
+   {
+    "motif": "sky_band",
+    "x": 0.5,
+    "y": 0.17,
+    "w": 74,
+    "h": 18,
+    "color": [
+     34,
+     70,
+     136
+    ],
+    "alpha": 0.42
+   },
+   {
+    "motif": "aurora",
+    "x": 0.47,
+    "y": 0.27,
+    "w": 68,
+    "h": 20,
+    "color": [
+     80,
+     235,
+     180
+    ],
+    "alpha": 0.72
+   },
+   {
+    "motif": "aurora",
+    "x": 0.72,
+    "y": 0.28,
+    "w": 34,
+    "h": 15,
+    "color": [
+     120,
+     250,
+     210
+    ],
+    "alpha": 0.4
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.19,
+    "y": 0.2,
+    "w": 16,
+    "h": 14,
+    "color": [
+     160,
+     196,
+     255
+    ],
+    "alpha": 0.3
+   },
+   {
+    "motif": "moon",
+    "x": 0.19,
+    "y": 0.2,
+    "w": 3.4,
+    "color": [
+     236,
+     240,
+     250
+    ],
+    "alpha": 1.0,
+    "pixelate": 3
+   },
+   {
+    "motif": "snowy_range",
+    "x": 0.4,
+    "y": 0.25,
+    "w": 62,
+    "h": 14,
+    "color": [
+     70,
+     96,
+     134
+    ],
+    "alpha": 0.95,
+    "lit": true,
+    "rim": 0.15,
+    "haze": 0.3,
+    "haze_color": [
+     30,
+     48,
+     80
+    ],
+    "pixelate": 3
+   },
+   {
+    "motif": "snowy_range",
+    "x": 0.58,
+    "y": 0.295,
+    "w": 86,
+    "h": 11,
+    "color": [
+     50,
+     70,
+     102
+    ],
+    "alpha": 0.97,
+    "lit": true,
+    "rim": 0.15,
+    "haze": 0.1,
+    "haze_color": [
+     30,
+     48,
+     80
+    ],
+    "pixelate": 3
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.5,
+    "y": 0.48,
+    "w": 50,
+    "h": 30,
+    "color": [
+     110,
+     170,
+     255
+    ],
+    "alpha": 0.14
+   },
+   {
+    "motif": "mountain_range",
+    "x": 0.5,
+    "y": 0.73,
+    "w": 76,
+    "h": 10,
+    "color": [
+     28,
+     42,
+     62
+    ],
+    "alpha": 0.85,
+    "haze": 0.15,
+    "haze_color": [
+     30,
+     48,
+     80
+    ]
+   },
+   {
+    "motif": "soft_glow",
+    "x": 0.5,
+    "y": 0.745,
+    "w": 46,
+    "h": 10,
+    "color": [
+     70,
+     150,
+     150
+    ],
+    "alpha": 0.2
+   },
+   {
+    "motif": "tree_line",
+    "x": 0.5,
+    "y": 0.795,
+    "w": 76,
+    "h": 8,
+    "color": [
+     22,
+     40,
+     54
+    ],
+    "alpha": 0.92,
+    "pixelate": 3
+   },
+   {
+    "motif": "nebula_glow",
+    "x": 0.83,
+    "y": 0.48,
+    "w": 7,
+    "h": 10,
+    "color": [
+     150,
+     164,
+     190
+    ],
+    "alpha": 0.55
+   },
+   {
+    "motif": "tree",
+    "x": 0.905,
+    "y": 0.674,
+    "w": 5.5,
+    "h": 15,
+    "color": [
+     214,
+     226,
+     242
+    ],
+    "alpha": 1.0,
+    "lit": false,
+    "pixelate": 3,
+    "rim": 0
+   },
+   {
+    "motif": "tree",
+    "x": 0.905,
+    "y": 0.679,
+    "w": 5.5,
+    "h": 15,
+    "color": [
+     44,
+     82,
+     82
+    ],
+    "alpha": 1.0,
+    "lit": true,
+    "pixelate": 3,
+    "rim": 0
+   },
+   {
+    "motif": "tree",
+    "x": 0.405,
+    "y": 0.775,
+    "w": 2.6,
+    "h": 6,
+    "color": [
+     40,
+     76,
+     78
+    ],
+    "alpha": 1.0,
+    "lit": true,
+    "pixelate": 3,
+    "rim": 0.35,
+    "haze": 0.45
+   },
+   {
+    "motif": "tree",
+    "x": 0.432,
+    "y": 0.791,
+    "w": 2.0,
+    "h": 4.5,
+    "color": [
+     40,
+     76,
+     78
+    ],
+    "alpha": 1.0,
+    "lit": true,
+    "pixelate": 3,
+    "rim": 0.35,
+    "haze": 0.5
+   },
+   {
+    "motif": "tree",
+    "x": 0.612,
+    "y": 0.781,
+    "w": 2.4,
+    "h": 5.5,
+    "color": [
+     40,
+     76,
+     78
+    ],
+    "alpha": 1.0,
+    "lit": true,
+    "pixelate": 3,
+    "rim": 0.35,
+    "haze": 0.45
+   },
+   {
+    "motif": "blocks",
+    "x": 0.5,
+    "y": 0.751,
+    "w": 64,
+    "h": 17,
+    "rows": [
+     "                        R C     ",
+     "                       RRRC     ",
+     "                      RRRRR     ",
+     "                     RRRRRRR    ",
+     "                      LWPTL     ",
+     "    SSSS              LPPBL  SSS",
+     "GGGGSSSSGGGGGGIIIIIGGGGGGGGGGSSS",
+     "GGGGGGGGGGGGGGJJJJJGGGGGGGGGGGGG"
+    ],
+    "legend": {
+     "G": "minecraft:block/snow",
+     "S": {
+      "front": "tfc:block/rock/raw/andesite",
+      "top": "minecraft:block/snow",
+      "side": "tfc:block/rock/raw/andesite"
+     },
+     "I": "minecraft:block/ice",
+     "J": "minecraft:block/blue_ice",
+     "R": {
+      "front": "minecraft:block/spruce_planks",
+      "top": "minecraft:block/snow",
+      "side": "minecraft:block/spruce_planks"
+     },
+     "L": {
+      "front": "minecraft:block/spruce_log",
+      "top": "minecraft:block/spruce_log_top",
+      "side": "minecraft:block/spruce_log"
+     },
+     "P": "minecraft:block/spruce_planks",
+     "W": {
+      "front": "minecraft:block/redstone_lamp_on",
+      "top": "minecraft:block/spruce_planks",
+      "side": "minecraft:block/spruce_planks"
+     },
+     "T": {
+      "front": "minecraft:block/spruce_door_top",
+      "top": "minecraft:block/spruce_planks",
+      "side": "minecraft:block/spruce_planks"
+     },
+     "B": {
+      "front": "minecraft:block/spruce_door_bottom",
+      "top": "minecraft:block/spruce_planks",
+      "side": "minecraft:block/spruce_planks"
+     },
+     "C": {
+      "front": "minecraft:block/cobblestone",
+      "top": "minecraft:block/cobblestone",
+      "side": "minecraft:block/cobblestone"
+     }
+    },
+    "depth": 0.5,
+    "shadow": 0,
+    "shade": 0.15,
+    "tint": 0.28
+   },
+   {
+    "motif": "tree",
+    "x": 0.16,
+    "y": 0.613,
+    "w": 7,
+    "h": 17,
+    "color": [
+     214,
+     226,
+     242
+    ],
+    "alpha": 1.0,
+    "lit": false,
+    "pixelate": 3,
+    "rim": 0
+   },
+   {
+    "motif": "tree",
+    "x": 0.16,
+    "y": 0.618,
+    "w": 7,
+    "h": 17,
+    "color": [
+     46,
+     86,
+     84
+    ],
+    "alpha": 1.0,
+    "lit": true,
+    "pixelate": 3,
+    "rim": 0
+   },
+   {
+    "motif": "tree",
+    "x": 0.232,
+    "y": 0.665,
+    "w": 5,
+    "h": 12,
+    "color": [
+     214,
+     226,
+     242
+    ],
+    "alpha": 1.0,
+    "lit": false,
+    "pixelate": 3,
+    "rim": 0
+   },
+   {
+    "motif": "tree",
+    "x": 0.232,
+    "y": 0.67,
+    "w": 5,
+    "h": 12,
+    "color": [
+     42,
+     80,
+     80
+    ],
+    "alpha": 1.0,
+    "lit": true,
+    "pixelate": 3,
+    "rim": 0
+   },
+   {
+    "motif": "tree",
+    "x": 0.3,
+    "y": 0.746,
+    "w": 3.6,
+    "h": 8,
+    "color": [
+     214,
+     226,
+     242
+    ],
+    "alpha": 1.0,
+    "lit": false,
+    "pixelate": 3,
+    "rim": 0
+   },
+   {
+    "motif": "tree",
+    "x": 0.3,
+    "y": 0.752,
+    "w": 3.6,
+    "h": 8,
+    "color": [
+     40,
+     76,
+     78
+    ],
+    "alpha": 1.0,
+    "lit": true,
+    "pixelate": 3,
+    "rim": 0
+   },
+   {
+    "motif": "sprite",
+    "asset": "cold_sweat:item/goat_fur_chestplate",
+    "x": 0.758,
+    "y": 0.782,
+    "w": 2,
+    "alpha": 1.0,
+    "shadow": 0,
+    "drop": 0.55
+   },
+   {
+    "motif": "sprite",
+    "asset": "cold_sweat:item/thermometer/thermometer_frozen_2",
+    "x": 0.695,
+    "y": 0.782,
+    "w": 2,
+    "alpha": 1.0,
+    "shadow": 0,
+    "drop": 0.5
+   },
+   {
+    "motif": "sprite",
+    "asset": "minecraft:item/lantern",
+    "x": 0.852,
+    "y": 0.782,
+    "w": 2,
+    "alpha": 1.0,
+    "shadow": 0,
+    "glow": [
+     255,
+     170,
+     90
+    ],
+    "unlit": true
+   }
+  ]
+ }
+}

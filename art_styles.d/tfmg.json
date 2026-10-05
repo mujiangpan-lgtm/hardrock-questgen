@@ -1,0 +1,23 @@
+{
+ "palette": {"panel_fill": [32, 34, 22], "accent": [200, 208, 66], "glow": [184, 198, 58], "text_key_hex": "#DDE26E"},
+ "background": {"tiles": [{"asset": "tfmg:block/factory_floor", "weight": 1}], "target_brightness": 0.095, "saturation": 0.55, "tint": [204, 216, 170], "contrast_sd": 0.01, "overlay": {"type": "nebula", "density": 0.18, "color": [120, 140, 70]}, "tile_size": 12},
+ "banner": {"ribbon_asset": "tfmg:block/asphalt", "icons_left": ["tfmg:item/steel_mechanism", "tfmg:item/heavy_plate", "tfmg:item/coal_coke"], "icons_right": ["tfmg:item/crude_oil_bucket", "tfmg:item/spark_plug", "tfmg:item/circuit_board"], "motif": "nebula", "motif_color": [170, 180, 66]},
+ "decor": [],
+ "shapes": {"normal": "square", "milestone": "hexagon", "optional": "diamond", "gate": "gear"},
+ "scene": {"layers": [
+  {"motif": "sky_band", "x": 0.5, "y": 0.16, "w": 72, "h": 14, "color": [112, 128, 46], "alpha": 0.42},
+  {"motif": "nebula_glow", "x": 0.28, "y": 0.2, "w": 32, "h": 12, "color": [110, 118, 74], "alpha": 0.4},
+  {"motif": "strata_band", "x": 0.5, "y": 0.805, "w": 72, "h": 7, "color": [78, 82, 56], "alpha": 0.42},
+  {"motif": "mountain_range", "x": 0.5, "y": 0.255, "w": 70, "h": 8, "color": [40, 44, 32], "alpha": 0.95},
+  {"motif": "smokestack", "x": 0.8, "y": 0.36, "w": 14, "h": 18, "color": [50, 52, 44], "alpha": 1.0},
+  {"motif": "soft_glow", "x": 0.5, "y": 0.5, "w": 46, "h": 32, "color": [150, 190, 70], "alpha": 0.12},
+  {"motif": "smokestack", "x": 0.22, "y": 0.52, "w": 18, "h": 30, "color": [80, 72, 64], "alpha": 0.97},
+  {"motif": "soft_glow", "x": 0.22, "y": 0.78, "w": 18, "h": 10, "color": [255, 140, 60], "alpha": 0.22},
+  {"motif": "soft_glow", "x": 0.3, "y": 0.39, "w": 9, "h": 9, "color": [255, 150, 60], "alpha": 0.4},
+  {"motif": "shaft", "x": 0.3, "y": 0.63, "w": 22, "h": 1.0, "color": [90, 92, 88], "alpha": 0.95, "rot": 90},
+  {"motif": "sprite", "asset": "minecraft:block/fire_0", "x": 0.3, "y": 0.395, "w": 3.34, "alpha": 1.0, "glow": [255, 150, 60]},
+  {"motif": "pipes", "x": 0.3, "y": 0.845, "w": 30, "h": 7, "color": [92, 98, 88], "alpha": 0.95},
+  {"motif": "pumpjack", "x": 0.725, "y": 0.7, "w": 18, "h": 12, "color": [84, 86, 78], "alpha": 0.97},
+  {"motif": "sprite_row", "assets": ["tfmg:item/crude_oil_bucket", "tfmg:item/diesel_bucket", "tfmg:item/gasoline_bucket"], "x": 0.47, "y": 0.775, "w": 13, "h": 3.4, "alpha": 1.0}
+ ]}
+}

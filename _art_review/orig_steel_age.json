@@ -1,0 +1,33 @@
+{
+ "palette": {"panel_fill": [28, 30, 36], "accent": [176, 190, 214], "glow": [140, 166, 226], "text_key_hex": "#CAD6EE"},
+ "background": {"tiles": [{"asset": "tfc:block/rock/raw/slate", "weight": 5}, {"asset": "tfc:block/rock/raw/phyllite", "weight": 2}], "target_brightness": 0.095, "saturation": 0.6, "tint": [196, 204, 226], "contrast_sd": 0.012, "overlay": {"type": "speckle", "density": 0.1, "color": [200, 210, 232]}, "tile_size": 12},
+ "banner": {"ribbon_asset": "tfc:block/metal/smooth/steel", "icons_left": ["tfc:item/metal/ingot/pig_iron", "tfc:item/metal/ingot/steel", "tfc:item/metal/tuyere/steel"], "icons_right": ["tfc:item/metal/ingot/black_steel", "tfc:item/metal/ingot/red_steel", "tfc:item/metal/ingot/blue_steel"], "motif": "mountains", "motif_color": [150, 162, 190]},
+ "decor": [],
+ "shapes": {"normal": "square", "milestone": "octagon", "optional": "diamond", "gate": "gear"},
+ "scene": {"layers": [
+  {"motif": "sky_band", "x": 0.5, "y": 0.16, "w": 72, "h": 12, "color": [70, 76, 96], "alpha": 0.42},
+  {"motif": "mountain_range", "x": 0.56, "y": 0.205, "w": 76, "h": 11, "color": [78, 80, 92], "alpha": 0.9},
+  {"motif": "mountain_range", "x": 0.42, "y": 0.255, "w": 66, "h": 7, "color": [30, 32, 40], "alpha": 0.88},
+  {"motif": "soft_glow", "x": 0.5, "y": 0.5, "w": 46, "h": 30, "color": [130, 146, 190], "alpha": 0.14},
+  {"motif": "nebula_glow", "x": 0.215, "y": 0.34, "w": 12, "h": 18, "color": [104, 108, 124], "alpha": 0.42},
+  {"motif": "soft_glow", "x": 0.2, "y": 0.74, "w": 20, "h": 22, "color": [255, 120, 50], "alpha": 0.36},
+  {"motif": "soft_glow", "x": 0.2, "y": 0.47, "w": 8, "h": 8, "color": [255, 160, 70], "alpha": 0.45},
+  {"motif": "strata_band", "x": 0.5, "y": 0.875, "w": 72, "h": 8, "color": [78, 82, 96], "alpha": 0.42},
+  {"motif": "sprite", "asset": "tfc:block/fire_bricks", "x": 0.2, "y": 0.527, "w": 4.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "tfc:block/fire_bricks", "x": 0.2, "y": 0.618, "w": 4.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "tfc:block/fire_bricks", "x": 0.2, "y": 0.709, "w": 4.67, "alpha": 1.0},
+  {"motif": "sprite", "asset": "tfc:block/devices/blast_furnace/side_lit", "x": 0.2, "y": 0.8, "w": 4.67, "alpha": 1.0, "glow": [255, 130, 50]},
+  {"motif": "soft_glow", "x": 0.2, "y": 0.44, "w": 11, "h": 16, "color": [8, 10, 16], "alpha": 0.4},
+  {"motif": "soft_glow", "x": 0.2, "y": 0.74, "w": 8, "h": 8, "color": [255, 110, 40], "alpha": 0.25},
+  {"motif": "sprite", "asset": "tfc:item/metal/tuyere/steel", "x": 0.262, "y": 0.775, "w": 4.0, "alpha": 1.0},
+  {"motif": "embers", "x": 0.2, "y": 0.45, "w": 5, "h": 5, "color": [255, 160, 70], "alpha": 0.8},
+  {"motif": "soft_glow", "x": 0.79, "y": 0.74, "w": 13, "h": 12, "color": [110, 140, 255], "alpha": 0.28},
+  {"motif": "sprite", "asset": "tfc:item/metal/sword/blue_steel", "x": 0.745, "y": 0.755, "w": 6.0, "alpha": 1.0, "glow": [90, 130, 255], "rot": 90},
+  {"motif": "sprite", "asset": "tfc:item/metal/sword/red_steel", "x": 0.83, "y": 0.755, "w": 6.0, "alpha": 1.0, "rot": 180, "glow": [255, 70, 60]},
+  {"motif": "sprite_row", "assets": ["tfc:item/metal/ingot/pig_iron", "tfc:item/metal/ingot/steel", "tfc:item/metal/ingot/black_steel", "tfc:item/metal/ingot/blue_steel", "tfc:item/metal/ingot/red_steel"], "x": 0.47, "y": 0.8, "w": 18, "h": 3.34, "alpha": 1.0},
+  {"motif": "plank_shelf", "x": 0.8, "y": 0.548, "w": 11, "h": 1.0, "color": [92, 96, 108], "alpha": 1.0},
+  {"motif": "sprite", "asset": "tfc:item/metal/helmet/steel", "x": 0.75, "y": 0.512, "w": 3.34, "alpha": 1.0},
+  {"motif": "sprite", "asset": "tfc:item/metal/helmet/black_steel", "x": 0.8, "y": 0.512, "w": 3.34, "alpha": 1.0},
+  {"motif": "sprite", "asset": "tfc:item/metal/helmet/blue_steel", "x": 0.85, "y": 0.508, "w": 3.34, "alpha": 1.0}
+ ]}
+}

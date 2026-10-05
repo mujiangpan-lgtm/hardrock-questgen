@@ -1,0 +1,30 @@
+{
+ "palette": {"panel_fill": [38, 26, 36], "accent": [206, 124, 192], "glow": [226, 120, 188], "text_key_hex": "#E6A0D9"},
+ "background": {"tiles": [{"asset": "tfc:block/thatch", "weight": 6}, {"asset": "minecraft:block/packed_mud", "weight": 2}], "target_brightness": 0.1, "saturation": 0.5, "tint": [240, 214, 232], "contrast_sd": 0.012, "overlay": {"type": "none", "density": 0, "color": [230, 160, 210]}, "tile_size": 12},
+ "banner": {"ribbon_asset": "minecraft:block/packed_mud", "icons_left": ["tfc:item/ceramic/jug_empty", "tfc:item/ceramic/pot", "tfc:item/food/beef"], "icons_right": ["firmalife:item/food/barley_flatbread", "tfc:item/food/barley_bread", "tfc:item/jar/cherry"], "motif": "flames", "motif_color": [236, 140, 96]},
+ "decor": [],
+ "shapes": {"normal": "rsquare", "milestone": "hexagon", "optional": "diamond", "gate": "gear"},
+ "scene": {"layers": [
+  {"motif": "soft_glow", "x": 0.5, "y": 0.5, "w": 52, "h": 36, "color": [206, 120, 186], "alpha": 0.16},
+  {"motif": "sky_band", "x": 0.5, "y": 0.17, "w": 72, "h": 12, "color": [120, 70, 104], "alpha": 0.3},
+  {"motif": "plank_shelf", "x": 0.5, "y": 0.163, "w": 64, "h": 1.7, "color": [100, 70, 48], "alpha": 0.95},
+  {"motif": "sprite_row", "assets": ["tfc:item/food/garlic", "tfc:item/food/onion", "tfc:item/food/barley", "tfc:item/food/onion", "tfc:item/food/garlic", "tfc:item/food/barley", "tfc:item/food/onion"], "x": 0.5, "y": 0.2, "w": 38, "h": 4.0, "alpha": 0.95},
+  {"motif": "hanging_cord", "x": 0.82, "y": 0.25, "w": 1.6, "h": 7, "color": [150, 118, 84], "alpha": 0.95},
+  {"motif": "hanging_cord", "x": 0.17, "y": 0.235, "w": 1.6, "h": 6, "color": [150, 118, 84], "alpha": 0.95},
+  {"motif": "soft_glow", "x": 0.17, "y": 0.33, "w": 12, "h": 10, "color": [255, 190, 110], "alpha": 0.3},
+  {"motif": "sprite", "asset": "minecraft:item/lantern", "x": 0.17, "y": 0.325, "w": 5.4, "alpha": 1.0, "glow": [255, 196, 110]},
+  {"motif": "sprite", "asset": "tfc:item/food/beef", "x": 0.82, "y": 0.355, "w": 5.4, "alpha": 1.0},
+  {"motif": "soft_glow", "x": 0.5, "y": 0.75, "w": 18, "h": 13, "color": [255, 150, 70], "alpha": 0.4},
+  {"motif": "plank_shelf", "x": 0.5, "y": 0.845, "w": 66, "h": 1.5, "color": [84, 60, 42], "alpha": 0.95},
+  {"motif": "sprite_row", "assets": ["tfc:item/jar/cherry", "firmalife:item/food/cheddar", "tfc:item/jar/plum"], "x": 0.215, "y": 0.5, "w": 15, "h": 3.4, "alpha": 1.0},
+  {"motif": "plank_shelf", "x": 0.212, "y": 0.539, "w": 13, "h": 1.1, "color": [100, 70, 48], "alpha": 1.0},
+  {"motif": "sprite", "asset": "minecraft:block/barrel_side", "x": 0.19, "y": 0.77, "w": 6.7, "alpha": 1.0},
+  {"motif": "sprite", "asset": "tfc:item/ceramic/vessel", "x": 0.275, "y": 0.79, "w": 4.0, "alpha": 1.0},
+  {"motif": "plank_shelf", "x": 0.8, "y": 0.6, "w": 13, "h": 1.1, "color": [100, 70, 48], "alpha": 1.0},
+  {"motif": "sprite", "asset": "tfc:item/food/barley_bread", "x": 0.775, "y": 0.553, "w": 5.4, "alpha": 1.0},
+  {"motif": "sprite", "asset": "firmalife:item/food/barley_flatbread", "x": 0.845, "y": 0.57, "w": 4.0, "alpha": 1.0},
+  {"motif": "sprite", "asset": "tfc:item/ceramic/jug_empty", "x": 0.75, "y": 0.79, "w": 5.4, "alpha": 1.0},
+  {"motif": "sprite", "asset": "waterflasks:item/leather_flask", "x": 0.83, "y": 0.8, "w": 4.0, "alpha": 1.0},
+  {"motif": "sprite", "asset": "tfc:item/firepit_pot", "x": 0.5, "y": 0.755, "w": 6.7, "alpha": 1.0, "glow": [255, 160, 80]}
+ ]}
+}

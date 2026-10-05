@@ -1,0 +1,97 @@
+QUEST CHAPTER AUTHORING GUIDE  (HardRock TFC 4, MC 1.20.1 Forge, FTB Quests)
+Pack root: D:/.minecraft/versions/HardRock TerraFirmaCraft 4 - realistic survival   (bash; use forward slashes)
+
+GOAL
+  Write ONE chapter file questgen/chapters/<stem>.py for an FTB Quests book rewrite. The book must be both
+  beautiful and a real play guide: detailed "manual" style text (what to do, why, how, common pitfalls),
+  generous practical rewards. All player-facing text in Simplified Chinese.
+
+READ FIRST
+  - questgen/qlib.py           DSL (Chapter, quest, section, item, tag, checkmark, kill, dimension, advancement,
+                               biome, xp, levels, Task({...raw ftbquests task dict...}))
+  - questgen/chapters/10_stone_age.py   THE EXEMPLAR. Match its structure, density, tone and formatting.
+  - questgen/old_quests.txt    flattened original book (pack author's tips; sections start with "######## <name>")
+  Do NOT edit qlib.py, build.py, registry files, or any other chapter file. If you truly need a generator
+  feature, use Task({...}) / raw dicts, or mention it in your final report.
+
+TOOLS
+  python questgen/find.py <regex> [...]        search item ids + zh names ('?' prefix = only from lang key -> warning)
+  python questgen/find.py --tag <regex>        search item tags
+  QGEN_STAGE=_stage_<stem> python questgen/build.py --stage --only 00_welcome,10_stone_age,<stem>
+  QGEN_STAGE=_stage_<stem> python questgen/preview.py <stem>      -> questgen/_stage_<stem>/preview_<key>.png
+  Then LOOK at the preview PNG (Read tool) and fix ugly layout (crossing lines, cramped labels, empty space).
+  Always use your own QGEN_STAGE dir (other agents run in parallel). Delete questgen/_stage_<stem> when done.
+  The build must print "OK" with no errors. Fix every ERROR; avoid "?"-only ids where a real id exists.
+
+IF YOU CANNOT RUN BASH (background subagent): only Read / Grep / Glob / Write. The parent runs build/preview.
+  - Item id check: Grep questgen/registry.json for '"<id>":' (one id per line, value = zh name). Tags: Grep
+    '"<tag>"' in the same file (tags list). Then make sure the id is NOT in kubejs/client_scripts/hide.js.
+  - Pre-extracted references in questgen/_ref/ (Grep these instead of unzipping jars):
+      _ref/assets/tfc/patchouli_books/field_guide/zh_cn/entries/**  TFC + Firmalife field guide (Chinese)
+      _ref/assets/<ns>/patchouli_books/**, _ref/assets/immersiveengineering/manual/**   other mod manuals
+      _ref/assets/<ns>/lang/zh_cn.json   official Chinese names
+      _ref/data/<ns>/recipes/**          mod recipes (pack overrides live in kubejs/data/** and server_scripts)
+    The pack's own field-guide overrides: kubejs/assets/tfc/patchouli_books/field_guide/zh_cn/** (take precedence).
+  - Layout without preview: copy the grid rhythm of 10_stone_age.py / 11_copper.py (2-unit spacing, section
+    rows separated by >= 3 units in y, chapter roughly 20 x 14 units). The parent will fix layout.
+
+FACTS MUST BE VERIFIED — this pack heavily modifies recipes
+  Before stating any recipe/mechanic, check: kubejs/server_scripts/*.js (event.remove / replaceInput /
+  custom recipes), kubejs/data/*/recipes/** (JSON overrides; {"conditions":[{"type":"forge:false"}]} = disabled),
+  kubejs/client_scripts/info.js (pack tooltips = author's intent), kubejs/client_scripts/hide.js (hidden =
+  disabled items, the validator rejects them), mod jars in mods/ (zipfile: data/<ns>/recipes, patchouli books
+  under assets/<ns>/patchouli_books/**/zh_cn), config/*.toml. A replaceInput is NOT a removal.
+  questgen/research_recipes.md is UNRELIABLE — ignore it. If unsure about exact recipe shapes, say
+  "详见 JEI（按 R 查看配方）" instead of inventing. Never invent numbers.
+
+CHAPTER CONTRACT
+  ch = Chapter("<key>", "<中文标题>", icon="<item id>", group="<group>", order=<n>, theme="<theme>",
+               subtitle="<一句意境副标题>")
+  - must contain quest keys "start" (gear, size ~1.5) and "finale" (gear, size ~1.75).
+  - "start" depends on the cross-chapter ref given in your assignment (format "chapter_key:quest_key").
+    Cross refs may only target "<key>:start" / "<key>:finale" of other chapters, or existing keys in
+    00_welcome / stone_age. Chapter keys: see list at the bottom.
+  - 15–30 quests, 3–5 sections via ch.section("第一节 · xx", [keys...]).
+
+LAYOUT (grid units; 1 unit = one normal quest)
+  - Main flow left->right / top->bottom. Neighbouring quests 2 units apart (min distance >= size sum/2).
+  - Section panel = bounds of its quests + pad 0.7 (+0.9 header on top). Panels must not overlap (validator
+    checks) — leave >= 1.6 units between rows of sections. Every quest should belong to a section.
+  - Shapes: start/finale = "gear"; key milestones = "hexagon" (size 1.25); normal = default circle;
+    optional side quests = "diamond" + optional=True.
+  - Avoid long dependency lines across the map: drop redundant deps, or hide_lines=True on that quest.
+  - any_dep=True when one of several deps suffices.
+
+TEXT STYLE (see exemplar)
+  - desc = list of lines; "" = blank line; "{@pagebreak}" splits long text into pages (~12 lines per page).
+  - &6 gold = key terms/items, &e = actions/steps ("&e右键&r"), &a = tips/good, &c = warnings/pitfalls,
+    &7 gray for bullet lines ("&7- ..."), &o&7「...」&r italic flavour quote on milestone quests. Close with &r.
+  - Structure: what it is & why -> how (numbered "&e1.&r") -> "&c常见的坑：&r" / "&a小技巧：&r".
+  - No emoji (MC font can't render). Use ◆ · — 「」 if needed.
+  - Task titles: Chinese, e.g. title="任意斧" for tags, "铜锭 ×4" for counts.
+
+TASKS
+  - Prefer item tasks (item(id,count) / tag(tag,count,title=...)) so completion is automatic; use tags when
+    any variant should count (wood types, rock types, metals). checkmark("...") for actions that can't be
+    detected (building a structure, reading). dimension("ad_astra:moon"), kill("minecraft:zombie", 5),
+    advancement(...) where fitting. Keep counts reasonable.
+REWARDS (generous but must not skip the chapter's own challenge)
+  - Every quest gets a practical reward: consumables, materials for the NEXT step, food, bandages, xp(20..100),
+    levels(3..10) on finales. Never reward an item the quest is teaching the player to obtain for the first
+    time if that would trivialise it (e.g. don't hand out steel in the steel-making quest).
+
+CHAPTER KEYS (stem -> key, group, order)
+  00_welcome->00_welcome | 01_climate->climate (survival,0) | 02_food->food (survival,1)
+  03_health->health (survival,2) | 04_farming->farming (survival,3) | 25_storage->storage (survival,4)
+  10_stone_age->stone_age (ages,0) | 11_copper->copper_age (ages,1) | 12_bronze->bronze_age (ages,2)
+  13_iron->iron_age (ages,3) | 14_steel->steel_age (ages,4)
+  20_create->create (industry,0) | 21_ie->ie (industry,1) | 22_tfmg->tfmg (industry,2)
+  23_pneumatic->pneumatic (industry,3) | 24_mekanism->mekanism (industry,4)
+  31_explore->explore (frontier,1) | 32_twilight->twilight (frontier,2)   [30_transport 已拆散并入 storage/farming/explore]
+  33_space->space (frontier,3)
+  Themes available: survival food stone copper bronze iron steel create ie tfmg pneumatic mekanism storage
+  transport explore twilight space guide
+
+FINAL REPORT (short, English or Chinese): file written, quest count, start dependency used, any facts you
+  could not verify, any generator feature you wished for, and key gating facts other chapters should know
+  (e.g. "Create needs bronze: X recipe uses #forge:ingots/bronze").

@@ -1,0 +1,28 @@
+{
+ "palette": {"panel_fill": [22, 34, 26], "accent": [124, 228, 124], "glow": [70, 210, 96], "text_key_hex": "#9DF59A"},
+ "background": {"tiles": [{"asset": "tfc:block/metal/smooth/steel", "weight": 6}, {"asset": "tfc:block/metal/smooth/black_steel", "weight": 2}], "target_brightness": 0.1, "saturation": 0.5, "tint": [214, 236, 218], "contrast_sd": 0.01, "overlay": {"type": "blueprint_grid", "density": 0.0, "color": [50, 110, 70]}, "tile_size": 12},
+ "banner": {"ribbon_asset": "tfc:block/metal/smooth/steel", "icons_left": ["mekanism:item/ingot_osmium", "mekanism:item/alloy_infused", "mekanism:item/basic_control_circuit"], "icons_right": ["mekanism:item/upgrade_speed", "mekanism:item/energy_tablet", "mekanism:item/hazmat_mask"], "motif": "none", "motif_color": [110, 200, 120]},
+ "decor": [],
+ "shapes": {"normal": "square", "milestone": "hexagon", "optional": "diamond", "gate": "gear"},
+ "scene": {"texel": 4, "shadow": 0.55, "light": {"dir": [-0.5, -1], "color": [205, 255, 220], "tint": 0.08, "rim": 0.4, "shade": 0.3}, "lights": [{"x": 0.2168, "y": 0.63502, "radius": 0.22, "strength": 0.6, "color": [110, 255, 150]}, {"x": 0.5, "y": 0.76105, "radius": 0.14, "strength": 0.45, "color": [140, 255, 180]}], "ambient": 0.8, "haze_color": [14, 28, 22], "layers": [
+  {"motif": "soft_glow", "x": 0.5, "y": 0.62, "w": 62, "h": 40, "color": [60, 190, 110], "alpha": 0.08},
+  {"motif": "blocks", "x": 0.50521, "y": 0.16694, "w": 71.0, "h": 4.3, "rows": ["SSSSSSSSSSSSSSSSSSSSSSSSSS"], "legend": {"S": "mekanism:block/steel_casing"}, "depth": 0.45, "shadow": 0, "drop": 0.35, "haze": 0.12},
+  {"motif": "shaft", "x": 0.50846, "y": 0.2144, "w": 36.17, "h": 1.1, "color": [86, 196, 118], "alpha": 1.0, "pixelate": 4, "lit": true},
+  {"motif": "shaft", "x": 0.22591, "y": 0.32815, "w": 11.58, "h": 1.1, "color": [86, 196, 118], "alpha": 1.0, "rot": 90, "pixelate": 4, "lit": true},
+  {"motif": "shaft", "x": 0.79102, "y": 0.24345, "w": 2.96, "h": 1.1, "color": [86, 196, 118], "alpha": 1.0, "rot": 90, "pixelate": 4, "lit": true},
+  {"motif": "shaft", "x": 0.52734, "y": 0.79378, "w": 29.58, "h": 1.1, "color": [86, 196, 118], "alpha": 1.0, "pixelate": 4, "lit": true},
+  {"motif": "blocks", "x": 0.79102, "y": 0.53273, "w": 9.7, "h": 28.3, "rows": ["TTT", "TVT", "TVT", "TTT", "TGT", "TGT", "TGT", "TGT", "TTT", "TLT"], "legend": {"T": "minecraft:block/black_concrete", "V": "minecraft:block/black_concrete", "G": "minecraft:block/black_concrete", "L": "minecraft:block/black_concrete"}, "depth": 0.45, "shadow": 0, "rim": 0, "haze": 0.18},
+  {"motif": "shaft", "x": 0.7819, "y": 0.59656, "w": 10.67, "h": 0.9, "color": [150, 160, 162], "alpha": 1.0, "rot": 90, "pixelate": 4, "lit": true, "haze": 0.18},
+  {"motif": "sprite", "asset": "mekanismgenerators:item/turbine_blade", "x": 0.7819, "y": 0.518, "w": 2.67, "alpha": 1.0, "shadow": 0, "rim": 0, "haze": 0.18},
+  {"motif": "sprite", "asset": "mekanismgenerators:item/turbine_blade", "x": 0.7819, "y": 0.57038, "w": 2.67, "alpha": 1.0, "shadow": 0, "rim": 0, "haze": 0.18},
+  {"motif": "sprite", "asset": "mekanismgenerators:item/turbine_blade", "x": 0.7819, "y": 0.62275, "w": 2.67, "alpha": 1.0, "shadow": 0, "rim": 0, "haze": 0.18},
+  {"motif": "sprite", "asset": "mekanismgenerators:item/turbine_blade", "x": 0.7819, "y": 0.67512, "w": 2.67, "alpha": 1.0, "shadow": 0, "rim": 0, "haze": 0.18},
+  {"motif": "blocks", "x": 0.79102, "y": 0.53273, "w": 9.7, "h": 28.3, "rows": ["TTT", "TVT", "TVT", "TTT", "TGT", "TGT", "TGT", "TGT", "TTT", "TLT"], "legend": {"T": "mekanismgenerators:block/turbine_casing", "V": "mekanismgenerators:block/turbine_vent", "G": "mekanism:block/structural_glass", "L": "mekanismgenerators:block/turbine_valve"}, "depth": 0.45, "haze": 0.18},
+  {"motif": "blocks", "x": 0.22591, "y": 0.62357, "w": 12.3, "h": 20.3, "rows": ["CCCC", "CGGC", "PGGC", "CGGC", "CGGP", "CGGC", "CCCC"], "legend": {"C": "minecraft:block/black_concrete", "G": "minecraft:block/black_concrete", "P": "minecraft:block/black_concrete"}, "depth": 0.45, "shadow": 0, "rim": 0},
+  {"motif": "blocks", "x": 0.22591, "y": 0.62357, "w": 12.3, "h": 20.3, "rows": ["....", "....", "EEEE", "EEEE", "EEEE", "EEEE", "EEEE"], "legend": {"E": "mekanism:liquid/energy"}, "depth": 0.45, "shadow": 0, "rim": 0},
+  {"motif": "blocks", "x": 0.22591, "y": 0.62357, "w": 12.3, "h": 20.3, "rows": ["CCCC", "CGGC", "PGGC", "CGGC", "CGGP", "CGGC", "CCCC"], "legend": {"C": "mekanism:block/induction_casing", "G": "mekanism:block/structural_glass", "P": "mekanism:block/induction_port"}, "depth": 0.45},
+  {"motif": "soft_glow", "x": 0.2168, "y": 0.63502, "w": 13, "h": 18, "color": [90, 255, 140], "alpha": 0.28},
+  {"motif": "blocks", "x": 0.5, "y": 0.7545, "w": 12.3, "h": 7.0, "rows": ["abcd", "efgh"], "legend": {"a": {"front": "mekanism:block/enrichment_chamber/front_active", "top": "mekanism:block/enrichment_chamber/top"}, "b": {"front": "mekanism:block/crusher/front_active", "top": "mekanism:block/crusher/top"}, "c": {"front": "mekanism:block/osmium_compressor/front_active", "top": "mekanism:block/osmium_compressor/top_active"}, "d": {"front": "mekanism:block/combiner/front_active", "top": "mekanism:block/combiner/top", "side": "mekanism:block/combiner/right"}, "e": {"front": "mekanism:block/energized_smelter/front_active"}, "f": {"front": "mekanism:block/purification_chamber/front_active"}, "g": {"front": "mekanism:block/chemical_injection_chamber/front_active"}, "h": {"front": "mekanism:block/precision_sawmill/front_active", "side": "mekanism:block/precision_sawmill/right_active"}}, "depth": 0.45},
+  {"motif": "soft_glow", "x": 0.5, "y": 0.76105, "w": 16, "h": 8, "color": [120, 255, 170], "alpha": 0.16}
+ ]}
+}

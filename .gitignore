@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+_stage*/
+_packdata/
+.packkey
+_art_review/try/
+_art_review/base/
+_art_review/*_tmp/
+_butcher_mechanics/
