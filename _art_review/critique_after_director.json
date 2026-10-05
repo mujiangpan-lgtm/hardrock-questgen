@@ -1,0 +1,167 @@
+{
+  "reviewer": "senior game art director (composition, cohesion/style consistency, lighting/depth, colour harmony, intentionality), screen29 previews (_art_review/after)",
+  "scores": [
+    {"key": "00_welcome", "score": 6.5, "fix_type": "mixed",
+     "issues": [
+       "x0.00-1.00 y0.00-0.27: top quarter is an empty gradient sky; the sun-ray fan (x0.58-0.85) and the moon are smooth vector effects that do not match the pixel ground.",
+       "x0.33-0.80 y0.60-0.88: dead fog band between the left camp and the right trees; the central platform holds only three tiny props (stone, sticks, flowers), so the scene reads as sparse stickers on a strip of grass.",
+       "x0.36-0.63 y0.36-0.58: one small lone panel floats mid-view with nothing in the scene relating to it; the banner is also small for a welcome page, so there is no real focal point.",
+       "x0.00-0.06 y0.42-0.75 and x0.83-0.99 y0.45-0.80: pines are flat dark silhouettes with a single bright edge line, unlike the lit, textured pixel ground and camp props."
+     ],
+     "what_for_9": "Make a real hero scene: a lit camp or landmark at the focal point under the panel, parallax layers with atmospheric haze, ground props at a consistent pixel scale, pixel-quantised sky effects, and a larger panel/banner composition that uses the full view."},
+    {"key": "climate", "score": 7.0, "fix_type": "mixed",
+     "issues": [
+       "x0.00-1.00 y0.05-0.30: smooth polygon mountains with pixel snow-cap sprites and a vector aurora clash with the pixel cabin and ground; the mountains look like flat paper cut-outs.",
+       "x0.00-0.30 y0.43-0.95: pines have a dashed, jagged light edge that reads as an anti-aliasing artifact, not snow.",
+       "x0.65-1.00 y0.28-0.60 and x0.00-0.40 y0.30-0.45: large empty dark-blue areas; panels cluster in the top centre while the cabin carries the whole lower-right corner.",
+       "x0.00-0.25 y0.88-1.00: the grey stone block and flat snow strip are the weakest, most placeholder-like elements; the ice patch is a plain rectangle."
+     ],
+     "what_for_9": "Unify the mountains and trees into one pixel style, add snow-laden pine sprites, add drifting snow depth layers, balance the left half with a second landmark, and add a cast glow from the cabin window onto the snow."},
+    {"key": "food", "score": 8.0, "fix_type": "spec",
+     "issues": [
+       "x0.55-0.70 y0.03-0.25: hanging produce is strung on thin lines at inconsistent scales (garlic, peppers and ham are much bigger than the herb bundles); the upper band reads as a row of stickers.",
+       "x0.00-0.30 y0.35-0.70: the shelves are floating planks with no back wall, brackets or shadows; items on them are too small and lack contact shadows.",
+       "x0.30-0.70 y0.18-0.70: purple/pink panel and banner tint is slightly off against the warm brown pantry palette; the wall is a flat dark noise texture with little depth.",
+       "x0.22-0.55 y0.28-0.70: dependency lines cross panel gaps and run over panel frames (section 1 to 2, section 1 down to 2), which looks tangled."
+     ],
+     "what_for_9": "Shift the panel tint to warm copper/cream, add a light pool and shadows under shelves and from the lantern onto the wall, tie hanging items to a rail with consistent scale, and give the stove/hearth a stronger glow."},
+    {"key": "health", "score": 7.5, "fix_type": "spec",
+     "issues": [
+       "x0.30-1.00 y0.65-0.78: a dead dark band between the panels and the bed/table; the right shelves float in empty space (x0.76-0.97 y0.30-0.60) with no wall structure.",
+       "x0.30-0.62 y0.70-0.98: the saturated red bed is the loudest element and pulls focus away from the panels and banner; the bed is also oversized next to the shelf props.",
+       "x0.02-0.98 y0.08-0.25: hanging herbs are tiny, sparse and unevenly spaced, so the ceiling band feels thin.",
+       "x0.00-0.27 y0.35-1.00: the left shelving unit is dense and well made, but the right side does not balance it."
+     ],
+     "what_for_9": "Re-balance mass (bring the right shelf into a proper cabinet), tone down or reposition the bed, add a warm lamp glow across the wall, and thicken the herb drying line to a believable rack."},
+    {"key": "farming", "score": 6.5, "fix_type": "mixed",
+     "issues": [
+       "x0.00-0.25 y0.42-0.90: the giant apple tree uses a coarse, high-frequency leaf texture that looks like noisy carpet, flat-lit, and far larger than the barn or crops; its pixel density does not match the rest.",
+       "x0.00-0.99 y0.10-0.32: the sun is a smooth vector glow and the clouds are flat blurred horizontal bars; both look like placeholders against the pixel barn and ground.",
+       "x0.25-0.58 y0.55-0.88: large empty gap between the tree and the hay stack; the wheat strip is a thin line.",
+       "x0.28-0.72 y0.18-0.80: six panels are scattered with uneven spacing and no alignment, and their dark green fill reads muddy against the brown dusk sky."
+     ],
+     "what_for_9": "Resize and re-texture the tree with proper leaf clusters and shading, replace the vector sun and clouds with pixel versions, fill the middle ground with fields, fences or a windmill, and align the panels on a clear grid."},
+    {"key": "storage", "score": 8.0, "fix_type": "spec",
+     "issues": [
+       "x0.74-0.99 y0.20-0.90: the tall server/drive stack is a repetitive grid with a heavy, monotone mass; it dominates the right and is less detailed than the left shelving.",
+       "x0.04-0.90 y0.09-0.10 and y0.93-0.96: the top and bottom pipes frame the scene well but are flat grey bars; they run through the empty top band and end abruptly at the shelf.",
+       "x0.38-0.65 y0.70-0.90: crate and barrel clump at the bottom centre is small and low-contrast relative to the panels above it.",
+       "x0.30-0.72 y0.29-0.71: teal panels sit well against the warm wood, but the panel fill is nearly the same dark as the wall, so they lack separation or shadow."
+     ],
+     "what_for_9": "Vary the right stack with different block types and lit/unlit indicators, add depth to the pipes (shadow, joints, flow glow), give the panels a drop shadow or backlight, and add floor reflections or light pools."},
+    {"key": "stone_age", "score": 8.0, "fix_type": "spec",
+     "issues": [
+       "x0.32-0.45 y0.52-0.56: the connection lines from section 1 run straight through the section 3 title text, and several lines cross panel frames.",
+       "x0.02-0.25 y0.37-0.58 and x0.76-0.95 y0.40-0.55: cave paintings are flat orange silhouettes with noise; they read well as art but are noticeably flatter than the lit pixel props around them.",
+       "x0.22-0.38 y0.08-0.35 and x0.75-0.80 y0.08-0.28: the stalactites are dull brown wedges with little shading or highlight.",
+       "x0.42-0.62 y0.70-0.92: the campfire is a strong focal point but its glow sits under the panels and competes with them for attention."
+     ],
+     "what_for_9": "Add lit rim details on the stalactites, give the cave paintings a layered pigment texture and light falloff, route lines so they never cross titles, and carry the fire glow onto the panels and cave ceiling."},
+    {"key": "copper_age", "score": 7.0, "fix_type": "mixed",
+     "issues": [
+       "x0.00-1.00 y0.00-0.28: a sunset sun over distant mountains in what is otherwise an enclosed mine-cave; the top third is empty brown gradient, and the setting is confused.",
+       "x0.20-0.60 y0.50-0.62 and x0.40-0.60 y0.30-0.55: a wide, muddy dark area behind and between the panels with no scene content.",
+       "x0.00-0.25 y0.30-0.98: left stepped rock wall with ore veins and torch is good, but the ore sprites are flat bright patches that look pasted on; the right forge stack is cut by the edge.",
+       "x0.43-0.62 y0.76-1.00: the furnace, pot and ingots are small against the large panels and are crowded at the very bottom edge."
+     ],
+     "what_for_9": "Commit to one setting (cave or open dusk), replace the empty upper area with ceiling or skyline detail, integrate ore into the rock with shading, scale up the forge as the hero, and let its glow reach the panels."},
+    {"key": "bronze_age", "score": 7.5, "fix_type": "spec",
+     "issues": [
+       "x0.08-0.30 y0.33-0.70: the tall timber frame with a hanging chain and lantern above the furnace reads like a gallows; its purpose is unclear and it has a plain flat top beam.",
+       "x0.03-0.98 y0.70-0.95: props are lined up along the floor in a row (furnace, table, anvil stump, kiln) with equal spacing, so it looks like an inventory strip, not a scene.",
+       "x0.28-0.48 y0.35-0.70: empty dark mid-field around and below the panels; the sky above (y0.0-0.2) is empty teal-to-brown gradient.",
+       "x0.58-0.76 y0.70-0.95: the anvil is large and smooth-shaded with thick pixels, noticeably different in rendering from the blocky furnaces."
+     ],
+     "what_for_9": "Stagger props in depth with overlap and a back layer, replace the frame with a recognisable smelter or crane, match anvil rendering to the block sprites, and add warm light shafts or ambient glow to unify the group."},
+    {"key": "iron_age", "score": 8.0, "fix_type": "spec",
+     "issues": [
+       "x0.00-1.00 y0.00-0.10: the top rafter band is flat brown noise with no detail; the two chains and lanterns are the only vertical accents, and their symmetry feels mechanical.",
+       "x0.02-0.30 y0.32-0.51: the tool rack is a flat dark board with small tools; it floats with no mount and little shading.",
+       "x0.45-0.62 y0.72-0.95: anvil with glowing ingot is a good focal point, but the stump top and sparks are slightly muddy; the barrel and coal pile on either side are small.",
+       "x0.28-0.46 y0.52-0.66: slight empty zone below the tool rack and to the left of the panels."
+     ],
+     "what_for_9": "Add a clearer back wall (stone or timber structure with depth), more variation in hanging elements, cast shadows from the furnace and lanterns, and sharpen the hero anvil moment."},
+    {"key": "steel_age", "score": 7.0, "fix_type": "spec",
+     "issues": [
+       "x0.00-1.00 y0.00-0.17 and x0.35-0.70 y0.65-0.90: very dark, low-contrast field with large empty areas; the smoke-stack silhouettes at the horizon are barely visible.",
+       "x0.05-0.19 y0.37-0.73: the faded second furnace gives nice depth, but it is a dim duplicate of the right furnace with the same shapes, which looks like a copy.",
+       "x0.67-0.78 y0.27-0.31: the section 3 panel title is double-stacked and tiny (a small '第三节' over the section name), so it breaks the panel header style.",
+       "x0.00-0.20 y0.78-0.95 and x0.23-0.40 y0.75-0.92: the anvil and ingot pile are small, low-contrast and spaced apart from each other, so they read as loose items."
+     ],
+     "what_for_9": "Raise value contrast with a rim light on the furnace and a glowing horizon, vary the background furnace, group the anvil/ingots/coal into one lit work area, and normalise the panel title fit."},
+    {"key": "create", "score": 6.0, "fix_type": "renderer",
+     "issues": [
+       "x0.00-0.25 y0.08-0.46, x0.78-1.00 y0.30-0.82, x0.72-0.85 y0.80-1.00: giant flat brown vector gears with smooth edges and no texture, shading or highlight; they look like clip-art and clash with the pixel-art language of the rest of the pack.",
+       "x0.00-0.25 y0.58-0.97: the water wheel is a smooth vector wheel with a flat blue block of water above it, not pixel-matched and not convincingly attached to anything.",
+       "x0.25-0.73 y0.79-0.88: the conveyor belt is a thin grey bar floating in the empty lower-middle; x0.25-0.55 y0.60-0.80 is empty.",
+       "x0.00-1.00 y0.00-1.00: the background mechanism-outline and grid texture is nearly invisible, so the field reads as flat dark with a few huge shapes."
+     ],
+     "what_for_9": "Redraw the machinery as pixel-art Create components with lit metal, brass trim, shaft and belt detail at a consistent pixel scale, add steam and a lit belt with items, and place a hero contraption under the panels."},
+    {"key": "ie", "score": 8.0, "fix_type": "spec",
+     "issues": [
+       "x0.00-0.15 y0.06-0.88 and x0.71-0.82 y0.10-0.74: the two lattice pylons are well made, but the right one is a flat pale-grey ghost that reads as unlit, and the repeated cross-brace texture is tiled and visible.",
+       "x0.30-0.72 y0.83-0.98: the floor and the crates/barrels/spools are small, with thin empty space (x0.35-0.60 y0.50-0.80) between the panels and floor.",
+       "x0.00-1.00 y0.00-0.16: the wire lines are drawn as smooth thin strokes, slightly different from the pixel sprites; the moon is a plain smooth disc.",
+       "x0.17-0.27 y0.50-0.60: the cyan lamp on the crane is the only cool accent; it is lovely but unrelated to the panel cyan outline, which could carry the same glow."
+     ],
+     "what_for_9": "Add atmospheric depth to the right pylon (haze, partial light), pixelise the wires and moon, carry the cyan lamp glow into the scene and panels, and enrich the floor with props and cables."},
+    {"key": "tfmg", "score": 7.0, "fix_type": "mixed",
+     "issues": [
+       "x0.00-1.00 y0.00-1.00: the olive/green-brown smog palette is muddy and low-contrast; the background looks dirty rather than atmospheric, and the olive panels merge into it.",
+       "x0.07-0.11 y0.14-0.65 and x0.73-0.77 y0.22-0.65: the two hazard-stripe poles are nearly black rectangles with a few stripe blocks; they look like stray placeholder columns.",
+       "x0.20-0.28 y0.32-0.95: the lattice tower has a ragged, dashed bright edge and a hard flame on top that is not lit in context.",
+       "x0.73-0.97 y0.28-0.97: the machinery stack on the right is noisy, with grey-on-grey texture at inconsistent scale; the pumpjack (x0.48-0.72 y0.72-0.95) is the nicest piece but lacks warm glow."
+     ],
+     "what_for_9": "Replace the olive haze with a clear dusk or refinery glow, redraw the poles as flare stacks or pipes, clean the lattice edges, and bring consistent shading to the machinery."},
+    {"key": "pneumatic", "score": 8.5, "fix_type": "spec",
+     "issues": [
+       "x0.00-1.00 y0.00-1.00: the brick wall pattern is flat and uniform; the pipe loop frames the scene well, but the wall behind has no light variation.",
+       "x0.08-0.25 y0.37-0.48: the red robot arms with a chip block float on the wall without any mount.",
+       "x0.00-0.65 y0.68-1.00: the bottom row is crowded (blocks, cases, tools), and the white block at the far left looks unlit and off-palette.",
+       "x0.27-0.60 y0.28-0.65: panels sit well, but the dark panel fill is almost the same as the wall, so edges rely on the outline alone."
+     ],
+     "what_for_9": "Add depth and light variation to the brick, a proper mount or cable for the floating machines, pipe shading and flow glow, and a subtle panel backlight so the ring of pipes and the panels read as one lit system."},
+    {"key": "mekanism", "score": 7.5, "fix_type": "spec",
+     "issues": [
+       "x0.04-0.27 y0.40-0.95 and x0.78-0.96 y0.15-0.93: the two huge machines are large flat-faced block grids with big coarse tiles; they have little detail and a different effective pixel density from the small bottom machine.",
+       "x0.30-0.75 y0.50-0.78: a large empty dark area to the right of the lower panels and above the machine.",
+       "x0.00-1.00 y0.00-0.08: the top truss frieze is a repeated tile band with weak contrast; the green pipes are thin lines that end abruptly (x0.10-0.15 y0.06-0.40).",
+       "x0.00-1.00 y0.00-1.00: strongly monochrome green; the glow from the tank is good, but there is almost no second hue, so the image feels flat."
+     ],
+     "what_for_9": "Add detail and shading to the big machines, a warm or contrasting accent light (red alarm, amber), connect the pipes into a believable system, and cover the empty middle ground with props."},
+    {"key": "explore", "score": 7.5, "fix_type": "mixed",
+     "issues": [
+       "x0.00-1.00 y0.05-0.30: smooth polygon mountains with a vector sun glow versus pixel trees, camp and terrain; the clash is clear in the sun disc (x0.09-0.18 y0.05-0.18).",
+       "x0.69-0.96 y0.75-1.00: the lower-right terrain is large, blurry, low-res stone blocks with a different pixel density from the rest of the scene.",
+       "x0.02-0.22 y0.76-0.84: the tents are flat white triangles with little detail, and read as placeholders.",
+       "x0.28-0.70 y0.54-0.74: an empty dark middle band under the panels with a faint topographic line texture that looks like noise."
+     ],
+     "what_for_9": "Re-render the mountains and sun as pixel layers, fix the terrain texture scale, draw proper tents and a banner, and add path and prop detail across the middle ground to link camp and ruins."},
+    {"key": "twilight", "score": 7.5, "fix_type": "mixed",
+     "issues": [
+       "x0.00-0.28 y0.00-0.95: the giant tree is cropped at the left with noisy leaf pixels and a flat trunk; it overpowers the left edge and its texture scale differs from the other props.",
+       "x0.28-0.74 y0.68-0.92: the glowing pond is nice, but the surrounding flowers and fireflies are sprinkled evenly like stickers with no grouping or depth.",
+       "x0.72-0.99 y0.52-0.92: the pale mushroom tree is flat tan with little shading and a pale colour that does not fit the purple night.",
+       "x0.45-0.55 y0.32-0.34: the section 2 panel title is stacked two lines tall and squeezed, breaking the header style."
+     ],
+     "what_for_9": "Re-texture the tree and mushroom with the purple night light, cluster the flora with foreground/background layers, add glow reflections on the panels, and normalise panel titles."},
+    {"key": "space", "score": 7.0, "fix_type": "renderer",
+     "issues": [
+       "x0.74-1.00 y0.00-0.25, x0.00-0.12 y0.08-0.23, x0.00-0.11 y0.44-0.62: smooth airbrushed vector planets and moon with no pixel structure; style differs from the pixel nodes, banner and every other chapter.",
+       "x0.88-0.95 y0.42-0.72: the rocket is a clip-art vector illustration with a clean outline, and the satellite (x0.14-0.27 y0.06-0.13) is the same, so both look like stickers dropped in.",
+       "x0.10-0.80 y0.68-0.85: a big empty band of star noise between the lower panels and the Earth limb; the small sparkle cluster at x0.31-0.37 y0.71-0.76 looks like a stray element.",
+       "x0.00-1.00 y0.84-1.00: the Earth limb is a good, simple gradient, but it is the only element that gives depth; the nebula glow is faint."
+     ],
+     "what_for_9": "Redraw the planets, rocket and satellite in the pack's pixel language with proper lighting from one star, add a strong nebula or aurora layer, and put the rocket or launch tower into the composition under the panels."}
+  ],
+  "systemic": [
+    "Donut composition: props hug the left, right and floor edges while the centre behind the panels is a flat dark field; panels float on top without being anchored (no shadow, backlight, mounting or lit surface), so the scene and the quest layout read as two separate layers.",
+    "Mixed media: smooth vector shapes (mountains, planets, sun glows, gears, clouds, ray fans, wires) appear next to pixel sprites in climate, farming, create, explore, space, welcome and copper; pixel density is also inconsistent (coarse blown-up stone and server blocks versus fine items).",
+    "Lighting is local, not global: each glow (lantern, forge, campfire) is an isolated pool; props have no contact shadows and the panels never receive the scene light, so objects look pasted onto the floor.",
+    "Backgrounds are low-contrast noise fills, muddy in the dark chapters (copper, steel, tfmg, mekanism, farming); the gradient skies are often empty in the top 20 to 30 percent.",
+    "Props are arranged in a floor-line row with equal spacing, with little overlap or depth layering; the same hero motifs (anvil, furnace, lantern, block stacks) recur across the age chapters.",
+    "Panel template is the same rounded rectangle with diamond corners in all chapters; only the tint changes, so it has no material identity per chapter and the dark fills nearly merge with dark backgrounds. Narrow-panel titles shrink, stack or get crossed by dependency lines (stone_age, steel_age, twilight, mekanism).",
+    "Item-scale and edge-quality artifacts: ragged dashed light edges on trees and lattice towers, hazard poles and pale 'ghost' structures that look like placeholders."
+  ],
+  "ceiling_estimate": "The pipeline of procedural spec-driven scenes from Minecraft textures and vector motifs reaches a clean 8.0 to 8.5 for its best chapters (pneumatic, iron, ie, storage), where pixel props, frames and lighting agree; average ceiling is about 8.0 to 8.5. A 9 on every chapter is out of reach without a global lighting and shadow pass, parallax depth layers with atmospheric haze, full pixelisation of all vector elements (render low-res then nearest-neighbour upscale), material-specific panel frames with backlight, and hand-pixelled hero assets (tree, rocket, planets, gears, and per-chapter landmark). A true 9 to 10 needs hand-drawn or commissioned key art (medium)."
+}
