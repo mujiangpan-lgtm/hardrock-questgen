@@ -1,0 +1,35 @@
+{
+  "reviewer": "experienced Minecraft modpack player / pack designer (readability of nodes, lines, panel headers over the art; theme at a glance; Minecraft-native feel; would I enjoy opening it), round 2 (_art_review/after2)",
+  "scores": [
+    {
+      "key": "create",
+      "score": 8.0,
+      "fix_type": "spec",
+      "issues": [
+        "x0.00-0.27 y0.57-1.00: the water under the waterwheel is a flat, noisy blue rectangle with a hard vertical edge at x0.27 and a dead-straight top line; it reads as a pasted tile rather than a stream, and the wheel is cropped by the left edge.",
+        "x0.72-0.95 y0.20-0.55: the windmill hub is a dark grey chest-like block with a lock plate, so it reads as a storage chest on a pole rather than a Create windmill bearing. The cream sails are also the palest, highest-contrast shapes in the scene and pull the eye away from the panels.",
+        "x0.03-0.37 y0.20-0.58: the left cog cluster (three cogs plus a pipe running through the big one) is the busiest spot. The brass cog colours are close to the panel-border gold, so cogs and panels compete slightly in the middle band.",
+        "x0.28-0.70 y0.72-0.80: a long thin pipe runs across with nothing to connect to, and the strip above the press line is a little empty compared with the packed lower row."
+      ],
+      "what_for_9": "Make the waterwheel sit in a real water channel (animated-looking highlights, an edge block or lip, no hard rectangular cut), turn the windmill hub into an obvious bearing or shaft block, and soften the sails' contrast. Separate the cog hues from the panel-gold border, for example by making the cogs darker brass or andesite. Then the machine row at the bottom (belt, press, mixer, boiler with steam) is already close to commercial quality.",
+      "fits_book": true,
+      "fit_notes": "Now sits squarely with storage, iron_age, steel_age and pneumatic: dark brick or grid wall, hanging lanterns on chains, a pipe frame, chunky block-diorama machines, warm light pooling. The panel borders are brass and the section headers are crisp, bright gold on dark, so they read well. Node outlines and the pink dependency lines stay legible everywhere, including the 4-line crossing in section 1. Pixel density matches the neighbours. It is the busiest of the industrial chapters, but the theme is identifiable at a glance and reads as Create (andesite casing, cogs, belt, press, brass). Only the water block and the chest-like windmill hub look less native."
+    },
+    {
+      "key": "space",
+      "score": 7.5,
+      "fix_type": "mixed",
+      "issues": [
+        "x0.77-0.86 y0.14-0.30: the dotted trail ending in a white arrow-head looks like a mouse cursor, not a rocket trajectory. It is a distracting and clumsy element.",
+        "x0.00-0.18 y0.16-0.40 and x0.72-0.92 y0.04-0.25: the sky mixes crisp pixel planets with large soft round blurred dots (bokeh or dust discs). They fight the pixel language, because every other chapter keeps hard pixel edges.",
+        "x0.00-0.18 y0.16-0.40 and top-right: Earth is a large blobby sphere with lumpy white cloud patches and no atmosphere rim or terminator shading, and the red planet is a flat orange ball. They are the least refined elements and look more like painted stickers than block-world objects.",
+        "x0.00-1.00 y0.88-1.00: the lunar ground strip is scattered with noisy single-pixel orange and grey specks and floating rocks. It looks muddy next to the clean buildings above. The satellite at x0.63-0.77 y0.37-0.45 floats beside panel 5 with no relationship to the scene."
+      ],
+      "what_for_9": "Keep the strong layering (stars, ringed planet, lunar horizon, launch gantry, astronaut with flag). Redraw Earth and Mars with block-style banded shading and an atmosphere rim, snap the soft discs to hard pixel stars, replace the cursor-like arrow with a proper exhaust or contrail, and clean the regolith strip into a few deliberate ore and rock clusters. Then it is a screenshot-worthy chapter.",
+      "fits_book": true,
+      "fit_notes": "The foreground is now in the block-diorama language of the others (box-shaped lunar base modules, rover, launch pad with a hazard-striped gantry), and the purple panel borders and headers read well over the dark star field. Lines and nodes are clear. It still stands out for the smooth gradient nebula, the dithered high-res planets and the saturated red, blue and yellow; the rest of the book is mostly dark and warm. That reads as a deliberate finale rather than a clash, and it is the chapter a player would open first. It still looks painted where the others look built."
+    }
+  ],
+  "contact_sheet_notes": "On the contact sheet both now belong. Create joins the dark industrial group (storage, iron_age, steel_age, pneumatic, mekanism) and is no longer an outlier; it is the most densely decorated of them but keeps the same lantern, pipe and brass vocabulary. Space sits with the night-sky chapters (climate, explore, twilight) but is clearly the brightest and most saturated tile, with the only full-colour planets and a bright rocket, so it still stands out. At thumbnail size that suits a final chapter, but up close its smooth background and soft dots are the one place where the style drifts from the pixel-block look of the book.",
+  "ceiling_estimate": "create about 8.5-9 with a better water or windmill pass; space about 8.5 once planets and sky noise are brought into the block-pixel language"
+}

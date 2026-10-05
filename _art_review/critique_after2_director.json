@@ -1,0 +1,35 @@
+{
+  "reviewer": "senior game art director (composition, cohesion/style consistency, lighting and depth, colour harmony, intentionality), round 2 (_art_review/after2)",
+  "scores": [
+    {
+      "key": "create",
+      "score": 8.0,
+      "fix_type": "spec",
+      "issues": [
+        "x0.00-0.27 y0.57-1.00: the water wheel stands in a flat, dithered blue slab that ends in a hard vertical edge at x0.27 against the stone block and hatched floor. The pool has no depth or reflection and the wheel's submerged paddles just fade out, so the corner reads as a pasted rectangle. The paddles are ragged and axe-shaped rather than clean planks.",
+        "x0.72-0.96 y0.20-0.55: the windmill is the biggest bright mass in the scene (pale wood blades) and it pulls the eye away from the title and panels. Its dark hub box sits awkwardly on the vertical pipe, and the blade tips crowd the section-2 panel (x0.67) and the right edge.",
+        "x0.27-0.95 y0.68-0.97: the bottom vignette row (ore block, ingots, belt, press, mixer, boiler) is packed tight with no breathing room, while x0.30-0.42 y0.50-0.70 and the strip under the banner are empty dark wall. The weight is bottom-heavy. The floor hatch at y0.95-1.00 has a slight moire look.",
+        "x0.04-0.37 y0.22-0.58 and x0.34-0.66 y0.05-0.15: the left gear cluster (three gears, pipe, piston) is lit flat with no cast shadow on the back wall. The two small top gears sit on the pipe like stickers, and the hanging chains are lower-res than the gears."
+      ],
+      "what_for_9": "Give the water a real pool, with a lit surface line, foam, a tapered bank and the wheel dipping into it, instead of a rectangle. Cut the windmill down or tone it so the banner stays the focal point. Add soft contact shadows under every machine and a faint warm light cast onto the wall from the lanterns and the firebox. Space the bottom row out and put a mid-size element or pipe run into the dead zone left of centre. Re-pixel the chains and top gears to the same pixel size as the big gears.",
+      "fits_book": true,
+      "fit_notes": "Yes. The dark brick/grid wall, pipe frame, hanging lanterns and block-diorama machines match pneumatic, storage and food. The brass and copper palette gives it its own identity, and the pixel density is consistent with the rest of the book. It is the richest and best-composed of the industrial chapters and now sits above pneumatic. The only things that stand out are the flat water slab and the oversized pale windmill."
+    },
+    {
+      "key": "space",
+      "score": 7.5,
+      "fix_type": "spec",
+      "issues": [
+        "x0.00-0.62 y0.00-0.42 and x0.71-0.81 y0.02-0.14: the sun, Earth, Saturn and Mars are drawn with a coarser pixel grid (about 8 screen px, with a dithered sun glow) than the astronaut, rocket and habitats (about 4-5 px). Earth is cut off at the left edge. The planets and tiny moons float as isolated stickers with no scale or light relation to the scene, and the sun's dither halo looks like a filter.",
+        "x0.02-0.66 y0.70-0.90: the lunar base is a line-up on one horizon: left module, rover, the 4-bay base, astronaut and flag. Every item has the same height, and the monitor-face modules look like one asset repeated. There are no real contact shadows or perspective, and a flat navy band at y0.70-0.78 sits behind them like a strip. It reads as assembled from stickers rather than a built place.",
+        "x0.79-0.90 y0.14-0.30 and x0.63-0.77 y0.37-0.46: the diagonal arrow-and-dots trail looks like a mouse cursor rather than a comet or flight path. The small satellite floats between the panels with nothing anchoring it, and it crowds panel 5 and the tower. The launch tower (x0.81-0.86) is tight against panel 5 (right edge x0.78).",
+        "x0.00-1.00 y0.90-1.00: the regolith foreground is a noisy dither with scattered orange pixel clusters and cropped rocks. It is muddy and softer than the structures above it and gives no depth gradient or foreground framing."
+      ],
+      "what_for_9": "Re-render the sun, planets and moons on the same pixel grid as the foreground. Add a scale and lighting logic (sun top-left, rim light on the rocket, tower and modules, and a matching planet terminator). Break the horizon line with height variation, such as a crater rim, a hill or a dish on a ridge, plus contact shadows and a distant ridge for depth. Replace the cursor-like trail with a clear exhaust plume or arc from the rocket. Clean up the regolith with a few large, deliberate rock and crater shapes and a darker foreground fade.",
+      "fits_book": true,
+      "fit_notes": "Borderline yes. The pixel art language, blocky habitat modules, launch tower, panel and banner styling all match the book, and the rocket and tower are as good as anything in it. It is still the only full-bleed bright scene in the book, with primary red and blue and saturated planets against a muted warm book. The planet and sun pixel density is also looser than the foreground. It reads as a finale chapter, which is acceptable, but it is the least consistent of the 19."
+    }
+  ],
+  "contact_sheet_notes": "On the contact sheet, create now sits comfortably in the industrial group next to steel_age and pneumatic: same dark wall, lanterns and pipes, with brass as its own colour. It is the busiest of the three but reads as intentional, and it no longer stands out as a different style. Space still stands out. It is the brightest, most saturated thumbnail, a full-bleed sky where most chapters are dark interiors or night landscapes. It is the closest in energy to twilight and ie. The base and rocket belong to the book's block-diorama vocabulary, but the planets and the sun are coarser, so it is the one tile that is clearly a different density. Both are now among the more complete chapters, with space the more visually striking.",
+  "ceiling_estimate": "create about 8.5-9 with a better water/pool treatment and shadow pass; space about 8-8.5 once the pixel scale is unified and the base gets height variation and depth"
+}

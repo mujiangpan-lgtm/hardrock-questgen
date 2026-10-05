@@ -489,3 +489,133 @@ The 7 local chapters' requests are in `fix_results_local.json` (`renderer_reques
 - Director, before: About 7.5 for most chapters, maybe 8 for the best ones (stone_age, create, space, food) after fixes. Spec work (move things inward, remove hotbar rows, ground objects, cut contradictory elements) gets most chapters from 5.5-6.5 to 7. Renderer work (snap all sprites to one integer texel size, no smooth scaling, a scene-wide light pass with cast light and rim light instead of halos, shaded vector props, depth haze per layer) could reach 7.5-8. 9 is not realistic: it needs one coherent rendering style with bespoke, hand-authored compositions, real lighting and depth, and every element drawn for its place. Fraction-placed procedural motifs plus re-scaled game icons cannot get there, because the parts were never designed to sit together. To reach 9 you would need a different medium: hand-painted or hand-pixelled chapter illustrations (commissioned, or AI-generated and then hand-cleaned to one palette and density), imported as the scene layer.
 - Player, before: About 7.5, with 8 possible for the best chapters (food, create, twilight, space) after strict cleanup. 9 is not realistic with procedural PIL motifs plus upscaled item textures composed by fractions. A 9 needs one coherent rendering style with intentional lighting, depth, and hand-placed detail, and generic geometric motifs can't supply that. They will always read as clip-art next to real Minecraft pixel art. Biggest gains from cheapest to most expensive: (1) pick one medium, preferably pure pixel art at one fixed integer texel scale, and redraw or drop the vector props; (2) remove lineups, oversize glow stickers and clip-art suns; (3) add a shared light/ground pass (contact shadows, rim light from the hero light source); (4) fix the header-text shrink. Reaching 9 would take hand-pixelled or commissioned per-chapter illustrations (or block-built in-game dioramas rendered as screenshots) used as the scene layer.
 
+
+## Round 2 (create/space)
+
+Task: `CLOUD_TASK2.md` - redo the two pilots that still used smooth vector gears, planets and rocket, in the
+book's current language (one texel, one scene light, block/pixel dioramas). Branch `art-fixes-2`.
+
+### Scores (blind, `critique_after2_*.json`; before = `critique_after_*.json` of round 1)
+
+| chapter | before dir | before pl | before avg | after dir | after pl | after avg | delta |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| create | 6 | 7 | 6.50 | 8 | 8 | **8.00** | +1.50 |
+| space | 7 | 6.5 | 6.75 | 7.5 | 7.5 | **7.50** | +0.75 |
+
+Both critics say both chapters now fit the book (`fits_book: true`). **Create** "now sits comfortably in the
+industrial group" (storage, iron_age, steel_age, pneumatic) and is the richest of those. **Space** fits
+"borderline": its foreground is in the block-diorama language and the rocket and tower are "as good as
+anything in the book", but it is still the brightest, most saturated tile and its sky reads as painted.
+With round 1's 17 chapters unchanged, the book average is now **7.39** (round 1: 7.28).
+
+### Process
+
+- Setup as in round 1. The re-encrypted pack data adds `ad_astra:environment/*` (square pixel planets and
+  suns, 6-16 px) and `minecraft:environment/*` (sun, moon_phases).
+- Before any artlib edit: full `QGEN_STAGE=_stage_ref` build plus screen29 previews of all 19. A second full
+  build gave pixel-identical previews (the build is deterministic, so the identity proof means something).
+- `create` and `space` were first exported unchanged from `art_styles.py` into `art_styles.d/{create,space}.json`
+  (separate commit), then reworked.
+- One workflow, sonnet throughout, both chapters in parallel. Each chapter went through three steps:
+  1. A fixer used up to 4 builds.
+  2. An independent blind critic reviewed that preview against the contact sheet: create 7.5/8, space 7.4/8.
+  3. A fresh fixer applied the critique with the remaining 2 builds.
+  Each chapter used exactly 6 builds, the task's limit.
+- Final full build into `_stage_final`: `OK: 19 chapters, 435 quests`, no WARN or ERROR.
+- **Proof that the other 17 chapters are unchanged:**
+  - screen29 previews 17/17 pixel-identical to `_stage_ref`;
+  - their 128 generated textures (scenes, panels, banners, backgrounds) 128/128 identical;
+  - their lines in `ftb_quests_theme.txt` identical;
+  - the artlib diff is 1574 additions and 0 deletions, with no existing function or name redefined.
+
+### What changed
+
+**create (`20_create`)**: a Create workshop wall at texel 4 with a warm light from the top left, contact and
+drop shadows, three lanterns on pixel chains plus the firebox as cast lights, and ambient 0.86.
+- **Top:** a ceiling beam and a full-width line shaft with brass and andesite gearboxes and two cogs.
+- **Left:** three meshing wooden and brass cogs on a vertical shaft, with the tooth phases computed so they
+  interlock.
+- **Hero, under the panels:**
+  - a hooked-bucket water wheel half sunk in a pixel pool with foam and splash, beside a stone trough wall;
+  - a power shaft from the wheel hub through a mechanical press gantry and a mixer gantry (brass casing,
+    whisk into molten brass);
+  - a belt carrying andesite alloy and brass ingots in and brass sheets out;
+  - a raw copper and raw zinc ore pile.
+- **Right:** a 4-sail canvas windmill on a bearing, a shaft down to a brass flywheel, and a copper boiler
+  with a lit firebox, pressure gauge, chimney and hard-edged pixel smoke.
+- **Removed:** the vector gears, the vector water wheel and windmill, the blueprint layer, the gear halo
+  behind the banner, and the background gear-ghost overlay. The banner motif is off, and the background is
+  industrial and weathered iron.
+- **Palette:** brass accent (232,184,86) kept.
+
+**space (`33_space`)**: a lunar launch site at texel 5, lit from the upper left (dir [-0.8,-0.55]).
+- **Sky:**
+  - a round pixel sun with a dithered corona at the top left, warming a large pixel Earth with its moon;
+  - a 1.4x ringed violet giant cropped by the top edge;
+  - a small Venus and a larger Mars with Phobos;
+  - square pixel stars and twinkles, with the background starfield overlay lowered from 0.3 to 0.1;
+  - a dotted flight trail from the rocket to Mars.
+- **Hero:** a red and white pixel rocket seated on the Ad Astra launch pad (`blocks`), beside a lattice
+  launch tower with service arms, a hazard foot and a beacon.
+- **Base:**
+  - a hab with a tilted solar array on a mast;
+  - a lunar rover with tyre tracks;
+  - a 4-bay machine bank with a lit furnace, LED bars, screens and a comms mast;
+  - an astronaut with boot prints, beside a flag with a rocket emblem.
+- **Ground and shadows:** a 3-row lunar ground of stone and deepslate with ore flecks, two far ridges,
+  craters, boulders in the corners, and texel-snapped cast shadows.
+- **Removed:** the airbrushed vector planets, the clip-art rocket, the satellite and the comet. A pixel
+  satellite now fills the void right of panel 2.
+- **Palette:** violet accent (176,150,255) kept.
+
+### artlib additions
+
+There are 27 new optional motifs: 10 `create_*` and 17 `space_*`. All parameters and example layers are in
+`ART_GUIDE.md`, "Round 6".
+- **Create** (in `PIXEL_MOTIFS`, so they take the scene light and shadows like sprites):
+  `create_cog`, `create_wheel`, `create_sails`, `create_shaft`, `create_belt`, `create_water`,
+  `create_steam`, `create_smoke`, `create_station` (press or mixer gantry), `create_boiler`.
+- **Space** (unlit unless a layer sets `lit` + `pixelate`):
+  `space_planet`, `space_sun`, `space_stars`, `space_rocket`, `space_gantry`, `space_astronaut`,
+  `space_rover`, `space_satellite`, `space_solar`, `space_mast`, `space_rocks`, `space_crater`,
+  `space_shadow`, `space_tracks`, `space_trail`, `space_crop`.
+- **Quirks:**
+  - `create_wheel`'s `rim` (rim thickness) shares its key with the scene light's per-layer rim-light
+    strength.
+  - `space_crop`'s `asset` is not validated by `build.py --check` (the motif is unused).
+  - The create spec was laid out by a pixel-level generator script in the session scratchpad. That script is
+    not committed; the JSON is the source of truth.
+
+### Remaining weak points
+
+- **create** (both critics 8):
+  - The water at the bottom left is a flat dithered slab with a straight top and a hard vertical edge at x0.27.
+  - The windmill is the palest, largest mass and pulls the eye from the banner. Its bearing block reads as a
+    chest.
+  - The bottom machine row is packed while the wall left of centre and under the banner is empty, so the
+    scene is bottom-heavy.
+  - The brass cogs are close to the panel-border gold.
+  - The two small top cogs and the chains read slightly as stickers.
+  - The press head is procedural, because the real press, mixer and pole textures are UV atlases.
+  - The critics put create's ceiling at about 8.5-9 with a water channel and a shadow pass.
+- **space** (both critics 7.5):
+  - The planets and sun use a coarser grid than the foreground: about 8 screen px versus 4-5, because they are
+    drawn at k 5 and scaled with the scene box. The sun's dither halo reads as a filter.
+  - Earth and Mars look blobby to the player.
+  - Soft round background-tile dots (the screen-space starfield overlay) still show next to the hard pixel
+    stars.
+  - The dotted trail with an arrowhead looks like a mouse cursor.
+  - The base is a same-height line-up on one horizon, and the satellite floats.
+  - The regolith strip is noisy.
+  - It is the brightest, most saturated tile in the book: acceptable for the finale, but the least
+    consistent of the 19.
+  - The critics put its ceiling at about 8-8.5 once the sky is on the foreground grid and the base gets height
+    variation.
+- **Fixers' drawing-code requests:**
+  - hand-drawn 16x16 press head, mixer head, encased fan front, crafter front and windmill sail sprites;
+  - a tier-1 rocket sprite matching the Ad Astra entity model, and a launch pad top with a flame trench;
+  - an orbital station and satellite sprite set;
+  - a strata-cut lunar plateau tile set;
+  - a hand-drawn round pixel sun;
+  - per-planet hand-placed detail.
+  The quick spec-level fixes are listed above and are cheap for a next round.
