@@ -316,6 +316,16 @@ Bayer screen-door anywhere (sky, mountains, props), single-texel checker only wh
   _art_review/gen_climate3.py out.json`; env `C3_ONLY=sky,mountains` renders layer groups only), quick look without a build:
   `python _art_review/_c3_view.py spec.json out.png [x0 y0 x1 y1 zoom]`.
 
+### Round 8: farming pixel motifs (round 3 of the cloud tasks, 2026-10-06, additive only)
+
+New opt-in motifs in `artlib.py` (one block above `DECOR_MOTIFS`); no existing default changed, unedited chapters
+render byte-identical. Give each layer `"k"` = the scene `texel`.
+
+- `farming_sky`: k=4, stops=[[24,36,58],[66,62,96],[150,92,104],[236,140,84],[252,196,118]] (colours top to bottom), steps=16, edge=0.86 (band fraction where a one-texel checker blends into the next band), seed=0  Example: `{"motif":"farming_sky","x":0.5,"y":0.5,"w":64,"h":41,"color":[255,255,255],"k":4,"stops":[[18,28,48],[32,46,74],[78,64,100],[164,94,102],[240,144,86],[252,202,124]],"steps":20}`
+- `farming_cloud`: k=4, seed=0, glint=(255,214,160) lit top rim, belly=(104,76,100) shaded underside, puffs=0 (0 = by width), flat=0.0 (0..1 flattens it into a streak), side=-1 (rim on the left); layer color = mid tone. Not named lit/shade because those clash with layer keys.  Example: `{"motif":"farming_cloud","x":0.2,"y":0.2,"w":10.9,"h":4.1,"color":[150,104,126],"glint":[240,176,150],"belly":[70,60,98],"k":4,"seed":11}`
+- `farming_tree`: k=4, seed=0, leaf2=(92,128,44), leaf3=(150,172,62), apple=(204,44,38), apples=14, trunk=(98,68,44), crown=0.66 (crown share of box height), side=-1 (lit side; 1 = right), clumps=1.0; layer color = dark leaf base  Example: `{"motif":"farming_tree","x":0.2,"y":0.75,"w":8.3,"h":11.3,"color":[48,78,30],"k":4,"seed":3,"apples":16,"crown":0.68,"side":1}`
+- `farming_furrows`: k=4, rows=5, soil=(92,62,40), soil2=(62,40,28), crop2=(120,150,52) green, kind='wheat'|'leaf'|'tuft', seed=0, ends=0.07 (ragged row ends); layer color = ripe crop tone  Example: `{"motif":"farming_furrows","x":0.37,"y":0.85,"w":11.3,"h":6.1,"color":[214,178,74],"crop2":[130,150,56],"kind":"wheat","rows":4,"k":4,"seed":4}`
+
 ## Verify (always look at the screen previews)
 
 ```
