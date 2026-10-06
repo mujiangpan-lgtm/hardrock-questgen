@@ -1,0 +1,217 @@
+{
+ "reviewer": "blind critic r3 after",
+ "scores": [
+  {
+   "key": "00_welcome",
+   "director": 6.0,
+   "player": 6.0,
+   "issues": [
+    "Top 35% is an empty brown gradient with a hard-edged sun-ray fan; the scene only starts at y~0.45",
+    "Scene is a thin strip along the bottom; cabin right and stump left leave a hollow middle",
+    "Panel is a small cluster in dead centre over a purple mountain; most nodes are blank grey shapes",
+    "Mountains are flat vector-ish polygons while the foreground is detailed pixel art"
+   ],
+   "what_for_8": "Fill the upper sky with real depth (stars, cloud layers, horizon glow), move the scene up into the middle band, and add a landmark that frames the single panel."
+  },
+  {
+   "key": "climate",
+   "director": 8.5,
+   "player": 8.0,
+   "issues": [
+    "Section 3-5 panels sit on busy trees/mountains at y~0.55-0.65; borders weak",
+    "Foreground props (rack, crate, anemometer, mannequin, hut) are evenly spaced like a shelf of stickers",
+    "Right hut is heavy and slightly crowds the bottom-right corner",
+    "Aurora ribbons are a bit flat compared with the lit moon"
+   ],
+   "what_for_8": "Tie the foreground props together with snow drifts and shared firelight, and give the lower panels a darker backing."
+  },
+  {
+   "key": "food",
+   "director": 7.5,
+   "player": 7.5,
+   "issues": [
+    "Large dark empty wall in the centre at y~0.55-0.75 beside the panels",
+    "Upper hanging produce is large and evenly spaced like wallpaper",
+    "Panel 2 line runs the long way down the left; reads tangled at x~0.33",
+    "Shelf props are repeated bottle/cheese motifs on both sides"
+   ],
+   "what_for_8": "Vary prop scale and spacing, add warm light spill on the back wall, and fill the dead centre with a hanging pot or window."
+  },
+  {
+   "key": "health",
+   "director": 7.0,
+   "player": 7.0,
+   "issues": [
+    "Heavy dark void at the top-centre and between shelves (y~0.5-0.8)",
+    "Red cross sign and cross painting are flat and oversized next to the shelves",
+    "Section 3 nodes sit in a row with no connecting lines; the panel reads unfinished",
+    "Shelves are mirrored clutter with repeated bottles and nurse caps"
+   ],
+   "what_for_8": "Replace the empty centre with a clear focal point (a lit medicine cabinet or window), reduce the duplicated props, and give the oversized sign proper lighting."
+  },
+  {
+   "key": "farming",
+   "director": 7.5,
+   "player": 7.0,
+   "issues": [
+    "Sunset sky is clean but the cloud bands look like flat stripes with dithering",
+    "Panels sit on the bright sky; the translucent brown panels look muddy against orange (x~0.3-0.6, y~0.4-0.55)",
+    "Barn at the right is very blocky and large; the left tree and hay bales feel pasted on",
+    "Many panels have unused empty areas, e.g. section 5 at the left"
+   ],
+   "what_for_8": "Darken the panel backing so it separates from the sunset, and unify the barn, field and tree under one depth-lit scene."
+  },
+  {
+   "key": "storage",
+   "director": 8.5,
+   "player": 8.0,
+   "issues": [
+    "Right machine tower and left shelf are strong, but both are tall slabs hugging the edges",
+    "Pipe frame around the top and bottom is a neat idea but reads as a thin outline",
+    "Section 2 panel is nearly empty (x~0.55, y~0.3)",
+    "The middle floor is empty between the crates and the tower"
+   ],
+   "what_for_8": "Add warm light across the floor and a mid-ground cluster to balance the two towers; keep the frame."
+  },
+  {
+   "key": "stone_age",
+   "director": 8.0,
+   "player": 7.5,
+   "issues": [
+    "Section 3 title is cut through by connection lines at x~0.4, y~0.55",
+    "Panel 1 lines cross heavily and clutter the centre",
+    "Cave paintings are low-contrast, so the left side feels dim and empty",
+    "Props in the bottom row are small relative to the huge dark cave"
+   ],
+   "what_for_8": "Reduce line crossings, lift the cave-painting contrast and enlarge the foreground tools to match the fire."
+  },
+  {
+   "key": "copper_age",
+   "director": 7.5,
+   "player": 7.0,
+   "issues": [
+    "Mountains behind the panels are muddy purple-brown and flatten the panel contrast",
+    "Left ore stairs and right furnace are big dark masses; the centre bottom is thin",
+    "The sun at the top right is a glowing disc sticker with a hard ring",
+    "Many nodes are blank discs with no item icon"
+   ],
+   "what_for_8": "Give the sky real gradient and cloud depth, brighten the ore with rim light, and tie the sun glow into the furnace light."
+  },
+  {
+   "key": "bronze_age",
+   "director": 7.5,
+   "player": 7.0,
+   "issues": [
+    "The top 20% is a flat gradient with only a header floating in it",
+    "Mountains are generic flat polygons repeated at one size",
+    "Section 5 and 4 panels are tiny with sparse nodes",
+    "Props sit in a thin strip along the bottom; the middle depth is empty"
+   ],
+   "what_for_8": "Add atmosphere layers to the sky, scale up the workshop props, and link the scene to the panels via firelight."
+  },
+  {
+   "key": "iron_age",
+   "director": 8.5,
+   "player": 8.0,
+   "issues": [
+    "Hanging tool board at the left is flat and its chain overlaps the panel edge at x~0.28",
+    "Right chimney is a tall slab with a hard dark edge",
+    "Section 4 nodes are scattered with no lines",
+    "Left half of the middle (y~0.5-0.6) is a dark void"
+   ],
+   "what_for_8": "Soften the hard silhouette edges, light the empty middle with forge glow, and fix the chain-to-panel overlap."
+  },
+  {
+   "key": "steel_age",
+   "director": 7.5,
+   "player": 7.5,
+   "issues": [
+    "Huge left brick chimney is a flat vertical slab with little shading",
+    "Moon and starfield are a clean contrast, but the mountains are a flat dark blue band",
+    "Section 3 title is tiny and overlaps itself at x~0.72, y~0.2",
+    "Ground is a flat grey strip; the pile of ingots in the middle is small"
+   ],
+   "what_for_8": "Add shading and depth to the chimneys, and bring the lit forge across the ground for a unified light."
+  },
+  {
+   "key": "ie",
+   "director": 8.0,
+   "player": 7.5,
+   "issues": [
+    "Two pylons and the crane frame the panels well, but the pylon lattice repeats flatly",
+    "Panels have many blank shapes, so the content reads empty",
+    "Glowing lamp at the left is the only strong accent",
+    "Ground and floor are a flat grey band"
+   ],
+   "what_for_8": "Add shared cyan/orange light across the ground and use the cable lines to link the pylons into the panels."
+  },
+  {
+   "key": "tfmg",
+   "director": 7.5,
+   "player": 7.5,
+   "issues": [
+    "Hazard stripes on both towers are loud and flat compared with the muted scene",
+    "Right machine stack is huge and heavy; the left is a thin tower",
+    "Pumpjack is a flat yellow silhouette in the lower middle",
+    "Green haze looks muddy and the background is mostly empty"
+   ],
+   "what_for_8": "Tone down the stripes, cut the right tower's size and use the haze for real depth around the pumpjack."
+  },
+  {
+   "key": "pneumatic",
+   "director": 8.0,
+   "player": 8.0,
+   "issues": [
+    "Pipe frame is repeated and neat, but gauges on the left and right look stuck on",
+    "Machines at the bottom corners are dark and heavy",
+    "Section 5 and 4 panels are sparse",
+    "Wall texture is busy behind the panel lines"
+   ],
+   "what_for_8": "Vary the pipe weight, add steam and light depth, and reduce wall noise behind the panels."
+  },
+  {
+   "key": "mekanism",
+   "director": 8.5,
+   "player": 8.0,
+   "issues": [
+    "Big green tank on the left and dark tower on the right are a strong frame",
+    "Ore pile in the bottom-right corner is small and cut off",
+    "Warning sign on the tower is a lone sticker",
+    "Section 4 and 2 panels have a few unfilled nodes"
+   ],
+   "what_for_8": "Add green light spill across the floor and unify the small props with the tower scale."
+  },
+  {
+   "key": "explore",
+   "director": 8.0,
+   "player": 7.5,
+   "issues": [
+    "Sun disc on the left is a glowing sticker that clashes with the night sky",
+    "Mountains behind the lower panels reduce panel contrast (y~0.55-0.7)",
+    "The ground is a big brown block with little interest (bottom 20%)",
+    "Lantern on the right peak floats without a source"
+   ],
+   "what_for_8": "Resolve the day/night contradiction (sun vs stars), darken the ground and add midground props."
+  },
+  {
+   "key": "twilight",
+   "director": 8.5,
+   "player": 8.0,
+   "issues": [
+    "Left tree trunk is a big flat brown column with little texture variance",
+    "Castle at the top right is a flat silhouette",
+    "Section 2 title is tiny and overlaps (x~0.5, y~0.25)",
+    "Lower panels overlap the dark forest and get less contrast"
+   ],
+   "what_for_8": "Add bark and shade variation to the trunk and some depth to the castle silhouette to match the pond and mushrooms."
+  }
+ ],
+ "systemic": [
+  "Many quest nodes show blank grey shapes without item icons, so panels read empty and lose theme",
+  "Panel fills are translucent dark boxes that fight busy backgrounds in several chapters (farming, copper, explore, twilight)",
+  "Compositions follow one template: tall prop towers at both edges and a hollow dark middle, which feels formulaic across chapters",
+  "Chunky pixel props on top of smooth gradient skies and flat polygon mountains in several chapters (welcome, copper, bronze, steel) clash in density",
+  "Light sources rarely cast light onto neighbouring props, so scenes read as assembled stickers"
+ ],
+ "ceiling_estimate": "Current set is about 7.8 average. With unified lighting, denser fill of the empty middles, and item icons in every node it could reach 8.5 or a bit higher; 9 needs hand-painted depth."
+}

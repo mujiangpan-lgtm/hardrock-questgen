@@ -619,3 +619,120 @@ There are 27 new optional motifs: 10 `create_*` and 17 `space_*`. All parameters
   - a hand-drawn round pixel sun;
   - per-planet hand-placed detail.
   The quick spec-level fixes are listed above and are cheap for a next round.
+
+## Round 3 (all chapters below 8)
+
+Task: `CLOUD_TASK3.md`, with the owner's overrides: no budget stop, fix **every** chapter whose blind average was
+below 8 (lowest first), at most 6 stage builds per chapter; all subagents `claude-sonnet-5-5` (run through the
+Workflow tool, because the plain Agent tool only accepts model aliases). Branch `art-fixes-3`.
+
+### Process
+
+1. Setup, full reference build into `_stage_ref`, screen29 previews of all 19 into `r3_before/` + contact sheet.
+2. One fresh blind critic scored all 19 on both lenses -> `critique_r3_before.json` (book average 7.20).
+3. 17 chapters were below 8 (only create and space scored 8.0). One fixer per chapter, lowest first, 4 at a time
+   (two 2-worker queues; a single workflow is capped at CPUs-2 = 2 concurrent agents). Every fixer kept its result
+   (none restored the original). Builds used per chapter: 00_welcome 5, copper_age 4, tfmg 2, health 4, explore 4, food 3, pneumatic 1, iron_age 3, climate 1, steel_age 1, farming 2, bronze_age 5, mekanism 3, storage 1, stone_age 1, ie 3, twilight 3.
+4. Final full build into `_stage_final`: `OK: 19 chapters, 435 quests`, no WARN/ERROR.
+   **Proof for the unedited chapters (create, space):** all 15 of their generated textures are md5-identical to
+   `_stage_ref`, and their `ftb_quests_theme.txt` lines are identical. artlib.py diff: 237 additions, 0 deletions.
+5. One fresh blind critic scored only the 17 edited chapters (previews in `r3_after/`, `r3_before/contact_sheet.png`
+   as book context) -> `critique_r3_after.json`.
+
+### Scores (blind; average of director and player)
+
+| chapter | before dir / pl | before | after dir / pl | after | delta |
+| --- | --- | ---: | --- | ---: | ---: |
+| 00_welcome | 6 / 6.5 | 6.25 | 6 / 6 | 6.00 | -0.25 |
+| climate | 8 / 7.5 | 7.75 | 8.5 / 8 | 8.25 | +0.50 |
+| food | 7.5 / 7.5 | 7.50 | 7.5 / 7.5 | 7.50 | +0.00 |
+| health | 7 / 7 | 7.00 | 7 / 7 | 7.00 | +0.00 |
+| farming | 6.5 / 6.5 | 6.50 | 7.5 / 7 | 7.25 | +0.75 |
+| storage | 7.5 / 7.5 | 7.50 | 8.5 / 8 | 8.25 | +0.75 |
+| stone_age | 7.5 / 7 | 7.25 | 8 / 7.5 | 7.75 | +0.50 |
+| copper_age | 6.5 / 6.5 | 6.50 | 7.5 / 7 | 7.25 | +0.75 |
+| bronze_age | 7 / 7 | 7.00 | 7.5 / 7 | 7.25 | +0.25 |
+| iron_age | 7.5 / 7.5 | 7.50 | 8.5 / 8 | 8.25 | +0.75 |
+| steel_age | 6.5 / 6.5 | 6.50 | 7.5 / 7.5 | 7.50 | +1.00 |
+| create | 8 / 8 | 8.00 | not edited | 8.00 | |
+| ie | 7.5 / 7.5 | 7.50 | 8 / 7.5 | 7.75 | +0.25 |
+| tfmg | 7 / 7 | 7.00 | 7.5 / 7.5 | 7.50 | +0.50 |
+| pneumatic | 7.5 / 7.5 | 7.50 | 8 / 8 | 8.00 | +0.50 |
+| mekanism | 7 / 7 | 7.00 | 8.5 / 8 | 8.25 | +1.25 |
+| explore | 7 / 7 | 7.00 | 8 / 7.5 | 7.75 | +0.75 |
+| twilight | 7.5 / 7.5 | 7.50 | 8.5 / 8 | 8.25 | +0.75 |
+| space | 8 / 8 | 8.00 | not edited | 8.00 | |
+| **book (19)** | | **7.20** | | **7.67** | **+0.47** |
+
+Edited chapters: 7.10 -> 7.63. Chapters at 8 or above: 2 -> 8 of 19.
+Unedited chapters keep their before score. The before and after scores come from two different critic sessions;
+expect about +-0.5 noise per chapter. **00_welcome** scored lower (6.25 -> 6.00) and **food** and **health** did not
+move although their fixers judged them improved; they were kept (within noise) but are the first candidates for
+another pass or a revert of 00_welcome.
+
+### What changed (from the fixers' reports)
+
+- **00_welcome** (6.25 -> 6.00, 5 builds): Replaced the smooth mountain_range and tree_line layers with pixel_range: a hazed far range plus a darker near massif on each side, all lit from the right. Added a pixel_sun, a dark pixel_drift hill and a pixel_forest belt of dark teal conifers (bare, snow 0) behind the lower mid-ground and in front of the mountains. This fills the dark middle band and hides the flat mountain cut-off line. Added a small pixel-lit wooden cabin built with blocks: dark oak roof row, a glass window, and an oak door. It sits on the lower mid platform at x 0.675, with a warm window glow, a new entry in lights, and a lantern beside it. It is the focal prop near the quests and balances the lantern, stump and book hero on the left. Moved the poppy and dandelion sprites to x 0.545 and 0.575 to make room for the cabin.
+- **copper_age** (6.50 -> 7.25, 4 builds): Rebuilt the scene with a generator script that places layers in screen pixels; the layer count is now 34. The texel stays 4, with one light and one shadow. Accent colour and palette are unchanged. Sky: replaced the smooth sun and the smooth mountain_range with pixel_sun plus two hard-tone pixel_range layers. These are warm, hazy dusk massifs with no snow and no mist bands. Added a small space_stars patch in the top-left sky. Dead middle: added two opaque pixel_drift hill layers in the same brown tone as the near range, so the dark area around the panels now has depth. Dropped the strata_band. Ground: a full-width cobble blocks row along the bottom edge.
+- **tfmg** (7.00 -> 7.50, 2 builds): Removed all muddy nebula_glow layers in the sky; kept the low-alpha sky_band and the warm light glows. Replaced the two flat dark hazard pillars with lit steel stacks: steel_fluid_tank bands, yellow caution rings, steel_block caps, low haze. The left stack sits on the brick chimney. The right stack is a flare stack with the fire sprite moved onto its top. Added two create_smoke columns (light grey above the left stack, dark above the right flare) to give the sky a clear hard-tone smoke read. Removed the dark noisy cast-iron tank tower behind the right tower.
+- **health** (7.00 -> 7.00, 4 builds): Replaced the oversized blocks bed with a hand-drawn pixel_art hospital bed (76x34 texels, same texel as the potion sprites) plus an IV stand with a blood bag, so scale now matches the small props. Replaced the floating right shelves and workbench with a grounded right apothecary cabinet (hickory back wall, posts, 3 shelves down to the floor, 12 items, lantern on top), shorter than the left unit for asymmetry. Added a red-cross wall sign hung by two pixel cords from the drying beam, and a wall anatomy chart above the bed to fill the empty dark middle. Added a barrel with bandage and morphine sprites on the floor at the left of the bed.
+- **explore** (7.00 -> 7.75, 4 builds): Replaced the oversized smooth sun and the smooth mountain_range/snowy_range with a hard-tone pixel scene: a pixel_sun sitting low in the valley of the left massif, plus a far hazy pixel_range and two darker flank massifs (pixel_range, faceted, lit from the left to match the sun). Added a hard-banded blue pixel_aurora and three space_stars boxes to fill the top band. Removed the map-line contour_map noise. Removed the blocky grey tower and the stepped terrain. The right-hand hero is now a snow peak with a glowing soul lantern at the summit, which reads as a destination. Replaced the flat vector pines with two rows of pixel_forest (back and mid belts) behind the lower panels, three tall foreground pine clumps (left x2, right x1), and a light sky_band mist. This fixes the dead dark area around the panels.
+- **food** (7.50 -> 7.50, 3 builds): Replaced the flat plank_shelf ceiling strip with a heavy stripped-spruce pixel_timber beam plus a thin upper rafter. The hanging cords and food now visibly hang from it. Added a hazed, dark spruce-plank wainscot (blocks, 2 rows, full width) behind the lower props for wall depth and a floor-to-wall transition. Rebuilt both left shelves as one shelving unit: two vertical posts down to the floor, thick pixel_timber boards with small diagonal brackets, and 5 items per shelf (up from 4). The shelves now look supported and fuller. Anchored the floating bread crate: the cabinets now sit on a 3-row cabinet-on-crates stack standing on the floor, with a smaller bread pile and pie on top.
+- **pneumatic** (7.50 -> 8.00, 1 builds): Removed the odd drone sticker (two turbine_rotor sprites, logistics_core sprite and its axle shaft) at x0.2-0.3 y0.44. Replaced it with a single pixel programmable-controller block (blocks layer, x0.25 y0.46) lit by the lantern rays. Replaced the second bottom-left 2x2 compressed-iron stack with a varied reinforced brick/tile/pillar stack to break the repeated texture. Added three pipe couplings (short wide shafts) on the long left vertical pipe at y0.33, 0.53 and 0.65 to break up the flat run.
+- **iron_age** (7.50 -> 8.25, 3 builds): Tool rack anchored: four chain segments each on a new left and right chain hang from the top beam to the rack corners, plus a dark contact-shadow glow under it and a warm glow behind the hammer head. Chimney forge shortened by one brick row (6 rows to 5, h 22 to 18.3, bottom edge unchanged); smoke, embers and the dark smoke glow lowered to match, so it dominates less. Crate recoloured to light oak over ash planks (was chestnut/hickory). Barrel changed to palm wood (brighter, more orange).
+- **climate** (7.75 -> 8.25, 1 builds): Removed the pixel_sun layer and its warm sun light, so the scene has one moon light and a consistent night. Removed the dense lower forest row (layers 33-39) behind the lower panels and raised haze on the mid forest bands to 0.45-0.5, so the tree band behind the panels is calmer. Removed the sticker-like windsock pixel_art and the shears sprite, which cuts clutter at the drying rack and tornado sign. Spec validated and formatted: 90 layers. build.py --check passes.
+- **steel_age** (6.50 -> 7.50, 1 builds): Rebuilt the scene layers (22) in art_styles.d/steel_age.json; palette, background, banner and shapes are untouched. The spec is valid and formatted, and build.py --check passes. Best copy is in scratchpad/r3/steel_age/best.json, generator in gen.py. Sky: hard-tone night sky with a pixel moon (space_stars plus pixel_moon), a faint dusk band, a hazy pixel_range mountain line and two dark fog bands that dissolve the mountain foot. The smooth smokestack and mountain_range layers and the floating embers are gone. Removed the dim ghost furnace on the left. In its place is a taller, hazier brick stack with a lit top cap and a lit oven door, with create_smoke rising from its flue. One hero: the right-hand blast furnace stays, now with a create_smoke plume from its lit flue. Its lights (flue top, fire door, crucible) are tied to real sources.
+- **farming** (6.50 -> 7.25, 2 builds): Rebuilt the scene at one texel (4, was 3): every layer is now a pixel motif, real block textures or pixelated livestock, so the old mixed-density props are gone. Replaced the smeared sky_band clouds with a hard-banded dusk sky (night blue to mauve to amber) and six hard-tone pixel clouds with flat shaded bellies and a warm lit rim. Added a pixel_sun setting behind rolling hills, a faint far range and three pixel_drift green hill layers for depth; birds and a few stars fill the top. Replaced the oversized vector-looking oak with a smaller hand-built pixel apple tree (4 leaf tones, outline, apples, forked trunk with roots) at the left.
+- **bronze_age** (7.00 -> 7.25, 5 builds): Rebuilt the scene layers with a generator script (scratchpad r3/bronze_age/gen.py). Header, palette, banner and background are unchanged and the accent colour is the same. Added a hard-tone dusk landscape: a pixel_sun in the saddle at the right, a warm-lit pixel_range far massif, a second lower pixel_range foothill band, two pixel_drift hill bands, and pixel_forest clumps. These replace the old smooth tree/mountain_range/nebula_glow smoke props. Fixed the flat horizon cut-off of the far range by covering its base with a drift. Shrank the mine: the headframe is now 3x5 cells and the adit 5x3 cells (was 3x6 and 7x5), with bell, chain and lamp rescaled to the texel. This fixes the mismatched scale and the oversized blocky look. Shrank the furnace tower from 6 to 5 rows and replaced the glow/nebula smoke with create_smoke pixel smoke on the chimney top.
+- **mekanism** (7.00 -> 8.25, 3 builds): Added a green conduit network: long overhead pipe linking the left and right posts, a vertical drop down the right gap between panel 3 and the turbine, and an elbow into the new QIO array (create_shaft, lit). Filled the empty middle with a 2x5 QIO drive array (front and rack_glass blocks) plus green soft_glow and a new cast light. Moved the machine bank left to x 0.45 (with its glow and light) to make room for the QIO array. Broke up the plain tank with elite and basic induction providers in the casing.
+- **storage** (7.50 -> 8.25, 1 builds): Tower texture varied: machine_casing, 4k/64k storage blocks and extra disk drives mixed into the repeating disk-drive stack (adds teal and yellow glowing cells, less repetitive). Shelf decluttered: removed lunch_basket, wooden_hopper, a burlap sack, a glazed vessel and a duplicate sack on the left shelf. Top and bottom pipe runs thickened (h 0.8/0.95 -> 1.1) so they read as deliberate runs. Low floor props regrouped: chest minecart and sacks clustered next to the hopper barrel instead of scattered.
+- **stone_age** (7.25 -> 7.75, 1 builds): Replaced the 14 stacked dripstone sprites (flat brown wedges) with 10 hand-built pixel_art stalactites. They have lit and shaded flanks, strata, warm tips and a few water drips, vary in length, and hang in two clusters left and right, clear of the banner and panels. Replaced the smooth cave_painting, cave_painting_herd and hand_print motifs with pixel_art cave art. The left wall has a pixel mammoth, two deer and three stick hunters on a faint lit wall patch. The right wall has two bison, two hunters and a stencil-style hand print. The ochre is brighter and has a dark/light speckle, and the art ignores the scene light so it stays readable. Removed the anvil-like chert block and its sticker-like tools. Added a tree-stump knapping block (pixel_art) with the hammer, flint and knife head resting on it, plus an axe and two flint chips on the floor. Added three pixel stalagmites (two beside the stump, one at the right edge) to frame the fire and fill the dead dark areas at the bottom left and right.
+- **ie** (7.50 -> 7.75, 3 builds): Right chimney shortened from 11 to 9 rows and moved so it stays on the ground. It is now less oversized, and its haze is 0.25 to tone down the saturated red. Removed the four flat grey soft_glow smoke blobs. Added a hard-edged create_smoke plume (k 3, 4 puffs, drift 0.5) rising from the chimney top. Left pylon haze raised from 0.1 to 0.3 so it is less flat and dominant. Added two space_stars boxes in the top corners. They appear faint in the preview.
+- **twilight** (7.50 -> 8.25, 3 builds): Giant pale gloom-cap mushroom replaced by a hand-drawn pixel_art glowing mushroom in the chapter's purple accent palette, plus a smaller companion, with a magenta light and soft glow; the out-of-palette blocky one is gone. Castle rebuilt as a pixel_art silhouette (three roofed towers, crenellated keep, warm lit windows, moon-side rim) with an amber glow behind it, so it reads clearly. Moon replaced by a hard-tone pixel_moon (k=2) with a moonlight light entry; stars are now space_stars at texel 2. Glowing pond replaced by a hard-banded pixel_art pond (mossy stone rim, 5 blue bands, lily pads, lotus, sparkles); the soft-glow stack and about 40 clutter flower sprites were cut to 12 flowers, 4 amethysts and 7 fireflies.
+
+### artlib additions
+
+Only farming added code: `farming_sky` (hard-banded gradient sky), `farming_cloud` (hard-tone pixel cloud),
+`farming_tree` (pixel fruit tree), `farming_furrows` (crop rows: wheat / leaf / tuft). One block above
+`DECOR_MOTIFS`, 237 additions, 0 deletions; parameters in ART_GUIDE.md "Round 8". All other fixers reused the
+existing opt-in motifs (`pixel_*`, `create_*`, `space_*`, `blocks`, `pixel_art`).
+
+### Remaining weak points (after critic)
+
+- **00_welcome** (6/6): Top 35% is an empty brown gradient with a hard-edged sun-ray fan; the scene only starts at y~0.45 | Scene is a thin strip along the bottom; cabin right and stump left leave a hollow middle
+- **climate** (8.5/8): Section 3-5 panels sit on busy trees/mountains at y~0.55-0.65; borders weak | Foreground props (rack, crate, anemometer, mannequin, hut) are evenly spaced like a shelf of stickers
+- **food** (7.5/7.5): Large dark empty wall in the centre at y~0.55-0.75 beside the panels | Upper hanging produce is large and evenly spaced like wallpaper
+- **health** (7/7): Heavy dark void at the top-centre and between shelves (y~0.5-0.8) | Red cross sign and cross painting are flat and oversized next to the shelves
+- **farming** (7.5/7): Sunset sky is clean but the cloud bands look like flat stripes with dithering | Panels sit on the bright sky; the translucent brown panels look muddy against orange (x~0.3-0.6, y~0.4-0.55)
+- **storage** (8.5/8): Right machine tower and left shelf are strong, but both are tall slabs hugging the edges | Pipe frame around the top and bottom is a neat idea but reads as a thin outline
+- **stone_age** (8/7.5): Section 3 title is cut through by connection lines at x~0.4, y~0.55 | Panel 1 lines cross heavily and clutter the centre
+- **copper_age** (7.5/7): Mountains behind the panels are muddy purple-brown and flatten the panel contrast | Left ore stairs and right furnace are big dark masses; the centre bottom is thin
+- **bronze_age** (7.5/7): The top 20% is a flat gradient with only a header floating in it | Mountains are generic flat polygons repeated at one size
+- **iron_age** (8.5/8): Hanging tool board at the left is flat and its chain overlaps the panel edge at x~0.28 | Right chimney is a tall slab with a hard dark edge
+- **steel_age** (7.5/7.5): Huge left brick chimney is a flat vertical slab with little shading | Moon and starfield are a clean contrast, but the mountains are a flat dark blue band
+- **ie** (8/7.5): Two pylons and the crane frame the panels well, but the pylon lattice repeats flatly | Panels have many blank shapes, so the content reads empty
+- **tfmg** (7.5/7.5): Hazard stripes on both towers are loud and flat compared with the muted scene | Right machine stack is huge and heavy; the left is a thin tower
+- **pneumatic** (8/8): Pipe frame is repeated and neat, but gauges on the left and right look stuck on | Machines at the bottom corners are dark and heavy
+- **mekanism** (8.5/8): Big green tank on the left and dark tower on the right are a strong frame | Ore pile in the bottom-right corner is small and cut off
+- **explore** (8/7.5): Sun disc on the left is a glowing sticker that clashes with the night sky | Mountains behind the lower panels reduce panel contrast (y~0.55-0.7)
+- **twilight** (8.5/8): Left tree trunk is a big flat brown column with little texture variance | Castle at the top right is a flat silhouette
+
+Systemic (after critic):
+- Many quest nodes show blank grey shapes without item icons, so panels read empty and lose theme
+- Panel fills are translucent dark boxes that fight busy backgrounds in several chapters (farming, copper, explore, twilight)
+- Compositions follow one template: tall prop towers at both edges and a hollow dark middle, which feels formulaic across chapters
+- Chunky pixel props on top of smooth gradient skies and flat polygon mountains in several chapters (welcome, copper, bronze, steel) clash in density
+- Light sources rarely cast light onto neighbouring props, so scenes read as assembled stickers
+
+Ceiling estimate (after critic): Current set is about 7.8 average. With unified lighting, denser fill of the empty middles, and item icons in every node it could reach 8.5 or a bit higher; 9 needs hand-painted depth.
+
+### Skipped chapters
+
+None: all 17 chapters below 8 were edited. create and space (8.0) were above the threshold and left unchanged.
+
+### Spend
+
+Subagent tokens (claude-sonnet-5-5): before critic ~0.10M, 17 fixers ~1.70M, after critic ~0.09M (plus ~2 short
+fixer starts discarded when the run was restarted with more parallelism). The dollar amount is not visible from
+this session; the budget stop was lifted by the owner.
+
