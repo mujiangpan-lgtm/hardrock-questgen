@@ -16,13 +16,17 @@
   {"motif": "sky_band", "x": 0.5, "y": 0.262, "w": 72, "h": 5, "color": [200, 112, 70], "alpha": 0.34},
   {"motif": "space_stars", "x": 0.5, "y": 0.1911, "w": 54, "h": 7, "color": [255, 255, 255], "alpha": 0.9, "n": 42, "sparkle": 3, "k": 5, "seed": 4, "unlit": true},
   {"motif": "pixel_moon", "x": 0.4515, "y": 0.2149, "w": 7, "h": 7, "color": [255, 255, 255], "k": 5, "r": 8, "halo": 1.8, "dither": 0, "alpha": 0.9, "unlit": true},
-  {"motif": "pixel_range", "x": 0.5, "y": 0.3215, "w": 70, "h": 9, "color": [52, 62, 92], "k": 5, "side": -1, "snow": 0.28, "steps": 4, "rays": 3, "jag": 0.25, "flat": 0.0, "peaks": [[0.07, 0.8, 0.13], [0.27, 0.55, 0.11], [0.47, 0.95, 0.15], [0.68, 0.6, 0.12], [0.86, 0.9, 0.14], [0.98, 0.6, 0.1]], "snow_lit": [132, 150, 196], "snow_shade": [70, 82, 120], "mist": [34, 40, 58], "mist_amt": 0.8, "mist_from": 0.45, "haze": 0.4, "seed": 3, "unlit": true},
-  {"motif": "sky_band", "x": 0.5, "y": 0.419, "w": 72, "h": 4, "color": [24, 28, 42], "alpha": 0.97},
-  {"motif": "sky_band", "x": 0.5, "y": 0.449, "w": 72, "h": 3, "color": [24, 28, 42], "alpha": 0.9},
+  {"motif": "pixel_range", "x": 0.5, "y": 0.4, "w": 70, "h": 9, "color": [62, 74, 108], "k": 5, "side": -1, "snow": 0.22, "steps": 4, "rays": 3, "jag": 0.25, "flat": 0.0, "peaks": [[0.1, 0.7, 0.12], [0.33, 0.9, 0.12], [0.55, 0.6, 0.1], [0.75, 0.95, 0.13], [0.93, 0.7, 0.1]], "snow_lit": [150, 166, 210], "snow_shade": [70, 82, 120], "mist": [34, 40, 58], "mist_amt": 0.0, "mist_from": 1.0, "haze": 0.55, "seed": 11, "unlit": true},
+  {"motif": "pixel_range", "x": 0.5, "y": 0.6, "w": 70, "h": 14, "color": [40, 48, 76], "k": 5, "side": -1, "snow": 0.3, "steps": 4, "rays": 3, "jag": 0.25, "flat": 0.0, "peaks": [[0.05, 0.85, 0.1], [0.27, 1.0, 0.12], [0.5, 0.75, 0.12], [0.7, 0.9, 0.12], [0.9, 1.0, 0.14]], "snow_lit": [132, 150, 196], "snow_shade": [70, 82, 120], "mist": [30, 36, 58], "mist_amt": 0.0, "mist_from": 1.0, "haze": 0.15, "seed": 3, "unlit": true},
   {"motif": "soft_glow", "x": 0.7748, "y": 0.3676, "w": 22, "h": 14, "color": [230, 120, 70], "alpha": 0.2},
   {"motif": "soft_glow", "x": 0.5, "y": 0.5781, "w": 54, "h": 34, "color": [120, 140, 196], "alpha": 0.08},
+  {"motif": "soft_glow", "x": 0.5, "y": 0.5, "w": 56, "h": 22, "color": [6, 8, 16], "alpha": 0.35},
+  {"motif": "pixel_drift", "x": 0.5, "y": 0.66, "w": 58, "h": 7, "color": [50, 60, 90], "k": 5, "deep": [22, 26, 40], "amp": 0.3, "waves": 2.4, "seed": 5, "dither": 0, "sparkle": 0.0},
+  {"motif": "pixel_drift", "x": 0.5, "y": 0.715, "w": 58, "h": 8, "color": [58, 68, 98], "k": 5, "deep": [30, 36, 56], "amp": 0.3, "waves": 2.0, "seed": 7, "dither": 0, "sparkle": 0.0},
   {"motif": "blocks", "x": 0.436, "y": 0.7323, "w": 21.46, "h": 8.12, "rows": ["SSSSSS", "SGSSGS"], "legend": {"C": "tfc:block/metal/block/black_steel", "S": "tfc:block/fire_bricks", "G": {"front": "tfc:block/devices/blast_furnace/side_lit", "top": "tfc:block/fire_bricks", "side": "tfc:block/fire_bricks"}}, "depth": 0.45, "alpha": 1.0, "haze": 0.7, "shadow": 0, "tint": 0.0},
   {"motif": "blocks", "x": 0.1917, "y": 0.5682, "w": 8.12, "h": 24.79, "rows": ["T ", "S ", "S ", "S ", "S ", "SS", "BS"], "legend": {"T": {"front": "tfc:block/metal/block/black_steel", "top": "tfc:block/devices/blast_furnace/top_lit", "side": "tfc:block/metal/block/black_steel"}, "S": "tfc:block/fire_bricks", "B": {"front": "tfc:block/devices/blast_furnace/side_lit", "top": "tfc:block/fire_bricks", "side": "tfc:block/fire_bricks"}}, "depth": 0.45, "alpha": 1.0, "haze": 0.5, "shadow": 0},
+  {"motif": "soft_glow", "x": 0.215, "y": 0.45, "w": 6, "h": 34, "color": [6, 8, 16], "alpha": 0.5},
+  {"motif": "soft_glow", "x": 0.1917, "y": 0.76, "w": 14, "h": 14, "color": [255, 140, 60], "alpha": 0.3},
   {"motif": "create_smoke", "x": 0.1649, "y": 0.24, "w": 5, "h": 10, "color": [84, 88, 106], "k": 5, "puffs": 5, "drift": 0.6, "unlit": true, "shadow": 0, "haze": 0.35, "alpha": 0.9},
   {"motif": "blocks", "x": 0.7754, "y": 0.6112, "w": 11.46, "h": 21.46, "rows": [" T ", " S ", "SSS", "RRR", "SSS", "FBF"], "legend": {"T": {"front": "tfc:block/metal/block/black_steel", "top": "tfc:block/devices/blast_furnace/top_lit", "side": "tfc:block/metal/block/black_steel"}, "S": "tfc:block/fire_bricks", "R": "tfc:block/metal/block/black_steel", "F": "tfc:block/fire_bricks", "B": {"front": "tfc:block/devices/blast_furnace/side_lit", "top": "tfc:block/fire_bricks", "side": "tfc:block/fire_bricks"}}, "depth": 0.45, "alpha": 1.0},
   {"motif": "create_smoke", "x": 0.764, "y": 0.3914, "w": 5, "h": 10, "color": [96, 100, 118], "k": 5, "puffs": 5, "drift": -0.5, "unlit": true, "shadow": 0, "alpha": 0.95},
@@ -33,7 +37,12 @@
   {"motif": "blocks", "x": 0.753, "y": 0.7753, "w": 4.79, "h": 4.79, "rows": ["C"], "legend": {"C": {"front": "tfc:block/devices/crucible/side", "top": "tfc:block/molten_lit", "side": "tfc:block/devices/crucible/side"}}, "depth": 0.45, "alpha": 1.0, "glow": [255, 130, 50], "glow_strength": 0.8},
   {"motif": "sprite_row", "x": 0.4515, "y": 0.7749, "w": 9, "h": 5, "assets": ["tfc:item/metal/ingot/pig_iron", "tfc:item/metal/ingot/steel", "tfc:item/metal/double_ingot/steel", "tfc:item/metal/ingot/black_steel", "tfc:item/metal/ingot/blue_steel", "tfc:item/metal/ingot/red_steel", "tfc:item/metal/ingot/steel"], "arrange": "pile"},
   {"motif": "anvil_hot", "x": 0.2926, "y": 0.7851, "w": 9, "h": 4.2, "color": [84, 88, 102], "pixelate": 5, "colors": 14, "lit": true},
-  {"motif": "sprite", "x": 0.3233, "y": 0.7444, "w": 3.3, "asset": "tfc:item/metal/hammer/steel", "shadow": 0.3}
+  {"motif": "sprite", "x": 0.3233, "y": 0.7444, "w": 3.3, "asset": "tfc:item/metal/hammer/steel", "shadow": 0.3},
+  {"motif": "space_rocks", "x": 0.5, "y": 0.9, "w": 64, "h": 3, "color": [78, 82, 96], "k": 5, "n": 16, "maxw": 6, "side": -1},
+  {"motif": "pixel_lightpool", "x": 0.77, "y": 0.885, "w": 18, "h": 2.6, "color": [255, 150, 70], "k": 5, "steps": 6, "peak": 0.7, "skew": -0.2, "dither": 0},
+  {"motif": "pixel_lightpool", "x": 0.29, "y": 0.875, "w": 12, "h": 2.4, "color": [255, 150, 70], "k": 5, "steps": 6, "peak": 0.6, "dither": 0},
+  {"motif": "sprite_row", "x": 0.4, "y": 0.8, "w": 8, "h": 5, "assets": ["tfc:item/metal/ingot/steel", "tfc:item/metal/ingot/black_steel", "tfc:item/metal/ingot/pig_iron", "tfc:item/metal/double_ingot/steel"], "arrange": "pile"},
+  {"motif": "sprite_row", "x": 0.5, "y": 0.8, "w": 8, "h": 5, "assets": ["tfc:item/metal/ingot/red_steel", "tfc:item/metal/ingot/blue_steel", "tfc:item/metal/ingot/steel", "tfc:item/metal/ingot/black_steel"], "arrange": "pile"}
   ]
  }
 }
