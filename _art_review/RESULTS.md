@@ -812,3 +812,46 @@ Ceiling estimate: With panel-contrast and mid-band fixes, most chapters could re
 Spend (round 4): about 1.25M subagent tokens for the fixers and 0.08M for the critic (plus two fixer starts discarded
 when the run was restarted to add the owner's reference chapters).
 
+
+## Round 5 (third pass on the 6 chapters still below 8)
+
+Same setup as round 4 (space and climate as primary references, issues from `critique_r4_after.json`, fresh
+reference `_stage_ref3`, 4 fixers in parallel, at most 6 builds). No `artlib.py` changes. Final build OK; the 13
+unedited chapters' 100 textures are md5-identical to `_stage_ref3` and their theme lines identical. Fresh blind critic
+on the 6 edited chapters: `critique_r5_after.json`; previews and a current contact sheet in `r5_after/`.
+
+| chapter | after r4 | after r5 (dir / pl) | after r5 | delta | builds |
+| --- | ---: | --- | ---: | ---: | ---: |
+| 00_welcome | 7.75 | 7.5 / 6.5 | 7.00 | -0.75 | 1 |
+| health | 7.75 | 8 / 8 | 8.00 | +0.25 | 2 |
+| farming | 7.25 | 7.5 / 7 | 7.25 | +0.00 | 4 |
+| copper_age | 7.75 | 7.5 / 7 | 7.25 | -0.50 | 3 |
+| bronze_age | 7.75 | 8 / 7.5 | 7.75 | +0.00 | 1 |
+| tfmg | 7.75 | 8 / 7.5 | 7.75 | +0.00 | 1 |
+
+Book average: 8.00 -> **7.95** (each chapter's latest blind score).
+
+**Reading:** the fixers made only small, local changes this round (1-4 builds: clouds, fireflies, a light pool, a
+monitor, a forest band, sky recolours), and the score changes (-0.75 to +0.25) are within the +-0.5 noise between
+critic sessions; 00_welcome and copper_age scored lower with a different critic although their edits were additive
+touches. Diminishing returns: the remaining gaps are mostly layout items the art spec cannot change (small panels,
+blank node icons, panel colours) and structural props (farming's block barn) that need new pixel motifs.
+
+### What changed in round 5
+
+- **health** (2 builds): Replaced the floating wall clock (layer 96) with a pixel ECG heart monitor (dark frame, teal screen, pink pulse line), so the right-hand wall cluster of monitor and hanging red-cross sign reads as one medical theme. Added a pink soft_glow behind the monitor and a matching pink entry in scene.lights, giving the empty upper-right wall a lit focal element. Brightened the monitor screen and glow on the second build after the first looked dim.
+- **bronze_age** (1 builds): Removed the bronze block stack at the right edge, which was cut off by the screen edge. Removed the propick sprite and the charcoal pile from the crowded bottom band. Moved the right-hand ingot and ore pile inward and made it smaller. Moved the minecart slightly left.
+- **farming** (4 builds): Clouds: replaced 5 same-silhouette big clouds with 7 varied ones (different sizes, flat 0.1-0.85, seeds, lit side, cold/warm tones); two small streaks fill the gaps, none repeat. Barn: lit lantern on the wall with a warm soft_glow and a new warm scene light, cream plank door trim (frame + X brace) as pixel_art, rooster weathervane on the roof, warm pixel_lightpool on the ground in front, darker ground shadow and a shade overlay on the right wing. Left foreground: three pixel sunflowers beside the apple tree to fill the left, with the pumpkin and melon below. Learned and used the real screen mapping: visible x is about 0.11-0.89 and y about 0.19-0.83 (screen_y = 1620*fy - 303 px, screen_x = (fx - 0.11)*1872 px); props placed accordingly.
+- **00_welcome** (1 builds): Added two hard-tone farming_cloud layers in the empty left sky (x0.17,y0.335 and x0.3,y0.4), matching the right-side cloud style. Added warm space_stars sparkle band (fireflies) over the forest in the vacant middle band (x0.46,y0.665). Added a hard-banded pixel_lightpool (dither 0) under the cabin lantern/window to ground the cabin light. Left composition, palette, panel and node areas untouched; spec validated and formatted.
+- **copper_age** (3 builds): Added a pixel_forest band of dark warm-hazed conifers (x0.5, y0.62, w40, h14, n22, hmin60/hmax100, color [50,30,44], haze 0.3) between the drift layers and the base blocks. It fills the empty dark mid-band behind the lower panels and adds a depth layer between the mountains and the foreground. Moved the furnace smoke from y0.4645 to y0.505 so it rises from the tower top instead of floating detached. Saved the spec in the one-layer-per-line format; it validates and build.py --check passes. The best version is copied to SP/r5/copper_age/best.json and the original is in orig.json.
+- **tfmg** (1 builds): Replaced the muddy olive sky gradient with a clean dusk gradient (deep blue-black to violet to orange horizon). Removed the olive sky_band and recoloured the big mid glow from olive-amber to warm orange. Far steel tower at x 0.745: haze 0.6 to 0.12, so it now reads as a solid structure. Lightened the far tower's smoke colour for contrast against the darker sky.
+
+### Remaining weak points (round-5 critic)
+
+- **00_welcome**: Single small quest panel floats mid-sky (centre, 40-57% height) with nodes spilling out of it and a big dark octagon/diamond lines over the mountain; panel does not feel part of the scene | Scene is empty in the upper 25% (sky only) and left 30% of the middle; props (stump with book, pouch, axe, sign) are tiny and scattered
+- **health**: Right 60% of the middle band (heartbeat monitor, first-aid sign) is a bit sparse and the heartbeat panel floats near the section 2 panel (right-centre, 43%) | Section 3 and 4 panels have small dim nodes with slightly low-contrast dark icons (centre, 58-62%)
+- **farming**: Panels are scattered over the sky with uneven spacing and a long diagonal connector line from panel 3 to panel 6 crossing the gap (centre, 40-65%) | Section 5 panel overlaps the sunset/tree area and its semi-transparent fill is muddy over the glow (left, 60-78%)
+- **copper_age**: Panels sit on a busy dithered forest/mountain band; panel fills are translucent and the dark node discs lose contrast (centre, 25-75%) | Left ore stair cliff and right furnace are heavy and nearly same value, the centre bottom forge is small and the middle is a murky dark-red mass (bottom-centre 50-75%)
+- **bronze_age**: Panels sit mostly on glowing sunset sky with brown fills; header text over bright sun area is readable but node icons are small (centre, 30-65%) | Section 5 panel holds a single dark gear node and section 4 two nodes, feels thin/empty (centre-right 55-65%)
+- **tfmg**: Panels are olive/gold on dark; node icons are tiny, dark hexagons and squares have low contrast inside panels (centre, 25-75%) | Section 2 has sparse disconnected nodes, section 3 wide panel is half empty (centre 42-57%)
+
