@@ -24,7 +24,7 @@
   {"motif": "blocks", "x": 0.5225, "y": 0.7773, "w": 69.9, "h": 3.9, "rows": ["FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"], "legend": {"F": {"front": "immersiveengineering:block/stone_decoration/concrete_tile/concrete_tile0", "top": "immersiveengineering:block/stone_decoration/concrete_tile/concrete_tile1", "side": "immersiveengineering:block/stone_decoration/concrete_tile/concrete_tile0"}}, "depth": 0.7, "shadow": 0, "haze": 0.6},
   {"motif": "light_rays", "x": 0.2682, "y": 0.6764, "w": 14, "h": 16, "color": [110, 220, 255], "alpha": 0.38, "src": [0.5, 0.0], "angle": 96, "spread": 46, "count": 6},
   {"motif": "blocks", "x": 0.7168, "y": 0.5011, "w": 7.2, "h": 29.2, "rows": ["SSS", " S ", " S ", " S ", " S ", " S ", " S ", " S ", " S ", " S ", " S ", " S ", " S ", " S "], "legend": {"S": {"front": "immersiveengineering:block/metal_decoration/steel_scaffolding", "top": "immersiveengineering:block/metal_decoration/steel_scaffolding_top_standard", "side": "immersiveengineering:block/metal_decoration/steel_scaffolding"}}, "depth": 0.4, "haze": 0.62, "shadow": 0},
-  {"motif": "blocks", "x": 0.1686, "y": 0.4916, "w": 7.2, "h": 31.2, "rows": ["SSS", " S ", " S ", "SSS", " S ", " S ", " S ", " S ", " S ", " S ", " S ", " S ", " S ", " S ", "CCC"], "legend": {"S": {"front": "immersiveengineering:block/metal_decoration/steel_scaffolding", "top": "immersiveengineering:block/metal_decoration/steel_scaffolding_top_standard", "side": "immersiveengineering:block/metal_decoration/steel_scaffolding"}, "C": "immersiveengineering:block/stone_decoration/concrete/concrete0"}, "depth": 0.4, "haze": 0.1},
+  {"motif": "blocks", "x": 0.1686, "y": 0.4916, "w": 7.2, "h": 31.2, "rows": ["SSS", " S ", " S ", "SSS", " S ", " S ", " S ", " S ", " S ", " S ", " S ", " S ", " S ", " S ", "CCC"], "legend": {"S": {"front": "immersiveengineering:block/metal_decoration/steel_scaffolding", "top": "immersiveengineering:block/metal_decoration/steel_scaffolding_top_standard", "side": "immersiveengineering:block/metal_decoration/steel_scaffolding"}, "C": "immersiveengineering:block/stone_decoration/concrete/concrete0"}, "depth": 0.4, "haze": 0.3},
   {"motif": "shaft", "x": 0.2397, "y": 0.2362, "w": 3.875, "h": 0.333, "color": [62, 74, 88], "alpha": 1.0, "rot": 11.4},
   {"motif": "shaft", "x": 0.2973, "y": 0.2479, "w": 3.877, "h": 0.333, "color": [62, 74, 88], "alpha": 1.0, "rot": 9.02},
   {"motif": "shaft", "x": 0.3554, "y": 0.2568, "w": 3.875, "h": 0.333, "color": [62, 74, 88], "alpha": 1.0, "rot": 6.59},
@@ -65,12 +65,9 @@
   {"motif": "blocks", "x": 0.3327, "y": 0.7227, "w": 3.2, "h": 5.2, "rows": ["M", "L"], "legend": {"L": {"front": "immersiveengineering:block/metal_device/capacitor_lv_side_none", "top": "immersiveengineering:block/metal_device/capacitor_lv_up_none", "side": "immersiveengineering:block/metal_device/capacitor_lv_side_none"}, "M": {"front": "immersiveengineering:block/metal_device/capacitor_mv_side_none", "top": "immersiveengineering:block/metal_device/capacitor_mv_up_none", "side": "immersiveengineering:block/metal_device/capacitor_mv_side_none"}}, "depth": 0.4},
   {"motif": "blocks", "x": 0.6973, "y": 0.7051, "w": 7.2, "h": 7.2, "rows": ["KKK", "KKK", "KKK"], "legend": {"K": "immersiveengineering:block/stone_decoration/cokebrick"}, "depth": 0.4},
   {"motif": "sprite", "asset": "immersiveengineering:block/multiblocks/coke_oven_on", "x": 0.6914, "y": 0.7117, "w": 6.0, "alpha": 1.0, "shadow": 0, "rim": 0, "shade": 0, "glow": [255, 140, 60]},
-  {"motif": "blocks", "x": 0.8145, "y": 0.5642, "w": 7.2, "h": 23.2, "rows": [" B ", " B ", " B ", " B ", " B ", "BBB", "BBB", "MMM", "BBB", "BBB", "BBB"], "legend": {"B": "immersiveengineering:block/stone_decoration/blastbrick", "M": "immersiveengineering:block/metal/sheetmetal_steel"}, "depth": 0.4},
+  {"motif": "blocks", "x": 0.8145, "y": 0.58, "w": 7.2, "h": 19.0, "rows": [" B ", " B ", " B ", "BBB", "BBB", "MMM", "BBB", "BBB", "BBB"], "legend": {"B": "immersiveengineering:block/stone_decoration/blastbrick", "M": "immersiveengineering:block/metal/sheetmetal_steel"}, "depth": 0.4, "haze": 0.25},
+  {"motif": "create_smoke", "x": 0.8145, "y": 0.4, "w": 6, "h": 8, "color": [120, 128, 140], "k": 3, "puffs": 4, "drift": 0.5, "shadow": 0, "unlit": true},
   {"motif": "sprite", "asset": "immersiveengineering:block/multiblocks/blast_furnace_on", "x": 0.8086, "y": 0.7117, "w": 6.0, "alpha": 1.0, "shadow": 0, "rim": 0, "shade": 0, "glow": [255, 140, 60]},
-  {"motif": "soft_glow", "x": 0.8125, "y": 0.3309, "w": 3.6, "h": 3.24, "color": [150, 166, 182], "alpha": 0.32},
-  {"motif": "soft_glow", "x": 0.8255, "y": 0.2942, "w": 4.8, "h": 4.32, "color": [150, 166, 182], "alpha": 0.28},
-  {"motif": "soft_glow", "x": 0.8451, "y": 0.2539, "w": 6.2, "h": 5.58, "color": [150, 166, 182], "alpha": 0.24},
-  {"motif": "soft_glow", "x": 0.8711, "y": 0.2135, "w": 7.6, "h": 6.84, "color": [150, 166, 182], "alpha": 0.2},
   {"motif": "sprite", "asset": "immersiveengineering:item/wirecoil_copper", "x": 0.387, "y": 0.7498, "w": 2.0, "alpha": 1.0},
   {"motif": "sprite", "asset": "immersiveengineering:item/wirecoil_electrum", "x": 0.4157, "y": 0.7513, "w": 2.0, "alpha": 1.0},
   {"motif": "sprite", "asset": "immersiveengineering:item/wirecoil_steel", "x": 0.4014, "y": 0.7219, "w": 2.0, "alpha": 1.0},
@@ -78,7 +75,12 @@
   {"motif": "sprite", "asset": "immersiveengineering:item/tool_hammer", "x": 0.4443, "y": 0.7528, "w": 2.0, "alpha": 1.0},
   {"motif": "blocks", "x": 0.6087, "y": 0.7403, "w": 3.2, "h": 3.2, "rows": ["B"], "legend": {"B": {"front": "immersiveengineering:block/wooden_device/barrel_side", "top": "immersiveengineering:block/wooden_device/barrel_up_none", "side": "immersiveengineering:block/wooden_device/barrel_side"}}, "depth": 0.4},
   {"motif": "blocks", "x": 0.6387, "y": 0.7461, "w": 3.2, "h": 3.2, "rows": ["M"], "legend": {"M": {"front": "immersiveengineering:block/wooden_device/barrel_side", "top": "immersiveengineering:block/wooden_device/barrel_up_none", "side": "immersiveengineering:block/wooden_device/barrel_side"}}, "depth": 0.4},
-  {"motif": "sprite", "asset": "immersiveengineering:item/fluid_containers_bucket_creosote", "x": 0.6029, "y": 0.7124, "w": 2.0, "alpha": 1.0}
+  {"motif": "sprite", "asset": "immersiveengineering:item/fluid_containers_bucket_creosote", "x": 0.6029, "y": 0.7124, "w": 2.0, "alpha": 1.0},
+  {"motif": "space_stars", "color": [210, 232, 255], "x": 0.3, "y": 0.07, "w": 16, "h": 5, "k": 3, "n": 18, "sparkle": 2},
+  {"motif": "space_stars", "color": [210, 232, 255], "x": 0.72, "y": 0.075, "w": 14, "h": 5, "k": 3, "n": 14, "sparkle": 2},
+  {"motif": "soft_glow", "x": 0.78, "y": 0.87, "w": 34, "h": 8, "color": [255, 140, 60], "alpha": 0.2},
+  {"motif": "soft_glow", "x": 0.23, "y": 0.87, "w": 24, "h": 7, "color": [90, 210, 255], "alpha": 0.14},
+  {"motif": "soft_glow", "x": 0.5, "y": 0.45, "w": 30, "h": 22, "color": [40, 130, 190], "alpha": 0.07}
   ]
  }
 }
