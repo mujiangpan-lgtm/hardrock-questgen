@@ -736,3 +736,79 @@ Subagent tokens (claude-sonnet-5-5): before critic ~0.10M, 17 fixers ~1.70M, aft
 fixer starts discarded when the run was restarted with more parallelism). The dollar amount is not visible from
 this session; the budget stop was lifted by the owner.
 
+
+## Round 4 (second pass on the 11 chapters still below 8)
+
+Owner request: another round toward a book average of 8, using **space** (星辰大海) and **climate** (气候与衣物)
+as the primary references (the owner's favourites). Same setup: one `claude-sonnet-5-5` fixer per chapter, 4 at a
+time, at most 6 builds each, issues taken from `critique_r3_after.json`; fresh reference build `_stage_ref2` first.
+No fixer edited `artlib.py`. Final full build `OK: 19 chapters, 435 quests`, no WARN/ERROR; the 8 unedited chapters'
+61 textures are md5-identical to `_stage_ref2` and their theme lines identical. One fresh blind critic scored the 11
+edited chapters (`critique_r4_after.json`, previews and a current 19-chapter contact sheet in `r4_after/`).
+
+| chapter | r3 start | after r3 | after r4 (dir / pl) | after r4 | delta r4 |
+| --- | ---: | ---: | --- | ---: | ---: |
+| 00_welcome | 6.25 | 6.00 | 8 / 7.5 | 7.75 | +1.75 |
+| climate | 7.75 | 8.25 | not edited | 8.25 | |
+| food | 7.50 | 7.50 | 8.5 / 8 | 8.25 | +0.75 |
+| health | 7.00 | 7.00 | 8 / 7.5 | 7.75 | +0.75 |
+| farming | 6.50 | 7.25 | 7.5 / 7 | 7.25 | +0.00 |
+| storage | 7.50 | 8.25 | not edited | 8.25 | |
+| stone_age | 7.25 | 7.75 | 8.5 / 7.5 | 8.00 | +0.25 |
+| copper_age | 6.50 | 7.25 | 8 / 7.5 | 7.75 | +0.50 |
+| bronze_age | 7.00 | 7.25 | 8 / 7.5 | 7.75 | +0.50 |
+| iron_age | 7.50 | 8.25 | not edited | 8.25 | |
+| steel_age | 6.50 | 7.50 | 8 / 8 | 8.00 | +0.50 |
+| create | 8.00 | 8.00 | not edited | 8.00 | |
+| ie | 7.50 | 7.75 | 8.5 / 8 | 8.25 | +0.50 |
+| tfmg | 7.00 | 7.50 | 8 / 7.5 | 7.75 | +0.25 |
+| pneumatic | 7.50 | 8.00 | not edited | 8.00 | |
+| mekanism | 7.00 | 8.25 | not edited | 8.25 | |
+| explore | 7.00 | 7.75 | 8.5 / 8 | 8.25 | +0.50 |
+| twilight | 7.50 | 8.25 | not edited | 8.25 | |
+| space | 8.00 | 8.00 | not edited | 8.00 | |
+| **book (19)** | **7.20** | **7.67** | | **8.00** | |
+
+Chapters at 8 or above: 13 of 19. Below 8: 00_welcome 7.75, health 7.75, farming 7.25, copper_age 7.75, bronze_age 7.75, tfmg 7.75.
+Scores of different rounds come from different critic sessions (about +-0.5 noise per chapter).
+
+### What changed in round 4
+
+- **farming** (5 builds): Darkened the panel backing: palette panel_fill [12,16,12], the central soft_glow enlarged to 34x34 at alpha 0.8, and a second dark glow added behind the top panels. Lower stripe clouds made puffier (flat 0.3, taller), with alpha 0.9 on all clouds. Apple tree smaller and moved inward (x 0.215, w 7.2, h 10.2) so it is no longer clipped at the left edge. Added a pixel_forest tree-line silhouette on the horizon behind the far drifts, for depth.
+- **00_welcome** (4 builds): Replaced the empty brown gradient and sun-ray fan with a full-height hard-tone dusk sky (farming_sky: indigo, plum, amber horizon). Added stars in three clusters, a pixel_moon at upper left, and four farming_cloud banks (one large violet bank at upper right, warm ones near the horizon). None cross the banner or panel. Rebuilt the mountains with the climate-style pixel_range: a tall faceted left massif, a right massif lit warm by the sun, and a hazy central range whose peak sits behind the panel. Light comes from the right throughout. Moved the pixel_sun to the gap between the central range and the cabin so it shows above the roofline and warms the range.
+- **steel_age** (6 builds): Replaced the single flat pixel_range with two ranges: a pale far range (haze 0.55, lit snow caps) and a darker near massif range taller toward the sides, so the mountains read as layered depth. Removed the two flat dark sky_band strips that made the dead dark band behind the panels. Added a dark soft_glow calm backdrop behind the panels and two pixel_drift foothill bands (at y 0.66 and 0.715) above the furnace wall. Left chimney: added a dark top-fading soft_glow for shading and a warm forge glow at its base to tie the light to the forge.
+- **bronze_age** (2 builds): Rebuilt the whole scene as a dusk landscape on one texel grid (scene texel 3 -> 4, every pixel layer k=4). It follows the space and climate chapters: hard-tone sky, layered ranges, one low sun, one warm light. The flat gradient at the top is gone. A banded dusk sky (farming_sky, 8 amber stops) now has stars (space_stars) and four lit streak clouds (farming_cloud, side 1, lit from the sun). A big pixel_sun sits in the valley between the right peaks, so the ridge cuts it, and a lights entry carries its glow. The old sun sat behind the chimney, so I moved it. Mountains are now layered: a hazy warm far range, two tall hero massifs at the left and right edges with warm lit snow and tongues, and a dark low ridge in front. They replace the repeated same-size flat polygons.
+- **explore** (5 builds): Resolved the day/night contradiction: the glowing pixel_sun is now a hard-band pixel_moon at upper left (x0.16, y0.2) with a cool moon light entry. Scene light and ambient colour are now moonlight blue. The only warm lights left are the campfire and lantern. The warm sky band and warm snow tints on the mountains were made cool. Removed the floating soul-lantern sprite and its glow, and replaced it with a small pixel_art red pennant on the right summit. Ground: dark teal pixel_drift hills now cover the big brown dirt block, with a darkening band and a warm pixel_lightpool around the campfire.
+- **stone_age** (4 builds): Turned the dark empty cave middle into a hard-tone pixel dusk landscape, following the space and climate technique: one pixel_art backdrop on the texel-4 grid (generated by scratchpad/r4/stone_age/backdrop.py + gen_spec.py). Backdrop contents: banded dusk sky with one-texel checker transitions and stars; a large erupting volcano on the right (lava streams, glowing crater, lit smoke plume, three hard glow rings); a mammoth herd silhouetted on the far ridge; three layered ridges with dark pine silhouettes (none behind the panels); a lit left rock cliff. Left cliff face is a mottled rock wall under the cave paintings. The painting palette is brightened to ochre, alpha 1, no haze, so it now reads at high contrast (critic: cave paintings low-contrast). Removed the old dim painting backdrop blob, the right-hand paintings and handprint (they would float in the sky), the old sky_band and soft_glow, and the big right stalactite.
+- **copper_age** (3 builds): Replaced the muddy sky bands with an existing farming_sky dusk gradient (dark navy to a copper-orange horizon) on one texel grid, as in the climate/space references. Added three hard-tone farming_cloud streaks lit by the sun, plus a sparse star patch at top left. Lowered the sun so it sits behind the far range, with a wider and softer pixel_sun glow (5 rings, lower alpha) instead of the hard-ringed disc sticker. Rebuilt both mountain ranges with pixel_range. The far range is a warm rose lit side with warm haze and mist. The near range is dark, giving clear layered depth and better panel contrast.
+- **health** (3 builds): Added a hand-built pixel night window as the top-centre focal point (82x44 texels, moon, stars, hills, lit cottage, muntins, sill), unlit so it glows, with cool moonlight soft_glow and a cool 'lights' entry. It sits over the beam and fills the empty top void. Removed the herb strands that hung in the centre top and the old oversized flat red-cross hanging sign with its long cords. New smaller hanging enamel red-cross sign: pixel_art with bevel, shading and short chains from the beam, plus a faint warm glow. Replaced the flat cross painting with a lit pixel medicine cabinet (enamel cornice with red cross, glass doors, warm interior, coloured bottles) with its own light and glow below panels 3 and 4.
+- **food** (3 builds): Top row hanging produce rebuilt with varied scale, cord length and clustering: large onion pair, a long five-garlic braid, a big hops bunch, a dried wheat sheaf, larger peppers. It no longer reads as even wallpaper. Added a centre hanging copper pot (pixel_art with a lid, on a chain) above the banner to fill the dead top-centre. Added a pixel_art arched night window (moon and stars) in the right wall gap, with a cool blue soft_glow and a matching cool light in `lights`. Added a small wall shelf with a cooking pot and jug, plus a hanging bacon and chicken string, in the right-hand dead wall gap at y 0.5-0.7.
+- **tfmg** (4 builds): Added a hard-tone dusk sky (farming_sky, dark olive to ember horizon) plus sparse stars, replacing the empty dark background. Removed the huge right hazard-striped tower with its smoke and fire; replaced it with a hazy far chimney with its own smoke for depth. Cut left tower to a single hazard band; shortened the right distillation tower (9 to 7 rows) and re-seated its smoke on the barrel top. Recoloured the pumpjack to a darker brass with a stronger outline and sat it in the warm horizon glow.
+- **ie** (4 builds): Removed the smooth sky_band, moon and star_cluster layers. Added a pixel_moon with halo, a one-texel space_stars field in the top band, and a faceted pixel_range hill line. Added two layers of generated pixel_art factory skyline (far and near) behind the wall: chimneys, sawtooth roofs, sparse lit orange and cyan windows. These give depth between the pylons and the panels. Added three pixel_lightpool layers (cyan under the lamp and crane, orange under the coke oven and blast furnace, plus a cyan one in the middle) and two space_rocks gravel bands on the floor, so the floor picks up the scene lights. Added a two-strand sagging cable (copper and steel, built from shaft segments) across the floor, linking the dynamo to the coke oven.
+
+### Remaining weak points (round-4 critic)
+
+- **00_welcome**: Quest cluster floats mid-sky (centre, y 28-58%) with no anchoring; section panel is a tiny box and the diamond/circle nodes are sparse | Left half of sky (x 0-50%, y 5-35%) is empty apart from the moon and a flat dash cloud
+- **food**: Dense wall decor competes with panel edges at the top (y 5-25%), hanging produce crowds the banner | Panel borders are low-contrast purple on dark brown; node icons are tiny (section 1 and 4, about 20 px)
+- **health**: Lower section panels (3 and 4) hold few nodes and read sparse; dark empty wall around the panel block (x 25-75%, y 60-75%) | Shelves at the left and right edges are visually heavy and dark, the red-on-dark panel borders are low contrast
+- **farming**: Six panels spread over the sky cover the sunset and the bird area; panels 3-5 stack at the left against the tree and read crowded | Barn plus hay at bottom right (x 60-98%, y 55-95%) is blocky and flat compared with the nicely lit tree
+- **stone_age**: Section 3 and 4 panel headers (y 53-55%) sit over bright orange horizon bands and are low contrast; title text nearly illegible | Line crossings between sections 1, 2 and 3 are tangled over the cave painting edge
+- **copper_age**: Top-right panel (section 3) overlaps its own 4 stacked nodes and the cluster of connector lines from the pentagon is cramped | Large dark empty mid-band (x 25-70%, y 55-80%) between lower panels and the forge
+- **bronze_age**: Section 5 panel is a tiny box with one node, section 4 is nearly empty, reads placeholder | Orange header text on panels over the glowing sun region (x 70-85%) is fine but the lower panels' text is very small
+- **steel_age**: Section 3 panel header text is squashed onto two lines at top-right (y 28%), clearly clipped | Mid-band (y 50-70%) is flat dark between panels and the ore pile, with a hard horizontal edge across the mountains at y 48%
+- **ie**: Nodes are mostly blank grey shapes with few icons in sections 1-5, so quest content is unreadable | Centre of the scene is a large black void behind the panels with the skyline barely visible
+- **tfmg**: Murky olive/amber background gradient is muddy and low in contrast, the middle dark tower at x 78-85% is nearly invisible | Section 2 panel has sparse unconnected nodes that read as placeholders
+- **explore**: Panel pair 2 and 5 are narrow with sparse nodes, and the grid texture in the sky (y 0-40%) is faintly visible, looks like a tiled background | Mountains sit behind lower panels (section 4, 5, 6) and low-contrast headers over the snow
+
+Systemic:
+- Panels are consistently small, sparsely populated boxes floating mid-scene, and many node icons are tiny or blank, reducing at-a-glance readability
+- Most scenes use a flat dark mid-band between panels and foreground props, so the lower third is crowded while the middle is empty
+- Panel header text over bright horizon or sun regions loses contrast in several chapters (stone_age, bronze_age, steel_age)
+- Dithered pixel clouds and smooth gradients are mixed; cloud silhouettes repeat
+- Props get cropped at the edges and some chapters have a tiny one-node panel that looks placeholder
+
+Ceiling estimate: With panel-contrast and mid-band fixes, most chapters could reach 8.5; a 9 would need hand-tuned depth layers and unified pixel density across sky and props.
+
+Spend (round 4): about 1.25M subagent tokens for the fixers and 0.08M for the critic (plus two fixer starts discarded
+when the run was restarted to add the owner's reference chapters).
+
