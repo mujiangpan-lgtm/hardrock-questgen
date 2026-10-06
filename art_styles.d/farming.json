@@ -1,395 +1,60 @@
 {
- "palette": {
-  "panel_fill": [
-   28,
-   38,
-   26
-  ],
-  "accent": [
-   136,
-   206,
-   92
-  ],
-  "glow": [
-   116,
-   196,
-   78
-  ],
-  "text_key_hex": "#ACE48A"
- },
- "background": {
-  "tiles": [
-   {
-    "asset": "tfc:block/dirt/loam",
-    "weight": 1
-   }
-  ],
-  "target_brightness": 0.1,
-  "saturation": 0.6,
-  "tint": [
-   222,
-   236,
-   190
-  ],
-  "contrast_sd": 0.01,
-  "overlay": {
-   "type": "none",
-   "density": 0,
-   "color": [
-    196,
-    220,
-    120
-   ]
-  },
-  "tile_size": 12
- },
- "banner": {
-  "ribbon_asset": "tfc:block/thatch",
-  "icons_left": [
-   "tfc:item/seeds/wheat",
-   "tfc:item/metal/hoe/copper",
-   "tfc:item/food/wheat"
-  ],
-  "icons_right": [
-   "minecraft:item/egg",
-   "minecraft:item/milk_bucket",
-   "minecraft:item/saddle"
-  ],
-  "motif": "mountains",
-  "motif_color": [
-   108,
-   170,
-   78
-  ]
- },
+ "palette": {"panel_fill": [12, 16, 12], "accent": [136, 206, 92], "glow": [116, 196, 78], "text_key_hex": "#ACE48A"},
+ "background": {"tiles": [{"asset": "tfc:block/dirt/loam", "weight": 1}], "target_brightness": 0.1, "saturation": 0.6, "tint": [222, 236, 190], "contrast_sd": 0.01, "overlay": {"type": "none", "density": 0, "color": [196, 220, 120]}, "tile_size": 12},
+ "banner": {"ribbon_asset": "tfc:block/thatch", "icons_left": ["tfc:item/seeds/wheat", "tfc:item/metal/hoe/copper", "tfc:item/food/wheat"], "icons_right": ["minecraft:item/egg", "minecraft:item/milk_bucket", "minecraft:item/saddle"], "motif": "mountains", "motif_color": [108, 170, 78]},
  "decor": [],
- "shapes": {
-  "normal": "circle",
-  "milestone": "heart",
-  "optional": "diamond",
-  "gate": "gear"
- },
+ "shapes": {"normal": "circle", "milestone": "heart", "optional": "diamond", "gate": "gear"},
  "scene": {
-  "texel": 3,
+  "texel": 4,
   "shadow": 0.45,
-  "light": {
-   "dir": [
-    -1,
-    -0.6
-   ],
-   "color": [
-    255,
-    198,
-    122
-   ],
-   "tint": 0.12,
-   "rim": 0.55,
-   "shade": 0.28
-  },
-  "haze_color": [
-   44,
-   50,
-   38
-  ],
+  "light": {"dir": [0.35, -0.85], "color": [255, 190, 120], "tint": 0.12, "rim": 0.5, "shade": 0.28},
+  "haze_color": [150, 100, 100],
+  "lights": [{"x": 0.28448, "y": 0.64796, "radius": 0.2, "strength": 0.7, "color": [255, 170, 90]}, {"x": 0.7345, "y": 0.683, "radius": 0.1, "strength": 0.55, "color": [255, 190, 100]}],
+  "ambient": 0.86,
   "layers": [
-   {
-    "motif": "sky_band",
-    "x": 0.5,
-    "y": 0.2261,
-    "w": 72,
-    "h": 12,
-    "color": [
-     64,
-     92,
-     84
-    ],
-    "alpha": 0.32
-   },
-   {
-    "motif": "sky_band",
-    "x": 0.5,
-    "y": 0.6552,
-    "w": 72,
-    "h": 22,
-    "color": [
-     240,
-     160,
-     78
-    ],
-    "alpha": 0.5
-   },
-   {
-    "motif": "soft_glow",
-    "x": 0.2037,
-    "y": 0.4074,
-    "w": 46,
-    "h": 38,
-    "color": [
-     255,
-     178,
-     96
-    ],
-    "alpha": 0.38
-   },
-   {
-    "motif": "sky_band",
-    "x": 0.7909,
-    "y": 0.3379,
-    "w": 17,
-    "h": 1.5,
-    "color": [
-     255,
-     186,
-     128
-    ],
-    "alpha": 0.42
-   },
-   {
-    "motif": "sky_band",
-    "x": 0.8071,
-    "y": 0.376,
-    "w": 12,
-    "h": 1.1,
-    "color": [
-     255,
-     170,
-     120
-    ],
-    "alpha": 0.34
-   },
-   {
-    "motif": "sky_band",
-    "x": 0.2091,
-    "y": 0.324,
-    "w": 12,
-    "h": 1.3,
-    "color": [
-     255,
-     196,
-     136
-    ],
-    "alpha": 0.36
-   },
-   {
-    "motif": "sun",
-    "x": 0.2037,
-    "y": 0.4074,
-    "w": 7.5,
-    "color": [
-     255,
-     222,
-     152
-    ],
-    "alpha": 0.97
-   },
-   {
-    "motif": "sky_band",
-    "x": 0.1875,
-    "y": 0.4225,
-    "w": 13,
-    "h": 1.0,
-    "color": [
-     255,
-     200,
-     140
-    ],
-    "alpha": 0.3
-   },
-   {
-    "motif": "mountain_range",
-    "x": 0.5,
-    "y": 0.6963,
-    "w": 72,
-    "h": 6,
-    "color": [
-     116,
-     98,
-     78
-    ],
-    "alpha": 0.82
-   },
-   {
-    "motif": "tree_line",
-    "x": 0.5,
-    "y": 0.7205,
-    "w": 72,
-    "h": 3.6,
-    "color": [
-     54,
-     66,
-     42
-    ],
-    "alpha": 0.95
-   },
-   {
-    "motif": "blocks",
-    "x": 0.5,
-    "y": 0.7842,
-    "w": 64,
-    "h": 7,
-    "rows": [
-     "GGGGGGGGGFFFFFFFFFGGGGGGGGGGGGG",
-     "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
-    ],
-    "legend": {
-     "G": {
-      "front": "minecraft:block/grass_block_side",
-      "top": "minecraft:block/moss_block",
-      "side": "minecraft:block/grass_block_side"
-     },
-     "F": {
-      "front": "minecraft:block/dirt",
-      "top": "tfc:block/farmland/loam",
-      "side": "minecraft:block/dirt"
-     },
-     "D": "minecraft:block/dirt"
-    },
-    "depth": 0.45,
-    "shadow": 0
-   },
-   {
-    "motif": "blocks",
-    "x": 0.2089,
-    "y": 0.6028,
-    "w": 14,
-    "h": 20,
-    "rows": [
-     " MMM ",
-     "MMMMM",
-     "MMMMM",
-     "MMMMM",
-     " MMM ",
-     "  T  ",
-     "  T  ",
-     "  T  "
-    ],
-    "legend": {
-     "M": "minecraft:block/moss_block",
-     "T": "tfc:block/wood/log/oak"
-    },
-    "depth": 0.45,
-    "haze": 0.6,
-    "haze_color": [
-     16,
-     30,
-     14
-    ],
-    "shadow": 0,
-    "unlit": true
-   },
-   {
-    "motif": "blocks",
-    "x": 0.2089,
-    "y": 0.6028,
-    "w": 14,
-    "h": 20,
-    "rows": [
-     " LFL ",
-     "FLLFL",
-     "LFLLF",
-     "FLFLL",
-     " LFL ",
-     "  T  ",
-     "  T  ",
-     "  T  "
-    ],
-    "legend": {
-     "F": "tfc:block/fruit_tree/red_apple_fruiting_leaves",
-     "L": "tfc:block/fruit_tree/red_apple_leaves",
-     "T": "tfc:block/wood/log/oak"
-    },
-    "depth": 0.45
-   },
-   {
-    "motif": "blocks",
-    "x": 0.7696,
-    "y": 0.6204,
-    "w": 18,
-    "h": 18,
-    "rows": [
-     "  TTT  ",
-     " TTTTT ",
-     "TTTTTTT",
-     "LPPHPPL",
-     "LPPPPPL",
-     "LPPUPPL",
-     "LPPDPPL"
-    ],
-    "legend": {
-     "T": "tfc:block/thatch",
-     "L": "tfc:block/wood/log/oak",
-     "P": "tfc:block/wood/planks/rosewood",
-     "H": {
-      "front": "minecraft:block/hay_block_side",
-      "top": "tfc:block/wood/planks/rosewood"
-     },
-     "U": {
-      "front": "tfc:block/wood/planks/oak_door_top",
-      "top": "tfc:block/wood/planks/rosewood"
-     },
-     "D": {
-      "front": "tfc:block/wood/planks/oak_door_bottom",
-      "top": "tfc:block/wood/planks/rosewood"
-     }
-    },
-    "depth": 0.45
-   },
-   {
-    "motif": "blocks",
-    "x": 0.6155,
-    "y": 0.7116,
-    "w": 8,
-    "h": 6,
-    "rows": [
-     " H ",
-     "HHH"
-    ],
-    "legend": {
-     "H": {
-      "front": "minecraft:block/hay_block_side",
-      "top": "minecraft:block/hay_block_top",
-      "side": "minecraft:block/hay_block_side"
-     }
-    },
-    "depth": 0.45
-   },
-   {
-    "motif": "sprite_row",
-    "assets": [
-     "tfc:block/crop/wheat_7",
-     "tfc:block/crop/wheat_7",
-     "tfc:block/crop/wheat_6",
-     "tfc:block/crop/wheat_7",
-     "tfc:block/crop/wheat_5",
-     "tfc:block/crop/wheat_7",
-     "tfc:block/crop/wheat_7",
-     "tfc:block/crop/wheat_6",
-     "tfc:block/crop/wheat_7"
-    ],
-    "x": 0.4348,
-    "y": 0.7368,
-    "w": 26,
-    "h": 3,
-    "spacing": 1.0,
-    "shadow": 0.25
-   },
-   {
-    "motif": "livestock",
-    "x": 0.7737,
-    "y": 0.7139,
-    "w": 14,
-    "h": 5.2,
-    "color": [
-     178,
-     134,
-     98
-    ],
-    "alpha": 1.0,
-    "pixelate": 3,
-    "colors": 24,
-    "outline": 0.45,
-    "lit": true
-   }
+  {"motif": "farming_sky", "x": 0.5, "y": 0.35718, "w": 64.0, "h": 40.8333, "color": [255, 255, 255], "k": 4, "stops": [[18, 28, 48], [32, 46, 74], [78, 64, 100], [164, 94, 102], [240, 144, 86], [252, 202, 124]], "steps": 20},
+  {"motif": "space_stars", "x": 0.22252, "y": 0.22402, "w": 12.8333, "h": 4.3333, "color": [255, 240, 220], "n": 9, "sparkle": 1, "alpha": 0.8, "k": 4},
+  {"motif": "space_stars", "x": 0.77478, "y": 0.221, "w": 13.1667, "h": 4.0, "color": [255, 240, 220], "n": 9, "sparkle": 1, "alpha": 0.8, "k": 4},
+  {"motif": "farming_cloud", "x": 0.205, "y": 0.262, "w": 10.8, "h": 4.0, "color": [150, 104, 126], "seed": 11, "flat": 0.15, "glint": [240, 176, 150], "belly": [70, 60, 98], "side": -1, "puffs": 0, "k": 4, "alpha": 0.9},
+  {"motif": "farming_cloud", "x": 0.8, "y": 0.25, "w": 9.0, "h": 3.6, "color": [150, 104, 126], "seed": 23, "flat": 0.1, "glint": [240, 176, 150], "belly": [70, 60, 98], "side": 1, "puffs": 0, "k": 4, "alpha": 0.9},
+  {"motif": "farming_cloud", "x": 0.84, "y": 0.385, "w": 6.5, "h": 1.8, "color": [150, 104, 126], "seed": 5, "flat": 0.7, "glint": [240, 176, 150], "belly": [70, 60, 98], "side": 1, "puffs": 0, "k": 4, "alpha": 0.9},
+  {"motif": "farming_cloud", "x": 0.215, "y": 0.405, "w": 6.5, "h": 1.8, "color": [150, 104, 126], "seed": 8, "flat": 0.65, "glint": [240, 176, 150], "belly": [70, 60, 98], "side": -1, "puffs": 0, "k": 4, "alpha": 0.9},
+  {"motif": "farming_cloud", "x": 0.2, "y": 0.535, "w": 11.5, "h": 3.8, "color": [238, 140, 98], "seed": 3, "flat": 0.35, "glint": [255, 214, 146], "belly": [150, 84, 104], "side": -1, "puffs": 0, "k": 4, "alpha": 0.9},
+  {"motif": "farming_cloud", "x": 0.8, "y": 0.505, "w": 9.5, "h": 3.0, "color": [238, 140, 98], "seed": 17, "flat": 0.45, "glint": [255, 214, 146], "belly": [150, 84, 104], "side": 1, "puffs": 0, "k": 4, "alpha": 0.9},
+  {"motif": "farming_cloud", "x": 0.497, "y": 0.2, "w": 14.0, "h": 1.4, "color": [150, 104, 126], "seed": 29, "flat": 0.85, "glint": [240, 176, 150], "belly": [70, 60, 98], "side": -1, "puffs": 0, "k": 4, "alpha": 0.9},
+  {"motif": "pixel_sun", "x": 0.28448, "y": 0.64796, "w": 12.3333, "h": 12.3333, "color": [255, 240, 196], "r": 9, "glow": [255, 190, 110], "glow2": [226, 110, 100], "rings": 4, "reach": 3.0, "glow_alpha": 0.5, "k": 4},
+  {"motif": "pixel_range", "x": 0.5, "y": 0.61172, "w": 57.1667, "h": 7.6667, "color": [96, 92, 124], "seed": 5, "snow": 0.0, "rays": 2, "jag": 0.2, "mist": [150, 106, 110], "mist_amt": 0.5, "mist_from": 0.5, "peaks": [[0.16, 0.45, 0.16], [0.7, 0.62, 0.2], [0.9, 0.5, 0.12]], "haze": 0.35, "haze_color": [170, 112, 104], "k": 4},
+  {"motif": "pixel_drift", "x": 0.5, "y": 0.67513, "w": 64.0, "h": 5.8333, "color": [120, 128, 92], "deep": [78, 84, 66], "amp": 0.5, "waves": 2.4, "seed": 51, "sparkle": 0, "dither": 0, "haze": 0.35, "haze_color": [170, 112, 104], "k": 4},
+  {"motif": "pixel_forest", "x": 0.5, "y": 0.668, "w": 50, "h": 4, "color": [52, 60, 60], "k": 4, "seed": 9, "n": 30, "hmin": 4, "hmax": 8, "haze": 0.3, "haze_color": [170, 112, 104], "snow": 0},
+  {"motif": "pixel_drift", "x": 0.5, "y": 0.70835, "w": 64.0, "h": 5.5, "color": [98, 128, 66], "deep": [58, 82, 46], "amp": 0.45, "waves": 1.7, "seed": 52, "sparkle": 0, "dither": 0, "haze": 0.15, "haze_color": [170, 112, 104], "k": 4},
+  {"motif": "pixel_drift", "x": 0.5, "y": 0.76572, "w": 64.0, "h": 8.0, "color": [88, 126, 54], "deep": [46, 70, 36], "amp": 0.28, "waves": 1.3, "seed": 53, "sparkle": 0, "dither": 0, "k": 4},
+  {"motif": "soft_glow", "x": 0.5, "y": 0.5, "w": 34, "h": 34, "color": [26, 16, 38], "alpha": 0.8},
+  {"motif": "soft_glow", "x": 0.5, "y": 0.3, "w": 30, "h": 10, "color": [26, 16, 38], "alpha": 0.6},
+  {"motif": "soft_glow", "x": 0.18481, "y": 0.72948, "w": 9.3333, "h": 1.6667, "color": [10, 20, 8], "alpha": 0.5},
+  {"motif": "farming_tree", "x": 0.215, "y": 0.645, "w": 7.2, "h": 10.2, "color": [48, 78, 30], "seed": 3, "leaf2": [88, 126, 44], "leaf3": [152, 176, 62], "apples": 16, "crown": 0.68, "side": 1, "k": 4},
+  {"motif": "blocks", "x": 0.77478, "y": 0.64192, "w": 15.0, "h": 15.0, "rows": ["  R  ", " RHR ", "LWUWL", "LWDWL"], "legend": {"R": "minecraft:block/dark_oak_planks", "H": {"front": "minecraft:block/hay_block_side", "top": "minecraft:block/hay_block_top", "side": "minecraft:block/hay_block_side"}, "L": "tfc:block/wood/log/oak", "W": "tfc:block/wood/planks/rosewood", "U": {"front": "tfc:block/wood/planks/oak_door_top", "top": "tfc:block/wood/planks/rosewood"}, "D": {"front": "tfc:block/wood/planks/oak_door_bottom", "top": "tfc:block/wood/planks/rosewood"}}, "depth": 0.45},
+  {"motif": "blocks", "x": 0.625, "y": 0.70231, "w": 5.5, "h": 5.5, "rows": [" H", "HH"], "legend": {"H": {"front": "minecraft:block/hay_block_side", "top": "minecraft:block/hay_block_top", "side": "minecraft:block/hay_block_side"}}, "depth": 0.45},
+  {"motif": "farming_furrows", "x": 0.35183, "y": 0.7633, "w": 11.3333, "h": 6.1667, "color": [214, 178, 74], "crop2": [130, 150, 56], "kind": "wheat", "rows": 4, "seed": 4, "k": 4},
+  {"motif": "farming_furrows", "x": 0.51886, "y": 0.76572, "w": 9.3333, "h": 5.8333, "color": [108, 138, 56], "crop2": [84, 120, 44], "kind": "leaf", "rows": 4, "seed": 6, "soil": [96, 66, 42], "k": 4},
+  {"motif": "pixel_art", "x": 0.42792, "y": 0.72398, "w": 2.5, "h": 3.1667, "color": [255, 255, 255], "pal": {"h": [190, 140, 70], "s": [220, 190, 90], "f": [226, 178, 130], "k": [40, 30, 24], "c": [74, 96, 120], "r": [176, 62, 54], "p": [96, 74, 52], "w": [110, 78, 50], "t": [230, 200, 100]}, "rows": ["......hhh......", ".....hhhhh.....", "...hhhhhhhhh...", ".....fkfkf.....", ".....fffff.....", "....ccccccc....", "sswwwwwwwwwwwss", "..ccccrcccc....", "...ccccwcccc...", "....cccwccc....", "....pppwppp....", "....pp.w.pp....", ".......w.......", ".......w.......", ".......w.......", ".......w.......", ".......w.......", "......ttt......", ".....t.t.t....."], "k": 4},
+  {"motif": "pixel_art", "x": 0.23163, "y": 0.36367, "w": 1.1667, "h": 0.5, "color": [255, 255, 255], "pal": {"d": [44, 30, 44]}, "rows": ["d.....d", ".dd.dd.", "...d..."], "shadow": 0, "unlit": true, "k": 4},
+  {"motif": "pixel_art", "x": 0.25695, "y": 0.34917, "w": 1.1667, "h": 0.5, "color": [255, 255, 255], "pal": {"d": [44, 30, 44]}, "rows": ["d.....d", ".dd.dd.", "...d..."], "shadow": 0, "unlit": true, "k": 4},
+  {"motif": "pixel_art", "x": 0.2451, "y": 0.38058, "w": 1.1667, "h": 0.5, "color": [255, 255, 255], "pal": {"d": [44, 30, 44]}, "rows": ["d.....d", ".dd.dd.", "...d..."], "shadow": 0, "unlit": true, "k": 4},
+  {"motif": "pixel_art", "x": 0.77958, "y": 0.32743, "w": 1.1667, "h": 0.5, "color": [255, 255, 255], "pal": {"d": [44, 30, 44]}, "rows": ["d.....d", ".dd.dd.", "...d..."], "shadow": 0, "unlit": true, "k": 4},
+  {"motif": "pixel_art", "x": 0.80544, "y": 0.31415, "w": 1.1667, "h": 0.5, "color": [255, 255, 255], "pal": {"d": [44, 30, 44]}, "rows": ["d.....d", ".dd.dd.", "...d..."], "shadow": 0, "unlit": true, "k": 4},
+  {"motif": "blocks", "x": 0.16703, "y": 0.78081, "w": 6.1667, "h": 4.8333, "rows": ["PM"], "legend": {"P": {"front": "minecraft:block/pumpkin_side", "top": "minecraft:block/pumpkin_top", "side": "minecraft:block/pumpkin_side"}, "M": {"front": "minecraft:block/melon_side", "top": "minecraft:block/melon_top", "side": "minecraft:block/melon_side"}}, "depth": 0.45},
+  {"motif": "pixel_timber", "x": 0.78017, "y": 0.78081, "w": 13.8333, "h": 2.8333, "color": [255, 255, 255], "k": 4, "shadow": 0.4, "snow": 0, "depth": 1, "beams": [[2, 1, 2, 15, 3, "tfc:block/wood/planks/oak"], [30, 1, 30, 15, 3, "tfc:block/wood/planks/oak"], [58, 1, 58, 15, 3, "tfc:block/wood/planks/oak"], [0, 4, 82, 4, 2, "tfc:block/wood/planks/oak"], [0, 9, 82, 9, 2, "tfc:block/wood/planks/oak"], [80, 1, 80, 15, 3, "tfc:block/wood/planks/oak"]]},
+  {"motif": "soft_glow", "x": 0.84, "y": 0.762, "w": 16, "h": 3.2, "color": [8, 10, 14], "alpha": 0.55},
+  {"motif": "pixel_lightpool", "x": 0.755, "y": 0.765, "w": 7, "h": 1.6, "color": [255, 176, 90], "k": 4, "steps": 5, "peak": 0.7, "skew": 0.0, "alpha": 1.0, "dither": 0},
+  {"motif": "soft_glow", "x": 0.7345, "y": 0.683, "w": 4, "h": 4, "color": [255, 190, 100], "alpha": 0.45},
+  {"motif": "pixel_art", "x": 0.7645, "y": 0.7105, "w": 2.5, "h": 3.6666666666666665, "color": [255, 255, 255], "pal": {"w": [238, 226, 200, 235]}, "rows": ["wwwwwwwwwwwwwww", "ww...........ww", "ww...........ww", "w.w.........w.w", "w..w.......w..w", "w..w.......w..w", "w...w.....w...w", "w....w...w....w", "w....w...w....w", "w.....w.w.....w", "w......w......w", "w......w......w", "w.....w.w.....w", "w....w...w....w", "w....w...w....w", "w...w.....w...w", "w..w.......w..w", "w..w.......w..w", "w.w.........w.w", "ww...........ww", "ww...........ww", "wwwwwwwwwwwwwww"], "k": 4, "shadow": 0},
+  {"motif": "soft_glow", "x": 0.875, "y": 0.68, "w": 4.5, "h": 8, "color": [10, 8, 16], "alpha": 0.35},
+  {"motif": "livestock", "x": 0.77748, "y": 0.72344, "w": 12.0, "h": 3.8333, "color": [178, 134, 98], "pixelate": 4, "colors": 24, "outline": 0.45, "lit": true},
+  {"motif": "pixel_art", "x": 0.7745, "y": 0.528, "w": 1.5, "h": 1.6666666666666667, "color": [255, 255, 255], "pal": {"d": [40, 28, 28], "g": [150, 120, 60]}, "rows": ["....d....", "....d....", "..ddddd..", ".ddddddd.", "...ddd...", "....g....", "....g....", "....g....", "....g....", "....g...."], "k": 4},
+  {"motif": "pixel_art", "x": 0.7345, "y": 0.683, "w": 0.75, "h": 1.0, "color": [255, 255, 255], "pal": {"o": [40, 28, 24], "y": [255, 214, 110], "w": [255, 246, 200]}, "rows": [".oo.", "oyyo", "oywo", "oyyo", ".oo."], "k": 4, "unlit": true, "shadow": 0},
+  {"motif": "pixel_art", "x": 0.146, "y": 0.715, "w": 1.75, "h": 2.5, "color": [255, 255, 255], "pal": {"y": [246, 196, 50], "b": [84, 52, 28], "g": [70, 110, 40]}, "rows": ["....yy....", "...yyyy...", "....gg....", "..y.gg.y..", "..yyyyyy..", ".yybbbbyy.", "yybbbbbbyy", "yybbbbbbyy", ".yybbbbyy.", "..yyyyyy..", "....gg....", "....gg....", "..g.gg.g..", "...gggg...", "....gg...."], "k": 4},
+  {"motif": "pixel_art", "x": 0.178, "y": 0.725, "w": 1.75, "h": 2.5, "color": [255, 255, 255], "pal": {"y": [246, 196, 50], "b": [84, 52, 28], "g": [70, 110, 40]}, "rows": ["....yy....", "...yyyy...", "....gg....", "..y.gg.y..", "..yyyyyy..", ".yybbbbyy.", "yybbbbbbyy", "yybbbbbbyy", ".yybbbbyy.", "..yyyyyy..", "....gg....", "....gg....", "..g.gg.g..", "...gggg...", "....gg...."], "k": 4},
+  {"motif": "pixel_art", "x": 0.162, "y": 0.738, "w": 1.75, "h": 2.5, "color": [255, 255, 255], "pal": {"y": [246, 196, 50], "b": [84, 52, 28], "g": [70, 110, 40]}, "rows": ["....yy....", "...yyyy...", "....gg....", "..y.gg.y..", "..yyyyyy..", ".yybbbbyy.", "yybbbbbbyy", "yybbbbbbyy", ".yybbbbyy.", "..yyyyyy..", "....gg....", "....gg....", "..g.gg.g..", "...gggg...", "....gg...."], "k": 4}
   ]
  }
 }

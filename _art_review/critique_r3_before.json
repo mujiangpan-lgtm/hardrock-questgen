@@ -1,0 +1,242 @@
+{
+ "reviewer": "senior art director + experienced Minecraft modpack player, screen29 previews (_art_review/r3_before)",
+ "scores": [
+  {
+   "key": "00_welcome",
+   "director": 6.0,
+   "player": 6.5,
+   "issues": [
+    "x0.00-0.50 y0.55-1.0: scene hugs the bottom-left corner, centre and right nearly empty",
+    "x0.35-0.65 y0.35-0.60: quest panel floats over murky dark void",
+    "x0.60-0.95 y0.60-0.85: faded tree silhouettes muddy, low contrast",
+    "x0.70-0.95 y0.0-0.25: sun rays disconnected from rest"
+   ],
+   "what_for_8": "fill the middle ground, unify the dim palette, add a focal prop near the quests"
+  },
+  {
+   "key": "climate",
+   "director": 8.0,
+   "player": 7.5,
+   "issues": [
+    "x0.62-0.80 y0.55-0.80: sunset glow behind peak conflicts with moonlit night",
+    "x0.08-0.28 y0.75-0.95: drying rack and fire clutter, props at mixed pixel scale",
+    "x0.40-0.65 y0.55-0.70: lower panels overlap dense tree line, lines less readable",
+    "x0.45-0.60 y0.65-0.90: tornado sign and wind sock look sticker-like"
+   ],
+   "what_for_8": "single light source, consistent prop scale, calmer tree band behind panels"
+  },
+  {
+   "key": "food",
+   "director": 7.5,
+   "player": 7.5,
+   "issues": [
+    "x0.0-1.0 y0.0-0.12: flat dark wall, ceiling beam only a strip",
+    "x0.03-0.28 y0.35-0.70: shelves small and sparse vs heavy floor props",
+    "x0.75-0.95 y0.40-0.65: bread crate floats over wall without support",
+    "x0.30-0.70 y0.60-0.75: dead dark gap between panels and stove"
+   ],
+   "what_for_8": "unify prop scale, add wall depth/lighting gradient, anchor floating crate"
+  },
+  {
+   "key": "health",
+   "director": 7.0,
+   "player": 7.0,
+   "issues": [
+    "x0.0-1.0 y0.05-0.25: hanging herbs small, thin and scattered",
+    "x0.45-0.85 y0.70-0.95: giant red bed oversized and flat vs tiny potions",
+    "x0.75-0.95 y0.30-0.60: right shelves floating with sparse content",
+    "x0.25-0.50 y0.60-0.75: empty dark zone"
+   ],
+   "what_for_8": "scale correction for bed, denser warm light pool, grounded shelves"
+  },
+  {
+   "key": "farming",
+   "director": 6.5,
+   "player": 6.5,
+   "issues": [
+    "x0.02-0.25 y0.40-0.90: tree oversized, noisy leaf texture heavy",
+    "x0.70-0.98 y0.48-0.90: barn huge, crude blocky, mixed density with animals",
+    "x0.0-1.0 y0.15-0.35: blurry smeared cloud streaks look like artifacts",
+    "x0.25-0.65 y0.75-0.90: empty brown sky with small wheat strip"
+   ],
+   "what_for_8": "consistent pixel density, replace smears with proper clouds, reduce oversized tree and barn"
+  },
+  {
+   "key": "storage",
+   "director": 7.5,
+   "player": 7.5,
+   "issues": [
+    "x0.0-0.25 y0.22-0.92: shelf crowded, busy against panels",
+    "x0.75-0.98 y0.20-0.90: tall block tower heavy and repetitive texture",
+    "x0.15-0.90 y0.08-0.12: pipe run is thin and arbitrary",
+    "x0.40-0.70 y0.75-0.90: low props scattered"
+   ],
+   "what_for_8": "vary tower texture, reduce shelf clutter, purposeful pipe route"
+  },
+  {
+   "key": "stone_age",
+   "director": 7.5,
+   "player": 7.0,
+   "issues": [
+    "x0.08-0.25 y0.38-0.60: cave paintings low contrast orange blobs, mammoth crude",
+    "x0.30-0.45 y0.50-0.75: panel lines cross over section 3 labels, tangled",
+    "x0.0-0.30 y0.70-0.90: anvil-like block with tools sticker-like",
+    "x0.07-0.30 y0.08-0.35: stalactites are flat brown wedges"
+   ],
+   "what_for_8": "cleaner painting shapes, consistent cave lighting, tidy line routing"
+  },
+  {
+   "key": "copper_age",
+   "director": 6.5,
+   "player": 6.5,
+   "issues": [
+    "x0.0-0.25 y0.30-0.95: left rock stairs flat with ore blotches",
+    "x0.0-1.0 y0.0-0.30: empty murky sky and hills, dark",
+    "x0.45-0.95 y0.75-0.98: forge props scattered at different scales",
+    "x0.45-0.70 y0.35-0.55: large empty dark gap between panel rows"
+   ],
+   "what_for_8": "stronger focal forge, richer rock texture, fill the mid-area with depth"
+  },
+  {
+   "key": "bronze_age",
+   "director": 7.0,
+   "player": 7.0,
+   "issues": [
+    "x0.08-0.30 y0.33-0.95: mine/furnace structure big and blocky, mismatched pixel scale",
+    "x0.57-0.75 y0.70-0.90: anvil large smooth versus textured blocks",
+    "x0.78-1.0 y0.35-0.90: dark pine silhouettes clash with foreground",
+    "x0.30-0.60 y0.75-0.95: work table cluttered small items"
+   ],
+   "what_for_8": "unify scale and shading, add rim light, reduce clutter"
+  },
+  {
+   "key": "iron_age",
+   "director": 7.5,
+   "player": 7.5,
+   "issues": [
+    "x0.02-0.30 y0.30-0.52: tool rack flat and floating",
+    "x0.04-0.15 y0.55-0.95: armor stand thin and grey, low contrast",
+    "x0.75-0.97 y0.35-0.95: chimney forge strong but dominates",
+    "x0.20-0.45 y0.70-0.95: crate and barrel dull"
+   ],
+   "what_for_8": "anchor the rack, more colour variation, balance the forge"
+  },
+  {
+   "key": "steel_age",
+   "director": 6.5,
+   "player": 6.5,
+   "issues": [
+    "x0.03-0.20 y0.37-0.73: dim ghost furnace looks like placeholder",
+    "x0.0-1.0 y0.0-0.30: murky sky, chimneys barely visible",
+    "x0.72-0.97 y0.35-0.98: large furnace oversized next to small pile",
+    "x0.80-0.98 y0.25-0.35: sparks float without source"
+   ],
+   "what_for_8": "clear depth layering, one hero object, richer sky and lighting"
+  },
+  {
+   "key": "create",
+   "director": 8.0,
+   "player": 8.0,
+   "issues": [
+    "x0.0-0.27 y0.55-0.90: water wheel muddy and large",
+    "x0.72-0.95 y0.20-0.60: windmill sail overlaps pipe awkwardly",
+    "x0.0-1.0 y0.0-0.07: ceiling strip repetitive",
+    "x0.40-0.55 y0.78-0.95: conveyor props crowded"
+   ],
+   "what_for_8": "clean overlaps, better water wheel readability"
+  },
+  {
+   "key": "ie",
+   "director": 7.5,
+   "player": 7.5,
+   "issues": [
+    "x0.03-0.15 y0.10-0.90: left pylon is huge and flat",
+    "x0.70-0.80 y0.15-0.75: right pylon dark and tall, low interest",
+    "x0.80-0.97 y0.30-0.95: brick chimney oversized and flat saturated red",
+    "x0.55-0.70 y0.90-1.0: ground band dull"
+   ],
+   "what_for_8": "vary pylon scale, tone down chimney, add atmospheric glow"
+  },
+  {
+   "key": "tfmg",
+   "director": 7.0,
+   "player": 7.0,
+   "issues": [
+    "x0.07-0.11 y0.15-0.65: hazard-stripe pillars flat and dark",
+    "x0.70-0.95 y0.28-0.98: tower of blocks noisy and desaturated",
+    "x0.0-1.0 y0.0-0.25: muddy olive smoke sky",
+    "x0.45-0.72 y0.75-0.95: pumpjack thin and low contrast"
+   ],
+   "what_for_8": "cleaner industrial silhouette, stronger palette separation, clearer smoke"
+  },
+  {
+   "key": "pneumatic",
+   "director": 7.5,
+   "player": 7.5,
+   "issues": [
+    "x0.05-0.15 y0.20-0.90: left pipe long and flat",
+    "x0.0-0.25 y0.65-1.0: block stacks repeat texture",
+    "x0.40-0.80 y0.55-0.75: bottom pipe crosses near panels",
+    "x0.18-0.35 y0.35-0.50: odd drone sticker"
+   ],
+   "what_for_8": "vary stacks, purposeful pipe routing, hero machine"
+  },
+  {
+   "key": "mekanism",
+   "director": 7.0,
+   "player": 7.0,
+   "issues": [
+    "x0.03-0.27 y0.40-0.95: green tank pillar big and plain",
+    "x0.78-0.97 y0.15-0.95: grey tower empty, repetitive tiles",
+    "x0.35-0.60 y0.75-0.95: machine low, details muddy",
+    "x0.40-0.75 y0.50-0.85: large empty middle"
+   ],
+   "what_for_8": "add detail and secondary lighting, break up empty central area"
+  },
+  {
+   "key": "explore",
+   "director": 7.0,
+   "player": 7.0,
+   "issues": [
+    "x0.05-0.25 y0.05-0.20: oversized sun glow washes mountains",
+    "x0.72-0.98 y0.15-0.95: tower and stepped terrain blocky, fades to grey",
+    "x0.0-0.25 y0.40-0.85: pines flat flat",
+    "x0.30-0.60 y0.55-0.80: map-line pattern faint noise"
+   ],
+   "what_for_8": "unify light, refine terrain detail, remove noisy contour pattern"
+  },
+  {
+   "key": "twilight",
+   "director": 7.5,
+   "player": 7.5,
+   "issues": [
+    "x0.0-0.28 y0.0-0.95: giant tree trunk huge and low-detail",
+    "x0.75-0.98 y0.55-0.95: pale mushroom blocky and out of palette",
+    "x0.30-0.70 y0.70-0.92: glowing pond is a strong focal, floral clutter",
+    "x0.78-0.98 y0.10-0.35: castle silhouette faint"
+   ],
+   "what_for_8": "harmonise mushroom palette, reduce trunk bulk"
+  },
+  {
+   "key": "space",
+   "director": 8.0,
+   "player": 8.0,
+   "issues": [
+    "x0.0-0.20 y0.15-0.40: earth good but different density from stars",
+    "x0.05-0.25 y0.0-0.12: sun blob overexposed",
+    "x0.70-0.80 y0.35-0.45: satellite small floating",
+    "x0.05-0.65 y0.80-1.0: moon ground rubble flat"
+   ],
+   "what_for_8": "unify pixel density, richer lunar ground"
+  }
+ ],
+ "systemic": [
+  "Mixed pixel density/scale between props, backgrounds and nodes",
+  "Large dead dark areas around panels and flat dark backgrounds",
+  "Oversized blocky hero props clash with small detail",
+  "Flat noisy textures repeated on towers and walls",
+  "Sparse floating props not grounded (shelves, racks, racks)",
+  "Lighting not consistent per scene"
+ ],
+ "ceiling_estimate": "Procedural spec-driven scenes from Minecraft textures reach about 8; hand-made hero props and consistent lighting passes would be needed beyond that."
+}

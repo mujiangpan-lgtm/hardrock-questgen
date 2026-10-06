@@ -4822,6 +4822,243 @@ def _d_pixel_range(W, H, color, rng, k=4, peaks=None, n=3, side=-1, snow=0.42, s
 _DECOR.update({"pixel_range": _d_pixel_range})
 
 
+# ---------------------------------------------------------------- round 8 (farming): hard-tone dusk sky, clouds, apple tree, crop furrows
+def _fm_col(c):
+    return np.array(c, np.float32) / 255.0
+
+
+def _d_farming_sky(W, H, color, rng, k=4, stops=None, steps=16, seed=0, edge=0.86):
+    """Hard-banded dusk sky on a k-px texel grid: `stops` = [[r,g,b], ...] top to bottom (default night blue -> mauve ->
+    amber), quantised to `steps` flat bands; a one-texel checker softens each band edge (no gradient, no blur).
+    A pixel backdrop: put it first, give the box the whole sky height; layer `alpha` fades it into the background."""
+    k, w, h = _cx_grid(W, H, k)
+    stops = stops or [[24, 36, 58], [66, 62, 96], [150, 92, 104], [236, 140, 84], [252, 196, 118]]
+    cs = np.array([_fm_col(c) for c in stops])
+    t = (np.arange(h, dtype=np.float32) + 0.5) / h * (len(cs) - 1)
+    ys, xs = np.mgrid[0:h, 0:w]
+    n = max(2, int(steps))
+    tb = np.floor(np.clip(np.arange(h, dtype=np.float32) / h, 0, 0.9999) * n)
+    frac = np.clip(np.arange(h, dtype=np.float32) / h * n - tb, 0, 1)
+    chk = ((xs + ys) % 2 == 0)
+    bb = np.where((frac[:, None] > float(edge)) & chk, tb[:, None] + 1, tb[:, None])
+    tt = np.clip(bb / n, 0, 1) * (len(cs) - 1)
+    i0 = np.clip(np.floor(tt).astype(int), 0, len(cs) - 2)
+    f = (tt - i0)[..., None]
+    rgb = cs[i0] * (1 - f) + cs[i0 + 1] * f
+    out = np.zeros((h, w, 4), np.float32)
+    out[..., :3] = rgb
+    out[..., 3] = 1.0
+    return _cx_up(out, k, W, H)
+
+
+def _d_farming_cloud(W, H, color, rng, k=4, seed=0, glint=(255, 214, 160), belly=(104, 76, 100), puffs=0, flat=0.0, side=-1):
+    """Hard-tone cloud with a flat shaded belly on a k-px texel grid. `color` = mid tone (pink-orange), `glint` the sun-side
+    top rim (left when `side` -1), `belly` the belly. `puffs` bumps (0 = by width), `flat` 0..1 flattens it into a streak."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    npf = int(puffs) or max(3, w // 9)
+    top = np.full(w, 1e9, np.float32)
+    X = np.arange(w, dtype=np.float32)
+    amp = (1.0 - float(flat))
+    for i in range(npf):
+        cx = (i + g.uniform(0.2, 0.8)) / npf * w
+        r = g.uniform(0.07, 0.17) * w * (0.55 + 0.45 * amp) + 3
+        ph = g.uniform(0.35, 1.0) * h * 0.78 * amp + h * 0.18
+        yb = h * 0.82
+        arc = (yb - ph) + (1 - np.sqrt(np.clip(1 - ((X - cx) / r) ** 2, 0, 1))) * ph
+        arc = np.where(np.abs(X - cx) <= r, arc, 1e9)
+        top = np.minimum(top, arc)
+    env = np.clip(np.minimum(X, w - 1 - X) / max(2.0, w * 0.08), 0, 1)
+    top = np.where(top < 1e8, top + (1 - env) * h * 0.4, 1e9)
+    bot = h * 0.86 + np.round((_p7_noise1(w, 5, g) - 0.5) * 2.2)
+    ys, xs = np.mgrid[0:h, 0:w]
+    inside = (ys >= np.round(top)[xs]) & (ys <= bot[xs])
+    d = ys - np.round(top)[xs]
+    chk = ((xs + ys) % 2 == 0)
+    c, lc, sc = _fm_col(color), _fm_col(glint), _fm_col(belly)
+    thick = np.maximum(1.0, (bot - np.round(top)))[xs]
+    rgb = np.broadcast_to(c, (h, w, 3)).copy()
+    shd = (ys > bot[xs] - np.maximum(2, 0.34 * thick)) | ((ys > bot[xs] - 0.5 * thick) & chk & (ys > bot[xs] - np.maximum(3, 0.42 * thick)))
+    litm = (d <= np.maximum(1, 0.16 * thick)) | ((d <= np.maximum(2, 0.3 * thick)) & chk & ((xs < w * 0.6) if side < 0 else (xs > w * 0.4)))
+    rgb = np.where(shd[..., None], sc, rgb)
+    rgb = np.where((litm & ~shd)[..., None], lc, rgb)
+    out = np.zeros((h, w, 4), np.float32)
+    out[..., :3] = rgb
+    out[..., 3] = inside.astype(np.float32)
+    return _cx_up(out, k, W, H)
+
+
+def _d_farming_tree(W, H, color, rng, k=4, seed=0, leaf2=(92, 128, 44), leaf3=(150, 172, 62), apple=(204, 44, 38), apples=14,
+                    trunk=(98, 68, 44), crown=0.66, side=-1, clumps=1.0):
+    """Hand-built orchard tree on a k-px texel grid: a crown of overlapping round clumps in 4 hard leaf tones (`color` = the
+    dark base, `leaf2`, `leaf3` lit) with leaf-cluster texture, a 1-texel dark outline, red apples with a highlight, and a
+    forked trunk that flares into roots. `crown` = share of the box height used by the crown, `side` -1 lit from the left."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    ys, xs = np.mgrid[0:h, 0:w].astype(np.float32)
+    ch = h * float(crown)
+    R = min(w * 0.5, ch * 0.5)
+    ccx, ccy = w / 2.0, ch * 0.5
+    circ = [(ccx, ccy, R * 0.82)]
+    for i in range(7):
+        a = g.uniform(0, 6.283)
+        rr = R * g.uniform(0.34, 0.5)
+        circ.append((ccx + np.cos(a) * (R - rr) * 0.95, ccy + np.sin(a) * (ch * 0.5 - rr) * 0.95, rr))
+    own = np.full((h, w), -1, int)
+    val = np.full((h, w), 9.0, np.float32)
+    lx, ly = (-0.62, -0.78) if side < 0 else (0.62, -0.78)
+    sh = np.zeros((h, w), np.float32)
+    for i, (cx, cy, rr) in enumerate(circ):
+        dd = np.hypot(xs + 0.5 - cx, ys + 0.5 - cy) / rr
+        m = dd < 1.0
+        s = ((xs + 0.5 - cx) * lx + (ys + 0.5 - cy) * ly) / rr
+        better = m & (dd < val + 0.0)
+        own = np.where(m, i, own)
+        sh = np.where(m, s * 0.7 + 0.15 * (1 - dd) - 0.25 * (i == 0), sh)
+        val = np.where(m, np.minimum(val, dd), val)
+    inside = own >= 0
+    nz = _p7_noise2(h, w, 3.2, 2.6, g)
+    sh = sh + (nz - 0.5) * 0.9 * float(clumps)
+    # lower half of the crown always a little darker
+    sh = sh - np.clip((ys - ch * 0.55) / (ch * 0.5), 0, 1) * 0.45
+    tones = [_fm_col(color) * 0.78, _fm_col(color), _fm_col(leaf2), _fm_col(leaf3)]
+    ti = np.clip(np.floor((sh + 0.55) / 0.34).astype(int), 0, 3)
+    rgb = np.zeros((h, w, 3), np.float32)
+    for j in range(4):
+        rgb = np.where((ti == j)[..., None], tones[j], rgb)
+    # leaf specks: dark gaps and light dabs
+    sp = g.random((h, w))
+    rgb = np.where((inside & (sp < 0.05))[..., None], tones[0] * 0.8, rgb)
+    rgb = np.where((inside & (sp > 0.965) & (sh > -0.1))[..., None], tones[3], rgb)
+    # outline: inside pixel with a transparent neighbour below / right (shadow side)
+    pad = np.pad(inside, 1, constant_values=False)
+    edge_dn = inside & ~pad[2:, 1:-1]
+    edge_side = inside & ~(pad[1:-1, 2:] if side < 0 else pad[1:-1, :-2])
+    rgb = np.where((edge_dn | edge_side)[..., None], tones[0] * 0.62, rgb)
+    top_edge = inside & ~pad[:-2, 1:-1] & (sh > -0.2)
+    rgb = np.where(top_edge[..., None], tones[3], rgb)
+    # apples
+    cand = np.argwhere(inside & (ti >= 1) & (ys < ch - 3) & (ys > 3) & ~edge_dn)
+    out = np.zeros((h, w, 4), np.float32)
+    ac = _fm_col(apple)
+    if len(cand):
+        idx = g.permutation(len(cand))[:int(apples)]
+        for y0, x0 in cand[idx]:
+            if x0 + 1 < w and y0 + 1 < h and inside[y0 + 1, x0 + 1] and inside[y0, x0 + 1] and inside[y0 + 1, x0]:
+                rgb[y0:y0 + 2, x0:x0 + 2] = ac
+                rgb[y0 + 1, x0 + (1 if side < 0 else 0)] = ac * 0.62
+                rgb[y0, x0 + (0 if side < 0 else 1)] = np.clip(ac * 1.0 + 0.32, 0, 1)
+    out[..., :3] = rgb
+    out[..., 3] = inside.astype(np.float32)
+    # trunk
+    tc = _fm_col(trunk)
+    ty0 = int(ch * 0.78)
+    tw = max(3, int(w * 0.13))
+    xl = int(ccx - tw / 2)
+    for y in range(ty0, h):
+        f = (y - ty0) / max(1, h - ty0)
+        flare = 2 if y > h - 4 else (1 if y > h - 8 else 0)
+        for x in range(xl - flare, xl + tw + flare):
+            if 0 <= x < w and not inside[y, x]:
+                u = (x - (xl - flare)) / max(1, tw + 2 * flare - 1)
+                if side < 0:
+                    cc = tc * (1.25 if u < 0.28 else (0.62 if u > 0.72 else 0.95))
+                else:
+                    cc = tc * (1.25 if u > 0.72 else (0.62 if u < 0.28 else 0.95))
+                if (x + y * 3) % 5 == 0:
+                    cc = cc * 0.86
+                out[y, x, :3] = np.clip(cc, 0, 1)
+                out[y, x, 3] = 1.0
+    # trunk shadow under the crown
+    for y in range(int(ch * 0.74), min(h, int(ch * 0.74) + 3)):
+        for x in range(xl, xl + tw):
+            if 0 <= x < w and out[y, x, 3] > 0 and not inside[y, x]:
+                out[y, x, :3] *= 0.6
+    return _cx_up(out, k, W, H)
+
+
+def _d_farming_furrows(W, H, color, rng, k=4, rows=5, soil=(92, 62, 40), soil2=(62, 40, 28), crop2=(120, 150, 52), kind="wheat",
+                       seed=0, ends=0.07):
+    """Ploughed field of crop rows on a k-px texel grid. Rows grow taller towards the bottom (perspective), each a lit soil
+    ridge with a dark furrow and plants sitting on it: `kind` wheat (golden stalks with heads), leaf (cabbage / potato
+    clumps), tuft (carrot / beet tops). `color` = crop base (ripe tone), `crop2` = its green. Ragged ends (`ends`)."""
+    k, w, h = _cx_grid(W, H, k)
+    g = _p7_np(rng, seed)
+    out = np.zeros((h, w, 4), np.float32)
+    s1, s2, cc, c2 = _fm_col(soil), _fm_col(soil2), _fm_col(color), _fm_col(crop2)
+    n = max(1, int(rows))
+    wts = np.array([0.8 + 0.5 * i / max(1, n - 1) for i in range(n)])
+    edges = np.concatenate([[0], np.cumsum(wts) / wts.sum() * h]).astype(int)
+    lo = (g.random(n) * ends * w).astype(int)
+    hi = (g.random(n) * ends * w).astype(int)
+    for r in range(n):
+        y0, y1 = int(edges[r]), int(edges[r + 1])
+        t = y1 - y0
+        x0, x1 = lo[r], w - hi[r]
+        for y in range(y0, y1):
+            f = (y - y0) / max(1, t - 1)
+            col = s1 * (1.06 if f < 0.34 else 0.9) if f < 0.62 else s2
+            for x in range(x0, x1):
+                nn = 0.93 if (x * 7 + y * 13) % 11 == 0 else 1.0
+                out[y, x, :3] = np.clip(col * nn, 0, 1)
+                out[y, x, 3] = 1.0
+        base = y0 + int(t * 0.66)
+        ph = 3 + int(5 * (0.5 + 0.9 * r / max(1, n - 1)))
+        step = 3 if kind == "wheat" else (6 if kind == "leaf" else 5)
+        step += int(r >= n - 2) * (1 if kind != "wheat" else 0)
+        x = x0 + int(g.integers(0, step))
+        while x < x1 - 1:
+            hh = int(ph * g.uniform(0.82, 1.1))
+            if kind == "wheat":
+                for yy in range(hh):
+                    y = base - yy
+                    if 0 <= y < h:
+                        tc = cc * (1.12 if yy >= hh - 3 else 0.9)
+                        if yy < hh * 0.45:
+                            tc = c2 * 0.95 + cc * 0.05
+                        out[y, x, :3] = np.clip(tc, 0, 1)
+                        out[y, x, 3] = 1.0
+                        if yy >= hh - 3 and 0 <= x + 1 < w and (yy + x) % 2 == 0:
+                            out[y, x + 1, :3] = np.clip(cc * 1.18, 0, 1)
+                            out[y, x + 1, 3] = 1.0
+            elif kind == "leaf":
+                rw = 2 + ph // 3
+                rh = max(2, int(rw * 0.8))
+                for yy in range(-rh, rh + 1):
+                    for xx in range(-rw, rw + 1):
+                        q = (xx / rw) ** 2 + (yy / rh) ** 2
+                        if q <= 1.0:
+                            y, xp = base - rh - yy + 1, x + xx
+                            if 0 <= y < h and 0 <= xp < w:
+                                if q > 0.62 and (yy > 0 or xx > 0):
+                                    col = c2 * 0.55
+                                elif xx < 0 and yy < 0 and q < 0.5:
+                                    col = cc * 1.25
+                                elif (xx + yy) % 4 == 0 and q < 0.7:
+                                    col = c2 * 0.8
+                                else:
+                                    col = cc
+                                out[y, xp, :3] = np.clip(col, 0, 1)
+                                out[y, xp, 3] = 1.0
+            else:
+                for yy in range(max(2, hh // 2 + 1)):
+                    for xx in (-1, 0, 1) if yy > 0 else (0,):
+                        if abs(xx) <= (yy * 2) // max(2, hh // 2 + 1) + (1 if yy == 0 else 0):
+                            y, xp = base - yy, x + xx
+                            if 0 <= y < h and 0 <= xp < w:
+                                out[y, xp, :3] = np.clip(c2 * (1.18 if xx < 0 else 0.86), 0, 1)
+                                out[y, xp, 3] = 1.0
+                if 0 <= base < h:
+                    out[base, x, :3] = np.clip(cc, 0, 1)
+                    out[base, x, 3] = 1.0
+            x += step + int(g.integers(0, 2))
+    return _cx_up(out, k, W, H)
+
+
+_DECOR.update({"farming_sky": _d_farming_sky, "farming_cloud": _d_farming_cloud, "farming_tree": _d_farming_tree,
+               "farming_furrows": _d_farming_furrows})
+
+
 DECOR_MOTIFS = set(_DECOR) | {"sprite", "sprite_row", "blocks"}
 
 
